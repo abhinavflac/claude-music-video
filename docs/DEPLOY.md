@@ -1,7 +1,7 @@
 # Lossless: the live restyle page
 
 `site/` is a static folder served at `abhinavflac.dev/lossless`, built from the public repo
-`github.com/abhinavflac/lossless` and assembled by the private folio site (`github.com/abhinavflac/folio`).
+`github.com/abhinavflac/claude-music-video` and assembled by the private folio site (`github.com/abhinavflac/folio`).
 
 ## Assets
 
@@ -30,11 +30,11 @@ The public repo is the source of truth. The folio repo pulls it in as a submodul
 renders the page through a React client component; no rewrite is needed, `/lossless` is a real route. Vercel fetches
 public submodules automatically.
 
-1. Push this folder to `github.com/abhinavflac/lossless` (public).
+1. Push this folder to `github.com/abhinavflac/claude-music-video` (public).
 2. In the folio repo:
 
 ```sh
-git submodule add https://github.com/abhinavflac/lossless.git lossless
+git submodule add https://github.com/abhinavflac/claude-music-video.git lossless
 ```
 
 3. Add `scripts/lossless.mjs` to folio (runs before `next build`; builds the submodule and copies the static pieces):
