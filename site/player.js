@@ -329,7 +329,7 @@ export function mount(opts) {
     var on = liveAllowed && LIVE !== false && LOOKS !== null; // the row is there while film/looks.json and film/live.json load
     root.classList.toggle('chips-off', !on);
     var kmark = '<svg class="k-mark" viewBox="0 0 40 40" aria-hidden="true"><g style="isolation:isolate"><circle cx="13" cy="16" r="12" fill="#EBCBD2" style="mix-blend-mode:multiply"/><circle cx="27" cy="16" r="12" fill="#EFE6B4" style="mix-blend-mode:multiply"/><circle cx="20" cy="28" r="12" fill="#D9CBE6" style="mix-blend-mode:multiply"/></g></svg>';
-    about.innerHTML = on ? 'A music video about refusing to be compressed: 67 scenes, each in its own design language, black-and-white manga traced into vectors. Every frame is JavaScript; tap to restyle it live, looks from ' + kmark + '<a href="https://katagami.ai" target="_blank" rel="noopener">katagami.ai</a>.'
+    about.innerHTML = on ? 'A music video about refusing to be compressed: 67 scenes, each in its own design language, black-and-white manga traced into vectors. Every frame is JavaScript; tap to restyle it live, looks from ' + kmark + ' <a href="https://katagami.ai" target="_blank" rel="noopener">katagami.ai</a>.'
       : 'A music video about refusing to be compressed: 67 scenes, each in its own design language, black-and-white manga traced into vectors. Every frame is drawn in JavaScript.';
     layout(); // the styles row takes (or gives back) the height the film was sized around
   }
