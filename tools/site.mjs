@@ -9,6 +9,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 
+// the build tools (hyperframes and gsap) are devDependencies; a production install skips them
+if (!fs.existsSync('node_modules/hyperframes/dist/hyperframe.runtime.iife.js')) {
+  console.error('site: hyperframes is not installed.\n  npm with NODE_ENV=production (Vercel) skips devDependencies: run `npm install --include=dev` or `npm ci --include=dev`.');
+  process.exit(1);
+}
+
 const SITE = 'site', FILM = `${SITE}/film`;
 fs.rmSync(FILM, { recursive: true, force: true });
 fs.mkdirSync(`${FILM}/vendor`, { recursive: true });

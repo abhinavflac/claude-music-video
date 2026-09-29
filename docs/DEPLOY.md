@@ -43,7 +43,7 @@ git submodule add https://github.com/abhinavflac/claude-music-video.git lossless
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 const run = c => execSync(c, { stdio: 'inherit' });
-run('npm ci --prefix lossless');
+run('npm ci --prefix lossless --include=dev'); // Vercel sets NODE_ENV=production: without --include=dev the film's devDependencies (hyperframes, gsap) are skipped and `npm run site` fails
 run('npm run fonts --prefix lossless');
 run('npm run scenes --prefix lossless');
 run('npm run site --prefix lossless');
