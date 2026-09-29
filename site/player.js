@@ -56,7 +56,10 @@ export function mount(opts) {
   // ---------- layout ----------
   function chromeMode() { var w = innerWidth, h = innerHeight; return h < 560 && w / h >= 1.3 ? 'corners' : 'stack'; }
   function layout() {
-    var mode = chromeMode(), F = FILMS[film], W = innerWidth, H = innerHeight, sw, sh, full = isFull();
+    var mode = chromeMode(), F = FILMS[film], full = isFull(), sw, sh;
+    var appEl = document.getElementById('app');
+    // the width comes from the player's own box, so it can share the page with a sidebar of any size
+    var W = appEl && appEl.clientWidth ? appEl.clientWidth : innerWidth, H = innerHeight;
     root.style.setProperty('--app-h', H + 'px'); // the page is exactly the visible viewport (Safari's toolbars come and go)
     root.setAttribute('data-chrome', mode);
     root.setAttribute('data-layout', mode === 'corners' ? 'side' : 'stack');
