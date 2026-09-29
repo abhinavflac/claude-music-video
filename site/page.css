@@ -1,6 +1,7 @@
 /* the page wears the film's own look (Tachikiri); a restyle look replaces these tokens, scene and chrome together.
-   Everything is scoped to #app, so the host site's chrome (navbar, footer, other routes) is never touched. */
-#app { --k-paper: #0A0A0B; --k-surface: #0F0F11; --k-ink: #EDEAE2; --k-on-surface: #EDEAE2; --k-muted: #8A8A82; --k-line: #26262A;
+   The tokens live on :root (the player's JS swaps them there); everything else is scoped to #app, so the host site's
+   chrome (navbar, footer, other routes) is never touched. */
+:root { --k-paper: #0A0A0B; --k-surface: #0F0F11; --k-ink: #EDEAE2; --k-on-surface: #EDEAE2; --k-muted: #8A8A82; --k-line: #26262A;
   --k-accent: #7CFF9A; --k-accent-2: #EDEAE2; --k-accent-3: #7CFF9A; --k-on-accent: #06140A;
   --k-accent-t: #7CFF9A; --k-accent-2-t: #EDEAE2; --k-accent-3-t: #7CFF9A;
   --k-font-display: 'Anton', sans-serif; --k-font-body: 'Noto Sans', sans-serif; --k-font-mono: 'Kode Mono', monospace;
