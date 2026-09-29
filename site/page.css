@@ -7,7 +7,7 @@
   --k-font-display: 'Anton', sans-serif; --k-font-body: 'Noto Sans', sans-serif; --k-font-mono: 'Kode Mono', monospace;
   --k-radius: 0px; --k-shadow: none; --sw: 300px; --sh: 170px; }
 #app, #app * { box-sizing: border-box; }
-#app { margin: 0; background: var(--k-paper); color: var(--k-ink); overflow: hidden; height: var(--app-h, 100svh); overscroll-behavior: none; -webkit-tap-highlight-color: transparent; font: 400 15px/1.45 var(--k-font-body); }
+#app { margin: 0; background: var(--k-paper); color: var(--k-ink); overflow-x: hidden; overflow-y: auto; min-height: var(--app-h, 100svh); overscroll-behavior: none; -webkit-tap-highlight-color: transparent; font: 400 15px/1.45 var(--k-font-body); }
 #app .sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 #app button { font: inherit; color: inherit; }
 
@@ -36,7 +36,7 @@ html[data-chrome="corners"] .chrome-bottom { flex-direction: column; align-items
 }
 
 /* ---------- the film ---------- */
-#app { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; height: var(--app-h, 100vh); height: var(--app-h, 100dvh); overflow: hidden;
+#app { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; justify-content: safe center; gap: 8px; min-height: var(--app-h, 100vh); min-height: var(--app-h, 100dvh); overflow-x: hidden; overflow-y: auto;
   padding: max(6px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); box-sizing: border-box; }
 #frame { position: relative; flex: none; display: flex; align-items: center; justify-content: center; }
 #frame:fullscreen { width: 100%; height: 100%; background: #000; }
@@ -79,7 +79,7 @@ html.has-tall #orient { display: flex; }
 @media (prefers-reduced-motion: reduce) { #invite.on .sticker { animation: inv-still 3.2s linear both; } #invite.on .finger, #invite.on .burst, #invite.on .pulse { animation: none; opacity: 0; } @keyframes inv-still { 0%, 90% { opacity: 1; } 100% { opacity: 0; } } }
 #stage { position: relative; width: var(--sw); height: var(--sh); flex: none; background: #000; overflow: hidden; isolation: isolate; border-radius: var(--k-radius); -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 /* fullscreen / immersive: the film fills the screen, the controls ride over it and get out of the way when the pointer rests */
-#app:fullscreen { padding: 0; gap: 0; background: #000; }
+#app:fullscreen { padding: 0; gap: 0; height: 100%; overflow: hidden; background: #000; }
 #app:fullscreen #bar, html.immersive #bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 52px; width: min(92vw, 1000px); z-index: 70; background: var(--k-surface); color: var(--k-on-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); padding: 8px 12px; transition: opacity 0.35s; }
 #app:fullscreen #bar button, #app:fullscreen #time, html.immersive #bar button, html.immersive #time { color: var(--k-on-surface); }
 #app:fullscreen #chips, html.immersive #chips { position: fixed; left: 0; right: 0; bottom: 0; width: auto; max-width: none; z-index: 70; padding: 6px 10px; background: var(--k-surface); border-top: 1px solid var(--k-line); transition: opacity 0.35s; }
