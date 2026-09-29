@@ -1,0 +1,87 @@
+<scene look="dialtone-afac1b">
+<!-- (no lyric) 2 a.m., from behind: the desk, one monitor glowing, the Oracle lamp awake, the city asleep. The blank
+     board on the wall becomes Dialtone's one active window, a clock that rolls 1:59 over to 2:00 AM on the downbeat;
+     the monitor runs a ROM flash. Vertical: the panel sits in a console window with the clock window below it. -->
+<style>
+    #s06-cam { position: absolute; inset: 0; }
+    .s06-win { position: absolute; background: var(--k-surface); color: var(--k-on-surface); border: 3px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); overflow: hidden; }
+    .s06-bar { display: flex; align-items: center; gap: 0.5em; padding: 0 0.7em; height: 2em; background: var(--k-accent-2); color: oklch(from var(--k-accent-2) clamp(0, (0.62 - l) * 1000, 1) 0 0); border-bottom: 3px solid var(--k-line); font: 500 1em/1 var(--k-font-mono); letter-spacing: 0.02em; white-space: nowrap; }
+    .s06-bar b { margin-left: auto; font-weight: 500; }
+    .s06-dot { width: 0.62em; height: 0.62em; border-radius: 50%; background: var(--k-accent); box-shadow: 0 0 0 3px var(--k-line); flex: none; }
+    .s06-roll { position: relative; overflow: hidden; height: 1em; line-height: 1; }
+    .s06-t { display: block; height: 1em; white-space: nowrap; }
+    .s06-time { display: flex; align-items: center; justify-content: center; gap: 0.1em; height: calc(100% - var(--bar)); font: 700 1em/1 var(--k-font-display); letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
+    .s06-ampm { font: 600 0.3em/1 var(--k-font-mono); letter-spacing: 0.04em; align-self: flex-start; margin-top: 0.3em; }
+    #s06-mon .s06-body { padding: 0.5em 0.7em; font: 500 1em/1.25 var(--k-font-mono); }
+    #s06-pct { display: block; font: 700 2.2em/1 var(--k-font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+    #s06-mon .k-bar { height: 0.7em; margin: 0.35em 0 0.4em; border: 2px solid var(--k-line); }
+    .s06-row { display: flex; justify-content: space-between; white-space: nowrap; }
+    #s06-glow { position: absolute; border-radius: 50%; background: radial-gradient(closest-side, var(--k-accent), transparent); opacity: 0.5; mix-blend-mode: multiply; pointer-events: none; }
+</style>
+<style frame="wide">
+    #s06-clock { font-size: 26px; --bar: 52px; }
+    #s06-clock .s06-time { font-size: 150px; }
+    #s06-mon { font-size: 24px; border-radius: 10px; }
+</style>
+<style frame="vert">
+    #s06-panel { left: 48px; top: 260px; width: 984px; height: 1060px; font-size: 30px; }
+    #s06-view { position: relative; width: 100%; height: calc(100% - 2em); overflow: hidden; }
+    #s06-clock { left: 48px; top: 1352px; width: 984px; height: 340px; font-size: 30px; --bar: 60px; }
+    #s06-clock .s06-time { font-size: 236px; }
+    #s06-mon { font-size: 28px; border-radius: 12px; }
+    #s06-panel .s06-bar, #s06-clock .s06-bar { padding-right: 100px; }
+</style>
+<body frame="wide">
+    <div id="s06-cam" data-layout-allow-overflow data-bleed>
+      <div id="s06-art"></div>
+      <div id="s06-glow"></div>
+      <div class="s06-win" id="s06-clock"><div class="s06-bar"><span class="s06-dot"></span>clock · local<b>do not disturb</b></div>
+        <div class="s06-time"><div class="s06-roll" data-layout-allow-occlusion><span class="s06-t" id="s06-t1">1:59</span><span class="s06-t" id="s06-t2">2:00</span></div><span class="s06-ampm">AM</span></div></div>
+      <div class="s06-win" id="s06-mon"><div class="s06-bar"><span class="s06-dot"></span>flash · rom.zip</div>
+        <div class="s06-body"><span id="s06-pct">58%</span><div class="k-bar" id="s06-bar"></div><div class="s06-row"><span>do not unplug</span></div></div></div>
+    </div>
+</body>
+<body frame="vert">
+    <div id="s06-cam" data-layout-allow-overflow data-bleed>
+      <div class="s06-win" id="s06-panel"><div class="s06-bar"><span class="s06-dot"></span>cam · desk<b>02:00</b></div>
+        <div id="s06-view"><div id="s06-art"></div><div id="s06-glow"></div>
+          <div class="s06-win" id="s06-mon"><div class="s06-bar"><span class="s06-dot"></span>flash · rom.zip</div>
+            <div class="s06-body"><span id="s06-pct">58%</span><div class="k-bar" id="s06-bar"></div><div class="s06-row"><span>do not unplug</span></div></div></div></div></div>
+      <div class="s06-win" id="s06-clock"><div class="s06-bar"><span class="s06-dot"></span>clock · local<b>do not disturb</b></div>
+        <div class="s06-time"><div class="s06-roll" data-layout-allow-occlusion><span class="s06-t" id="s06-t1">1:59</span><span class="s06-t" id="s06-t2">2:00</span></div><span class="s06-ampm">AM</span></div></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's06', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), d0 = S.downbeats[0] ?? 0.65;
+
+      // the plate: the whole room wide; vertical, the desk and him inside the console window
+      const vb = vert ? '310 0 1305 1340' : '0 0 2400 1340';
+      const [PW, PH] = vert ? [978, 1060 - 60 - 6] : [W, H], M = K.map(vb, K.bleed(PW, PH));
+      K.shot($('#s06-art'), 's06-desk-2am', { viewBox: vb });
+      // the lamp's light pool, breathing on the beat; the flash window on the monitor, the clock on the blank board
+      Object.assign($('#s06-glow').style, M.rect(170, 800, 330, 260));
+      if (!vert) Object.assign($('#s06-clock').style, M.rect(250, 180, 790, 270));
+      Object.assign($('#s06-mon').style, vert ? M.rect(420, 572, 470, 305) : M.rect(485, 585, 385, 270));
+      K.onBeats(S, b => tl.fromTo($('#s06-glow'), { opacity: 0.8 }, { opacity: 0.45, duration: 0.4, ease: 'power2.out', immediateRender: false }, b));
+
+      // the clock rolls over on the downbeat
+      gsap.set($('#s06-t2'), { opacity: 0 });
+      tl.set($('#s06-t2'), { opacity: 1 }, d0 - 0.06);
+      tl.fromTo([$('#s06-t1'), $('#s06-t2')], { yPercent: 0 }, { yPercent: -100, duration: 0.16, ease: 'power3.inOut' }, d0 - 0.06);
+      tl.set($('#s06-t1'), { opacity: 0 }, d0 + 0.1);
+      tl.fromTo($('#s06-clock'), { scale: 1 }, { scale: 1.035, duration: 0.08, ease: 'power2.out', immediateRender: false }, d0);
+      tl.to($('#s06-clock'), { scale: 1, duration: 0.3, ease: 'power2.out' }, d0 + 0.08);
+
+      // the flash creeps on
+      const fill = K.el('div', 'k-bar-fill', $('#s06-bar'));
+      K.fill(tl, fill, 0.58, 0.66, 0, S.dur, 'none');
+      K.count(tl, $('#s06-pct'), 58, 66, 0, S.dur, v => Math.floor(v) + '%', 'none');
+
+      gsap.set($('#s06-cam'), { transformOrigin: vert ? '50% 40%' : '45% 25%' });
+      K.push(tl, $('#s06-cam'), S.dur, 1, 1.05);
+      K.slabIn(root, tl, { dur: 0.26 });
+      window.__timelines[id] = tl;
+    })();
+</script>

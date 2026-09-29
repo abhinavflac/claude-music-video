@@ -1,0 +1,93 @@
+<scene look="prism-works-ec408b">
+<!-- c1_4 "Keep the parts that sound like truth": the spectrum from s17 again, dispersed like light through a prism. The
+     16-22 kHz band the low-pass shaved off is bracketed and labelled "truth"; from "parts" on it grows back, bar by bar,
+     low to high, and the cursor presses a big KEEP on "truth". -->
+<style>
+    #s22-lyric { position: absolute; font: 700 1em/0.95 var(--k-font-display); letter-spacing: -0.035em; color: var(--k-ink); }
+    #s22-panel { position: absolute; background: var(--k-surface); border: 2px solid var(--k-ink); box-shadow: var(--k-shadow); }
+    .s22-head { display: flex; justify-content: space-between; padding: 0.7em 0.9em; border-bottom: 2px solid var(--k-line); font: 500 1em/1 var(--k-font-mono); color: var(--k-ink); white-space: nowrap; }
+    .s22-head span { color: var(--k-muted); }
+    #s22-plot { position: absolute; }
+    #s22-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .s22-axis { font: 500 22px/1 var(--k-font-mono); fill: var(--k-muted); }
+    .s22-truth { font: 700 30px/1 var(--k-font-mono); fill: var(--k-ink); letter-spacing: 0.04em; }
+    #s22-keep, #s22-keep-sh { position: absolute; }
+    #s22-keep-sh { background: var(--k-ink); transform: translate(6px, 6px); }
+    #s22-keep { display: grid; place-items: center; background: var(--k-accent); color: var(--k-on-accent); border: 3px solid var(--k-ink); font: 700 1em/1 var(--k-font-display); letter-spacing: 0.06em; }
+</style>
+<style frame="wide">
+    #s22-lyric { left: 80px; top: 104px; width: 1760px; font-size: 124px; }
+    #s22-panel { left: 80px; top: 384px; width: 1760px; height: 604px; font-size: 24px; }
+    #s22-plot { left: 60px; right: 300px; top: 116px; bottom: 76px; }
+    #s22-keep, #s22-keep-sh { right: 48px; bottom: 56px; width: 200px; height: 110px; font-size: 44px; }
+</style>
+<style frame="vert">
+    #s22-panel { left: 48px; top: 250px; width: 984px; height: 1058px; font-size: 28px; }
+    .s22-head { padding-right: 100px; }
+    #s22-plot { left: 56px; right: 40px; top: 120px; bottom: 250px; }
+    #s22-keep, #s22-keep-sh { left: 56px; bottom: 56px; width: 300px; height: 120px; font-size: 54px; }
+    #s22-lyric { left: 48px; top: 1352px; width: 912px; font-size: 112px; }
+</style>
+<body>
+    <div id="s22-panel">
+      <div class="s22-head"><b>spectrum · abhinav.flac</b><span id="s22-state">16–22 kHz: missing</span></div>
+      <div id="s22-plot"><svg id="s22-svg" data-layout-ignore></svg></div>
+      <div id="s22-keep-sh"></div><div id="s22-keep">KEEP</div>
+    </div>
+    <div id="s22-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's22', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tParts = at(/^parts/), tTruth = at(/^truth/);
+
+      // log-frequency plot, 20 Hz to 22 kHz; bars dispersed through a prism gradient; the 16 kHz shelf and above regrow
+      const plot = $('#s22-plot'), PW = plot.clientWidth, PH = plot.clientHeight, sv = $('#s22-svg');
+      sv.setAttribute('viewBox', `0 0 ${PW} ${PH}`);
+      const SPLIT = 0.7, LO = Math.log10(20), HI = Math.log10(16000);
+      const fx = f => (f <= 16000 ? (Math.log10(f) - LO) / (HI - LO) * SPLIT : SPLIT + (1 - SPLIT) * (f - 16000) / 6000) * PW;
+      const grad = K.svg('linearGradient', { id: 's22-prism', gradientUnits: 'userSpaceOnUse', x1: 0, y1: 0, x2: PW, y2: 0 }, K.svg('defs', {}, sv));
+      [['0', 'accent'], ['0.55', 'accent-2'], ['1', 'accent-3']].forEach(([o, c]) => { const s = K.svg('stop', { offset: o }, grad); s.style.stopColor = `var(--k-${c})`; });
+      const x16 = fx(16000), x22 = fx(22000);
+      K.svg('rect', { x: x16, y: -8, width: x22 - x16, height: PH + 8, fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 3, 'stroke-dasharray': '10 8' }, sv);
+      const lbl = K.svg('text', { x: (x16 + x22) / 2, y: -22, 'text-anchor': 'middle', class: 's22-truth' }, sv); lbl.textContent = 'truth';
+      [[100, '100'], [1000, '1k'], [10000, '10k'], [16000, '16k'], [22000, '22k']].forEach(([f, s]) => {
+        K.svg('line', { x1: fx(f), x2: fx(f), y1: PH, y2: PH + 10, stroke: 'var(--k-muted)', 'stroke-width': 2 }, sv);
+        const t = K.svg('text', { x: fx(f), y: PH + 36, 'text-anchor': f === 22000 ? 'end' : 'middle', class: 's22-axis' }, sv); t.textContent = s;
+      });
+      const N = vert ? 60 : 90, nLo = Math.round(N * SPLIT), bw = PW / N, r = K.rng(22), bars = [];
+      K.svg('path', { d: `M${x16 - 9} ${PH + 4} l6 -12 l6 24 l6 -12`, fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 2.5 }, sv);
+      for (let i = 0; i < N; i++) {
+        const hi = i >= nLo, k = hi ? (i - nLo + 0.5) / (N - nLo) : 0;
+        const base = hi ? 0.34 + 0.12 * Math.sin(i * 1.3) - 0.14 * k : 0.82 - 0.34 * (i / nLo) + 0.14 * Math.sin(i * 0.55) + 0.1 * (r() - 0.5);
+        const b = K.svg('rect', { x: (i * bw + 1.5).toFixed(1), width: (bw - 3).toFixed(1), fill: 'url(#s22-prism)' }, sv);
+        bars.push({ b, base: Math.max(0.1, base), hi, k, ph: r() * 6.28 });
+      }
+      const grow = t => Math.max(0, Math.min(1, (t - tParts) / (tTruth - tParts)));
+      K.drive(tl, 0, S.dur, t => {
+        bars.forEach(({ b, base, hi, k, ph }) => {
+          let h = base * (0.9 + 0.1 * Math.sin(t * 9 + ph));
+          if (hi) h *= Math.max(0, Math.min(1, grow(t) * 1.6 - k * 0.6));
+          const px = h * PH;
+          b.setAttribute('y', (PH - px).toFixed(1)); b.setAttribute('height', Math.max(0, px).toFixed(1));
+        });
+        $('#s22-state').textContent = t < tParts ? '16–22 kHz: missing' : t < tTruth ? `16–22 kHz: restoring ${Math.round(grow(t) * 100)}%` : '16–22 kHz: kept';
+      }, 0, S.dur);
+
+      // the cursor comes in and presses KEEP on "truth"
+      const keep = $('#s22-keep'), kp = K.pos(keep, root), kx = kp.x + kp.w * 0.55, ky = kp.y + kp.h * 0.6;
+      const cur = K.cursor(root), ring = K.el('div', 'k-ring', root);
+      K.glide(tl, cur, [[0, kx + 420, ky + 260], [tTruth - 0.5, kx + 300, ky + 150], [tTruth - 0.04, kx, ky]]);
+      K.click(tl, cur, ring, tTruth, kx, ky);
+      tl.fromTo(keep, { x: 0, y: 0 }, { x: 6, y: 6, duration: 0.06, ease: 'power2.in', immediateRender: false }, tTruth);
+      tl.to(keep, { x: 0, y: 0, duration: 0.18, ease: 'power2.out' }, tTruth + 0.1);
+
+      // the line, TRUTH in the cyan block
+      const { spans } = K.words($('#s22-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [3, 5] : [3] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

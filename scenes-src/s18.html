@@ -1,0 +1,93 @@
+<scene look="tobari-db319e">
+<!-- pc1_4 "But wired in, I hear the room, I hear the string decay": a spotlit koma at night, the art inked cream on navy.
+     Eyes shut, IEMs glowing, reverb rings breathe out of his ear; on "room" a cut to the room from behind, the rings
+     crossing it wall to wall; on "string" back to his face, closer, as a single string, plucked, rings along the bottom
+     of the frame and dies away. The caption card reads the room: RT60, the note, the decay in dB, falling with the string. -->
+<style>
+    #s18-koma { position: absolute; overflow: hidden; border: 4px solid var(--k-ink); border-radius: 4px; background: var(--k-paper); }
+    .s18-shot { position: absolute; inset: 0; }
+    .s18-ring { fill: none; stroke: var(--k-ink); }
+    .s18-glow { fill: var(--k-accent); filter: blur(10px); }
+    #s18-string { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    #s18-string path { fill: none; stroke: var(--k-accent); stroke-width: 5; stroke-linecap: round; }
+    #s18-string .s18-rest { stroke: var(--k-muted); stroke-width: 2; }
+    #s18-cap { position: absolute; display: flex; flex-direction: column; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); box-shadow: inset 6px 0 0 var(--k-accent); color: var(--k-on-surface); }
+    .s18-read { display: flex; justify-content: space-between; gap: 1em; font: 500 0.36em/1 var(--k-font-mono); letter-spacing: 0.06em; color: var(--k-muted); text-transform: uppercase; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .s18-read b { font-weight: 500; color: var(--k-on-surface); }
+    #s18-lyric { font: 700 1em/1.08 var(--k-font-display); letter-spacing: -0.01em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s18-koma { left: 736px; top: 70px; width: 1124px; height: 830px; }
+    #s18-cap { left: 64px; top: 150px; width: 644px; padding: 28px 28px 30px 38px; font-size: 64px; }
+    .s18-read { order: 2; display: grid; gap: 12px; margin-top: 26px; padding-top: 22px; border-top: 2px solid var(--k-line); font-size: 24px; }
+    .s18-read span { display: flex; justify-content: space-between; }
+</style>
+<style frame="vert">
+    #s18-koma { left: 36px; top: 250px; width: 1008px; height: 1040px; }
+    #s18-cap { left: 36px; top: 1316px; width: 1008px; padding: 22px 100px 26px 40px; font-size: 74px; }
+    .s18-read { padding-bottom: 18px; margin-bottom: 14px; border-bottom: 2px solid var(--k-line); font-size: 28px; }
+</style>
+<body>
+    <div id="s18-koma" data-layout-allow-overflow><div class="s18-shot" id="s18-a"></div><div class="s18-shot" id="s18-b"></div><div class="s18-shot" id="s18-c"></div></div>
+    <svg id="s18-string" data-layout-ignore></svg>
+    <div id="s18-cap"><div class="s18-read"><span>rt60&nbsp;<b>0.62 s</b></span><span>a2&nbsp;<b>110 hz</b></span><span id="s18-db">decay&nbsp;<b>0.0 db</b></span></div><div id="s18-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's18', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tRoom = at(/^room/), tString = at(/^string/), tI2 = L.words.filter(x => x.w === 'I')[1].t;
+      const inks = [K.tok(root, 'ink'), K.tok(root, 'paper')];
+
+      // three shots in the koma: his face (IEM rings), the room from behind (rings crossing it), his face again, closer
+      const IEM = [2035, 745], EAR = [1040, 560];
+      const vbA = vert ? '940 0 1622 1674' : '560 0 2340 1674', vbB = vert ? '480 0 1298 1340' : '200 0 1873 1340', vbC = vert ? '1200 250 1100 1135' : '930 230 1640 1173';
+      const A = K.shot($('#s18-a'), 's18-listening', { viewBox: vbA, inks }), B = K.shot($('#s18-b'), 's06-desk-2am', { viewBox: vbB, inks }), C = K.shot($('#s18-c'), 's18-listening', { viewBox: vbC, inks });
+      gsap.set([$('#s18-b'), $('#s18-c')], { opacity: 0 });
+      tl.set($('#s18-a'), { opacity: 0 }, tRoom); tl.set($('#s18-b'), { opacity: 1 }, tRoom);
+      tl.set($('#s18-b'), { opacity: 0 }, tString); tl.set($('#s18-c'), { opacity: 1 }, tString);
+      K.push(tl, $('#s18-a'), tRoom, 1, 1.05);
+      tl.fromTo($('#s18-b'), { scale: 1.05 }, { scale: 1, duration: tString - tRoom, ease: 'none' }, tRoom);
+      tl.fromTo($('#s18-c'), { scale: 1 }, { scale: 1.08, duration: S.dur - tString, ease: 'none' }, tString);
+
+      // reverb rings: circles breathing out of a point, thinning as they go, over a soft glow at the source
+      const rings = (shot, vb, [x, y], times, r1, w0) => {
+        const ov = K.overlay(shot, vb), glow = K.svg('circle', { cx: x, cy: y, r: w0 * 2.2, class: 's18-glow' }, ov);
+        tl.fromTo(glow, { opacity: 0.95 }, { opacity: 0.5, duration: 0.45, ease: 'sine.inOut', yoyo: true, repeat: 5, immediateRender: false }, times[0]);
+        times.forEach(t => {
+          const c = K.svg('circle', { cx: x, cy: y, r: w0, class: 's18-ring' }, ov);
+          gsap.set(c, { opacity: 0 });
+          tl.fromTo(c, { attr: { r: w0 * 2, 'stroke-width': w0 * 0.9 }, opacity: 0.9 }, { attr: { r: r1, 'stroke-width': w0 * 0.12 }, opacity: 0, duration: 1.1, ease: 'power1.out' }, t);
+        });
+      };
+      rings(A, vbA, IEM, [0.02, at(/^wired/), S.downbeats[0] ?? 0.54, at(/^hear/)], 1500, 26);
+      rings(B, vbB, EAR, [tRoom, tI2, tRoom + 0.42], 2600, 22);
+      rings(C, vbC, IEM, [tString, ...S.beats.filter(b => b > tString + 0.2)], 1200, 18);
+
+      // the string: a standing wave plucked on "string", decaying exponentially to the end; the readout falls with it
+      const sv = $('#s18-string'), y0 = vert ? 1726 : 948, tau = 1.1;
+      sv.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      K.svg('path', { class: 's18-rest', d: `M0 ${y0} L${W} ${y0}` }, sv);
+      const wave = K.svg('path', {}, sv);
+      sv.style.filter = 'drop-shadow(0 0 10px var(--k-accent))';
+      const db = $('#s18-db b');
+      K.drive(tl, 0, S.dur, t => {
+        const a = t < tString ? 0 : 46 * Math.exp(-(t - tString) / tau), ph = (t - tString) * 2 * Math.PI;
+        let d = '';
+        for (let i = 0; i <= 96; i++) {
+          const u = i / 96, y = y0 + a * (Math.sin(Math.PI * u) * Math.sin(ph * 9.3) + 0.35 * Math.sin(2 * Math.PI * u) * Math.sin(ph * 18.6 + 1.1));
+          d += `${i ? 'L' : 'M'}${(u * W).toFixed(1)} ${y.toFixed(1)} `;
+        }
+        wave.setAttribute('d', d);
+        wave.style.opacity = t < tString ? 0 : 1;
+        db.textContent = `${(t < tString ? 0 : -8.686 * (t - tString) / tau).toFixed(1).replace('-', '−')} db`;
+      }, 0, S.dur);
+
+      // the caption: the line, DECAY in the red block
+      const { spans } = K.words($('#s18-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [3, 7] : [3, 7, 11] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.26 });
+      window.__timelines[id] = tl;
+    })();
+</script>

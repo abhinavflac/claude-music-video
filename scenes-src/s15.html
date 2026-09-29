@@ -1,0 +1,75 @@
+<scene look="gamut-924f74">
+<!-- pc1_1 "Everything is shrinking into something you can stream": an export queue. A sunset raw and a voice memo shrink on
+     the beats; the last row is you.human, infinity, squeezed to 128 kbps on "stream". -->
+<tokens>--k-accent-3: #1F7A3E;</tokens>
+<style>
+    #s15-cam { position: absolute; inset: 0; }
+    #s15-lyric { position: absolute; font: 700 1em/1.04 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-ink); }
+    #s15-q { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    #s15-qh { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--k-line); font: 600 0.8em/1 var(--k-font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
+    .s15-row { display: grid; align-items: center; column-gap: 24px; border-bottom: 2px solid var(--k-line); }
+    .s15-ic { width: 1.4em; height: 1.7em; border: 3px solid var(--k-on-surface); clip-path: polygon(0 0, 70% 0, 100% 25%, 100% 100%, 0 100%); }
+    .s15-name { font-weight: 600; }
+    .s15-slot { position: relative; height: 34px; border: 2px solid var(--k-line); }
+    .s15-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: var(--k-accent); transform-origin: 0 50%; }
+    .s15-you .s15-fill { background: var(--k-accent-2); }
+    .s15-size { font: 500 0.85em/1 var(--k-font-mono); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .s15-chip { justify-self: end; padding: 0.3em 0.6em; border: 2px solid var(--k-on-surface); font: 600 0.62em/1 var(--k-font-mono); text-transform: uppercase; white-space: nowrap; }
+</style>
+<style frame="wide">
+    #s15-lyric { left: 80px; top: 116px; width: 1760px; font-size: 108px; }
+    #s15-q { left: 80px; top: 400px; width: 1760px; font-size: 34px; }
+    #s15-qh { height: 72px; padding: 0 30px; }
+    .s15-row { grid-template-columns: 60px 460px 1fr 330px 170px; height: 104px; padding: 0 30px; }
+</style>
+<style frame="vert">
+    #s15-q { left: 48px; top: 270px; width: 984px; font-size: 40px; }
+    #s15-qh { height: 84px; padding: 0 26px; font-size: 28px; }
+    .s15-row { grid-template-columns: 56px 1fr 170px; grid-template-rows: auto auto; row-gap: 16px; padding: 24px 26px; }
+    .s15-ic { grid-column: 1; grid-row: 1; } .s15-name { grid-column: 2; grid-row: 1; } .s15-chip { grid-column: 3; grid-row: 1; }
+    .s15-slot { grid-column: 1 / 3; grid-row: 2; } .s15-size { grid-column: 3; grid-row: 2; text-align: right; }
+    #s15-lyric { left: 48px; top: 1336px; width: 984px; font-size: 86px; }
+</style>
+<body>
+    <div id="s15-cam" data-layout-allow-overflow>
+      <div id="s15-lyric"></div>
+      <div id="s15-q">
+        <div id="s15-qh"><span>export queue · streaming presets</span><span id="s15-n">5 jobs</span></div>
+        <div class="s15-row" id="s15-r1"><span class="s15-ic"></span><span class="s15-name">sunset.raw</span><span class="s15-slot"><span class="s15-fill"></span></span><span class="s15-size" data-from="48" data-to="0.207" data-unit="MB">48 MB</span><span class="s15-chip">jpeg · 60%</span></div>
+        <div class="s15-row" id="s15-r2"><span class="s15-ic"></span><span class="s15-name">voice_memo.wav</span><span class="s15-slot"><span class="s15-fill"></span></span><span class="s15-size" data-from="42" data-to="3.1" data-unit="MB">42 MB</span><span class="s15-chip">opus · 24k</span></div>
+        <div class="s15-row" id="s15-r4"><span class="s15-ic"></span><span class="s15-name">voice_notes_mom.m4a</span><span class="s15-slot"><span class="s15-fill"></span></span><span class="s15-size" data-from="12" data-to="0.64" data-unit="MB">12 MB</span><span class="s15-chip">aac · 32k</span></div>
+        <div class="s15-row" id="s15-r5"><span class="s15-ic"></span><span class="s15-name">first_song_demo.flac</span><span class="s15-slot"><span class="s15-fill"></span></span><span class="s15-size" data-from="38" data-to="2.4" data-unit="MB">38 MB</span><span class="s15-chip">mp3 · 64k</span></div>
+        <div class="s15-row s15-you" id="s15-r3"><span class="s15-ic"></span><span class="s15-name">you.human</span><span class="s15-slot"><span class="s15-fill"></span></span><span class="s15-size" id="s15-you">∞</span><span class="s15-chip">mp3 · 128k</span></div>
+      </div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's15', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], w = re => L.words.find(x => re.test(x.w));
+      K.push(tl, $('#s15-cam'), S.dur, 1, 1.04);
+
+      // each job shrinks in beat-sized steps; you.human goes last, on "stream"
+      const fmt = (mb, unit) => mb >= 1 ? `${mb.toFixed(mb >= 10 ? 0 : 1)} MB` : `${Math.round(mb * 1024)} KB`;
+      const rows = [$('#s15-r1'), $('#s15-r2'), $('#s15-r4'), $('#s15-r5')], starts = [w(/^shrinking/).t, w(/^into/).t, w(/^something/).t, w(/^you$/).t];
+      rows.forEach((row, i) => {
+        const size = row.querySelector('.s15-size'), a = +size.dataset.from, b = +size.dataset.to, fill = row.querySelector('.s15-fill');
+        const t0 = starts[i], steps = 4;
+        for (let k = 1; k <= steps; k++) {
+          const f = 1 - k / steps * (1 - b / a), at = t0 + (k - 1) * 0.1;
+          tl.to(fill, { scaleX: Math.max(0.02, f), duration: 0.09, ease: 'power3.out' }, at);
+        }
+        K.count(tl, size, a, b, t0, t0 + 0.4, v => fmt(v), 'power3.out');
+      });
+      const st = w(/^stream/).t;
+      tl.to($('#s15-r3 .s15-fill'), { scaleX: 0.04, duration: 0.16, ease: 'power4.in' }, st);
+      K.drive(tl, st, st + 0.16, p => { $('#s15-you').textContent = p < 1 ? '∞' : '128 kbps'; });
+      K.shake(tl, $('#s15-cam'), st + 0.16, 8, 3);
+
+      const key = L.words.findIndex(x => /^shrinking/.test(x.w));
+      const { spans } = K.words($('#s15-lyric'), L, { key, breakBefore: vert ? [3, 5] : [4] });
+      K.reveal(tl, spans, L, 'rise');
+
+      window.__timelines[id] = tl;
+    })();
+</script>

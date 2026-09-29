@@ -1,0 +1,117 @@
+<scene look="plush-4d452c">
+<!-- v1_6 "When the thing you ask it isn't there, it tells you so": a self-lit companion chat with oracle-mini, his RAG
+     bot. He asks for the rated RPM of pump #7; the retrieval chip scans all 12 chunks and finds nothing on "there"; the
+     bot's face drops to worried, then it answers "I don't know. It isn't in the context." on "tells", and settles into a
+     calm, eyes-shut smile on "so". The lyric is the bot's own profile bio. -->
+<style>
+    .s12-win { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); overflow: hidden; }
+    .s12-head { display: flex; align-items: center; gap: 0.6em; padding: 0.7em 0.9em; border-bottom: 2px solid var(--k-line); white-space: nowrap; }
+    .s12-av { position: relative; flex: none; overflow: hidden; border-radius: 50%; background: var(--k-ink); box-shadow: 0 0 0 4px var(--k-accent-2); }
+    .s12-av > div { position: absolute; inset: 0; }
+    .s12-name { font: 600 1em/1 var(--k-font-display); color: var(--k-ink); }
+    .s12-sub { font: 500 0.66em/1.3 var(--k-font-body); color: var(--k-muted); }
+    .s12-live { display: inline-block; width: 0.5em; height: 0.5em; margin-right: 0.35em; border-radius: 50%; background: var(--k-accent-2); }
+    .s12-log { position: absolute; left: 0; right: 0; bottom: 3.3em; display: flex; flex-direction: column; gap: 0.7em; padding: 0 0.9em 0.6em; }
+    .s12-b { max-width: 82%; padding: 0.55em 0.8em 0.6em; border-radius: var(--k-radius); font: 500 1em/1.25 var(--k-font-body); }
+    .s12-me { align-self: flex-end; background: var(--k-accent); color: var(--k-on-accent); border-bottom-right-radius: 8px; }
+    .s12-bot { align-self: flex-start; background: var(--k-paper); color: var(--k-ink); border: 2px solid var(--k-line); border-bottom-left-radius: 8px; }
+    .s12-chip { align-self: center; padding: 0.4em 0.9em; border: 2px dashed var(--k-muted); border-radius: 999px; font: 500 0.7em/1 var(--k-font-mono); color: var(--k-ink); white-space: nowrap; }
+    .s12-dots { display: flex; gap: 0.35em; padding: 0.35em 0.1em; }
+    .s12-dots i { width: 0.5em; height: 0.5em; border-radius: 50%; background: var(--k-muted); }
+    .s12-me.s12-old { background: var(--k-paper); border: 2px solid var(--k-line); color: var(--k-muted); }
+    .s12-bot.s12-old { color: var(--k-muted); }
+    .s12-fine { align-self: flex-start; margin-top: -0.3em; font: 500 0.66em/1 var(--k-font-mono); color: var(--k-muted); opacity: 0; }
+    .s12-compose { position: absolute; left: 0.9em; right: 0.9em; bottom: 0.9em; display: flex; align-items: center; justify-content: space-between; padding: 0.55em 0.8em; border: 2px solid var(--k-line); border-radius: 999px; font: 500 0.8em/1 var(--k-font-body); color: var(--k-muted); }
+    .s12-send { width: 1.5em; height: 1.5em; border-radius: 50%; background: var(--k-accent); }
+    #s12-card { text-align: left; }
+    #s12-lyric { font: 600 1em/1.02 var(--k-font-display); letter-spacing: -0.01em; color: var(--k-ink); }
+    .s12-tags { display: flex; gap: 0.5em; font: 500 0.7em/1 var(--k-font-mono); color: var(--k-ink); }
+    .s12-tags span { padding: 0.4em 0.7em; border-radius: 999px; background: var(--k-paper); border: 2px solid var(--k-line); color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s12-chat { left: 80px; top: 110px; width: 1000px; height: 880px; font-size: 34px; }
+    #s12-chat .s12-av { width: 72px; height: 72px; }
+    #s12-card { left: 1130px; top: 110px; width: 710px; height: 880px; padding: 40px; font-size: 34px; }
+    #s12-big { width: 250px; height: 250px; box-shadow: 0 0 0 6px var(--k-accent-2), 0 0 60px 6px var(--k-accent-2); }
+    #s12-card .s12-name { margin-top: 30px; font-size: 56px; }
+    #s12-card .s12-sub { margin: 6px 0 26px; font-size: 26px; }
+    #s12-lyric { font-size: 74px; }
+    #s12-card .s12-tags { position: absolute; left: 40px; bottom: 40px; font-size: 24px; }
+</style>
+<style frame="vert">
+    #s12-chat { left: 48px; top: 250px; width: 984px; height: 1060px; font-size: 42px; }
+    #s12-chat .s12-av { width: 84px; height: 84px; }
+    #s12-chat .s12-log { padding-right: 100px; }
+    #s12-card { left: 48px; top: 1330px; width: 984px; height: 376px; padding: 20px 100px 20px 32px; font-size: 30px; display: grid; grid-template-columns: 72px 1fr; column-gap: 20px; row-gap: 10px; align-items: center; }
+    #s12-big { width: 72px; height: 72px; }
+    #s12-card .s12-name { font-size: 44px; }
+    #s12-card .s12-sub { font-size: 28px; }
+    #s12-lyric { grid-column: 1 / 3; font-size: 78px; line-height: 1; }
+    #s12-card .s12-tags { display: none; }
+</style>
+<body>
+    <div class="s12-win" id="s12-chat">
+      <div class="s12-head"><div class="s12-av" id="s12-av-s"><div id="s12-av-s-in"></div></div><div><div class="s12-name">oracle-mini</div><div class="s12-sub"><span class="s12-live"></span>grounded · 12 chunks indexed</div></div></div>
+      <div class="s12-log">
+        <div class="s12-b s12-me s12-old">torque spec for valve 3?</div>
+        <div class="s12-b s12-bot s12-old">42 N·m, from the maintenance manual, p. 14.</div>
+        <div class="s12-b s12-me" id="s12-q">what's the rated RPM for pump #7?</div>
+        <div class="s12-chip" id="s12-chip">scanning chunk 0 / 12</div>
+        <div class="s12-b s12-bot" id="s12-typing"><div class="s12-dots"><i></i><i></i><i></i></div></div>
+        <div class="s12-b s12-bot" id="s12-a">I don't know. It isn't in the context.</div>
+        <div class="s12-fine" id="s12-fine">no guesses. no vibes.</div>
+      </div>
+      <div class="s12-compose"><span>ask oracle-mini…</span><span class="s12-send"></span></div>
+    </div>
+    <div class="s12-win" id="s12-card">
+      <div class="s12-av" id="s12-big"><div id="s12-f-bright"></div><div id="s12-f-worried"></div><div id="s12-f-calm"></div></div>
+      <div><div class="s12-name">oracle-mini</div><div class="s12-sub">@oracle · local, retrieval-grounded</div></div>
+      <div id="s12-lyric"></div>
+      <div class="s12-tags"><span>honest</span><span>grounded</span><span>nightlight</span></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's12', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tThere = at(/^there/), tTells = at(/^tells/), tSo = at(/^so$/);
+      const ink = [K.tok(root, 'ink'), K.tok(root, 'paper')];
+
+      // the Oracle's faces from its sheet: bright-eyed, worried, eyes-shut calm
+      const FACE = { bright: '2745 1215 660 660', worried: '1075 1240 680 680', calm: '205 1225 660 660' };
+      K.shot($('#s12-av-s-in'), 'char-oracle', { viewBox: FACE.bright, inks: ink });
+      for (const f of ['bright', 'worried', 'calm']) K.shot($('#s12-f-' + f), 'char-oracle', { viewBox: FACE[f], inks: ink });
+      gsap.set([$('#s12-f-worried'), $('#s12-f-calm')], { opacity: 0 });
+      const face = (f, t) => ['bright', 'worried', 'calm'].forEach(k => tl.set($('#s12-f-' + k), { opacity: k === f ? 1 : 0 }, t));
+      face('worried', tThere); face('bright', tTells); face('calm', tSo);
+      tl.fromTo($('#s12-big'), { scale: 1.08 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tThere);
+      tl.fromTo($('#s12-big'), { scale: 1.08 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tTells);
+
+      // the chat plays out: question, the scan finding nothing, typing, the honest answer, the fine print
+      const pop = (el, t) => tl.fromTo(el, { opacity: 0, scale: 0.8, y: 24 }, { opacity: 1, scale: 1, y: 0, duration: 0.24, ease: 'back.out(2.2)' }, t);
+      gsap.set($('#s12-q'), { transformOrigin: '100% 100%' }); gsap.set([$('#s12-typing'), $('#s12-a')], { transformOrigin: '0% 100%' });
+      pop($('#s12-q'), 0.06);
+      pop($('#s12-chip'), 0.3);
+      K.drive(tl, 0.34, tThere, v => { $('#s12-chip').textContent = v < 12 ? `scanning chunk ${Math.floor(v)} / 12` : 'retrieved 0 / 12 chunks'; }, 0, 12);
+      tl.set($('#s12-chip'), { borderStyle: 'solid' }, tThere);
+      K.shake(tl, $('#s12-chip'), tThere, 7, 3);
+      gsap.set($('#s12-typing'), { display: 'none' });
+      tl.set($('#s12-typing'), { display: 'block' }, tThere + 0.06);
+      pop($('#s12-typing'), tThere + 0.06);
+      $('#s12-typing').querySelectorAll('i').forEach((d, i) => tl.fromTo(d, { y: 0 }, { y: -10, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false }, tThere + 0.08 + i * 0.07));
+      tl.set($('#s12-typing'), { display: 'none' }, tTells);
+      gsap.set($('#s12-a'), { display: 'none' });
+      tl.set($('#s12-a'), { display: 'block' }, tTells);
+      pop($('#s12-a'), tTells);
+      gsap.set($('#s12-fine'), { display: 'none' });
+      tl.set($('#s12-fine'), { display: 'block' }, tSo);
+      tl.fromTo($('#s12-fine'), { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.2, ease: 'power2.out' }, tSo);
+
+      // the bio is the line, TELLS in the accent block
+      const { spans } = K.words($('#s12-lyric'), L, { key: L.words.findIndex(x => /^tells/.test(x.w)) });
+      K.reveal(tl, spans, L, 'pop');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

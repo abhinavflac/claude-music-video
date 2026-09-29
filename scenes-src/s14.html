@@ -1,0 +1,89 @@
+<scene look="glaze-0418f6">
+<!-- v1_8 "It admits when it's empty, I just say 'all good'": two porcelain status cards. The oracle reports an empty
+     context, honestly; he is at 3%, awake 19 hours, and types "all good :)", which sends and is read at 2:14 AM. -->
+<tokens>--k-muted: #6B7277; --k-accent-2: #2E8C7E;</tokens>
+<style>
+    #s14-cam { position: absolute; inset: 0; }
+    #s14-lyric { position: absolute; font: 600 1em/1.06 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-ink); }
+    .s14-card { position: absolute; display: flex; flex-direction: column; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: calc(var(--k-radius) * 1.5); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s14-top { display: flex; align-items: center; gap: 16px; }
+    .s14-ava { width: 2.2em; height: 2.2em; border-radius: 50%; border: 3px solid var(--k-line); display: grid; place-items: center; font: 600 0.9em/1 var(--k-font-display); flex: none; }
+    .s14-name { font: 600 1.1em/1.1 var(--k-font-display); }
+    .s14-sub { font: 500 0.66em/1.2 var(--k-font-mono); color: var(--k-muted); }
+    .s14-batt { margin-left: auto; display: flex; align-items: center; gap: 10px; font: 500 0.8em/1 var(--k-font-mono); }
+    .s14-cell { position: relative; width: 70px; height: 34px; border: 3px solid var(--k-on-surface); border-radius: 8px; }
+    .s14-cell::after { content: ""; position: absolute; right: -9px; top: 9px; width: 6px; height: 10px; border-radius: 0 3px 3px 0; background: var(--k-on-surface); }
+    .s14-lvl { position: absolute; left: 3px; top: 3px; bottom: 3px; width: 4px; border-radius: 3px; background: var(--k-accent); }
+    .s14-rows { display: grid; gap: 14px; }
+    .s14-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-top: 2px solid var(--k-line); }
+    .s14-row b { font-weight: 600; }
+    .s14-pill { padding: 0.3em 0.75em; border-radius: 99px; border: 2px solid var(--k-accent-2); color: var(--k-on-surface); font: 600 0.8em/1 var(--k-font-mono); }
+    .s14-field { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 2px solid var(--k-line); border-radius: 99px; min-height: 1em; }
+    .s14-bubble { align-self: flex-end; padding: 16px 22px; border-radius: 26px 26px 6px 26px; background: var(--k-accent); color: var(--k-on-accent); font: 600 1em/1 var(--k-font-body); }
+    .s14-read { align-self: flex-end; font: 500 0.66em/1 var(--k-font-mono); color: var(--k-muted); }
+    #s14-honest { font: 600 1em/1.2 var(--k-font-display); }
+</style>
+<style frame="wide">
+    #s14-lyric { left: 80px; top: 118px; width: 1760px; font-size: 104px; }
+    .s14-card { top: 400px; width: 860px; height: 580px; padding: 36px 40px; gap: 26px; font-size: 40px; }
+    #s14-a { left: 80px; } #s14-b { left: 980px; }
+</style>
+<style frame="vert">
+    .s14-card { left: 48px; width: 984px; padding: 32px 36px; gap: 24px; font-size: 46px; }
+    #s14-a { top: 270px; height: 500px; } #s14-b { top: 794px; height: 510px; }
+    #s14-lyric { left: 48px; top: 1336px; width: 984px; font-size: 100px; }
+</style>
+<body>
+    <div id="s14-cam" data-layout-allow-overflow>
+      <div id="s14-lyric"></div>
+      <div class="s14-card" id="s14-a">
+        <div class="s14-top"><span class="s14-ava">o</span><span><span class="s14-name">oracle-mini</span><br><span class="s14-sub">retrieval · context window</span></span>
+          <span class="s14-batt"><span class="s14-cell"><span class="s14-lvl" id="s14-lvl-a"></span></span><span id="s14-pa">12%</span></span></div>
+        <div class="s14-rows">
+          <div class="s14-row"><span>context</span><b id="s14-ctx">3 / 12 chunks</b></div>
+          <div class="s14-row"><span>status</span><span class="s14-pill" id="s14-empty">EMPTY</span></div>
+        </div>
+        <div id="s14-honest"></div>
+      </div>
+      <div class="s14-card" id="s14-b">
+        <div class="s14-top"><span class="s14-ava">a</span><span><span class="s14-name">abhinav</span><br><span class="s14-sub">awake 19h 04m</span></span>
+          <span class="s14-batt"><span class="s14-cell"><span class="s14-lvl" id="s14-lvl-b"></span></span><span>3%</span></span></div>
+        <div class="s14-field"><span id="s14-typed"></span><span class="k-caret" id="s14-car"></span></div>
+        <div class="s14-bubble" id="s14-sent">all good :)</div>
+        <div class="s14-read" id="s14-read">Read 2:14 AM</div>
+      </div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's14', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], w = re => L.words.find(x => re.test(x.w));
+      K.push(tl, $('#s14-cam'), S.dur, 1, 1.045);
+
+      // the oracle drains to empty and says so
+      const e0 = w(/^admits/).t, e1 = w(/^empty/).t;
+      K.drive(tl, 0, e1, p => {
+        const n = Math.max(0, Math.round(3 * (1 - p)));
+        $('#s14-ctx').textContent = `${n} / 12 chunks`;
+        $('#s14-pa').textContent = `${Math.max(0, Math.round(12 * (1 - p)))}%`;
+        $('#s14-lvl-a').style.width = `${Math.max(0, 1 - p) * 20}px`;
+      });
+      tl.fromTo($('#s14-empty'), { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.18, ease: 'back.out(3)' }, e1);
+      K.type(tl, $('#s14-honest'), 'says so. honestly.', e1 + 0.1, e1 + 0.45);
+
+      // he types it, sends it, and it is read
+      const g0 = w(/^say/).t, g1 = w(/good/).t, g2 = w(/good/).end;
+      K.caret(tl, $('#s14-car'), 0, S.dur, 0.5);
+      K.type(tl, $('#s14-typed'), 'all good :)', g0, g1 + 0.1);
+      tl.set($('#s14-typed'), { opacity: 0 }, g2 + 0.05);
+      tl.fromTo($('#s14-sent'), { opacity: 0, y: 30, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'back.out(2)' }, g2 + 0.05);
+      tl.fromTo($('#s14-read'), { opacity: 0 }, { opacity: 1, duration: 0.12 }, g2 + 0.3);
+      $('#s14-lvl-b').style.width = '3px';
+
+      const key = L.words.length - 1;
+      const { spans } = K.words($('#s14-lyric'), L, { key, breakBefore: vert ? [3, 5] : [5] });
+      K.reveal(tl, spans, L, 'rise');
+
+      window.__timelines[id] = tl;
+    })();
+</script>

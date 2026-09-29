@@ -1,0 +1,72 @@
+<scene look="klaxon-9a58cb">
+<!-- Title card: LOSSLESS in screen-printed grotesk; LESS lands in the acid slab on the downbeat. Mono tags carry the file's
+     facts; the sticker reads like a catalogue label. -->
+<tokens>--k-accent-2: #141210;</tokens>
+<style>
+    #s04-cam { position: absolute; inset: 0; }
+    #s04-ink { position: absolute; inset: -30px; opacity: 0.07; background: repeating-linear-gradient(-38deg, var(--k-line) 0 2px, transparent 2px 14px); }
+    .s04-word { position: absolute; font: 400 1em/0.8 var(--k-font-display); letter-spacing: -0.04em; text-transform: uppercase; color: var(--k-ink); white-space: nowrap; }
+    #s04-less { color: oklch(from var(--k-accent) clamp(0, (0.62 - l) * 1000, 1) 0 0); }
+    #s04-slab { position: absolute; background: var(--k-accent); border: 6px solid var(--k-line); box-shadow: var(--k-shadow); transform-origin: 0 50%; }
+    #s04-tags { position: absolute; display: flex; flex-wrap: wrap; gap: 16px; }
+    .s04-tag { padding: 0.45em 0.7em 0.4em; border: 3px solid var(--k-line); background: var(--k-surface); color: var(--k-on-surface); font: 500 1em/1 var(--k-font-mono);
+      box-shadow: 5px 5px 0 var(--k-line); white-space: nowrap; }
+    #s04-sub { position: absolute; font: 500 1em/1.2 var(--k-font-body); color: var(--k-ink); white-space: pre; }
+    #s04-sticker { position: absolute; border: 4px solid var(--k-line); background: var(--k-surface); color: var(--k-on-surface); box-shadow: var(--k-shadow); display: grid; gap: 14px; }
+    #s04-sticker .big { font: 400 1em/0.9 var(--k-font-display); text-transform: uppercase; }
+    #s04-sticker .row { display: flex; justify-content: space-between; font: 500 0.36em/1 var(--k-font-mono); }
+    #s04-bars { height: 70px; display: flex; gap: 4px; align-items: stretch; }
+    #s04-bars i { display: block; background: var(--k-line); }
+</style>
+<style frame="wide">
+    #s04-loss { left: 110px; top: 190px; font-size: 360px; }
+    #s04-slab { left: 92px; top: 500px; width: 1140px; height: 318px; }
+    #s04-less { left: 116px; top: 516px; font-size: 360px; }
+    #s04-tags { left: 1330px; top: 190px; width: 500px; font-size: 28px; }
+    #s04-sub { left: 116px; top: 880px; font-size: 40px; }
+    #s04-sticker { left: 1330px; top: 560px; width: 450px; padding: 26px; font-size: 110px; }
+</style>
+<style frame="vert">
+    #s04-loss { left: 44px; top: 392px; font-size: 330px; }
+    #s04-slab { left: 30px; top: 682px; width: 1010px; height: 292px; }
+    #s04-less { left: 50px; top: 696px; font-size: 330px; }
+    #s04-sub { left: 48px; top: 1030px; font-size: 48px; }
+    #s04-tags { left: 48px; top: 1180px; width: 984px; font-size: 34px; }
+    #s04-sticker { left: 48px; top: 1392px; width: 984px; padding: 30px 34px; font-size: 128px; }
+</style>
+<body>
+    <div id="s04-ink" data-bleed data-layout-ignore></div>
+    <div id="s04-cam" data-layout-allow-overflow>
+      <div class="s04-word" id="s04-loss">loss</div>
+      <div id="s04-slab"></div>
+      <div class="s04-word" id="s04-less" data-layout-allow-overlap>less</div>
+      <div id="s04-sub"></div>
+      <div id="s04-tags"><span class="s04-tag">track 01</span><span class="s04-tag">4:08</span><span class="s04-tag">G minor · 91 bpm</span><span class="s04-tag">FLAC 24/96</span><span class="s04-tag">abhinav.flac</span></div>
+      <div id="s04-sticker"><span class="big">lsl-001</span><div id="s04-bars"></div><div class="row"><span>0 bits lost</span><span>side A</span></div></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's04', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), down = S.downbeats[0] ?? 0.66;
+      K.push(tl, $('#s04-cam'), S.dur, 1, 1.05);
+      tl.fromTo($('#s04-ink'), { x: 0 }, { x: -40, duration: S.dur, ease: 'none' }, 0);
+
+      // LOSS is there from the first frame; LESS slams into its acid slab on the downbeat
+      tl.fromTo($('#s04-loss'), { x: -30 }, { x: 0, duration: 0.5, ease: 'power3.out' }, 0);
+      tl.fromTo($('#s04-slab'), { scaleX: 0 }, { scaleX: 1, duration: 0.14, ease: 'power3.out' }, down - 0.14);
+      tl.fromTo($('#s04-less'), { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: 0.12, ease: 'power4.in' }, down);
+      K.shake(tl, $('#s04-cam'), down + 0.12, 14, 3);
+
+      // a barcode drawn in code, tags on the beats, the subtitle typed
+      const bars = $('#s04-bars'), r = K.rng(404);
+      for (let i = 0; i < 46; i++) { const b = K.el('i', '', bars); b.style.width = `${1 + Math.floor(r() * 4) * 2}px`; }
+      const tags = [...root.querySelectorAll('.s04-tag')];
+      tags.forEach((g, i) => tl.fromTo(g, { opacity: 0, y: 16, rotation: i % 2 ? 3 : -3 }, { opacity: 1, y: 0, rotation: 0, duration: 0.16, ease: 'back.out(2)' }, (S.beats[i + 1] ?? 0.3 + i * 0.3) - 0.04));
+      tl.fromTo($('#s04-sticker'), { opacity: 0, rotation: -8, scale: 0.8 }, { opacity: 1, rotation: -3, scale: 1, duration: 0.2, ease: 'back.out(2)' }, down + 0.3);
+      K.type(tl, $('#s04-sub'), vert ? 'a song about\nnot being compressed' : 'a song about not being compressed', down + 0.25, down + 1.1);
+
+      K.slabIn(root, tl);
+      window.__timelines[id] = tl;
+    })();
+</script>

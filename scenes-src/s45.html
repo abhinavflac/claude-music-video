@@ -1,0 +1,92 @@
+<scene look="fanfare-706610">
+<!-- c2_7 "But I'm lossless, I'm lossless": the thumbs-up again, closer, on a bright stage. Yellow key-light rays turn
+     behind his head, a white flash and sparkles on each downbeat, and the LOSSLESS-O-METER (v2) climbs to 99%: 1% still
+     buffering. The line is a proclamation on a red ribbon. -->
+<style>
+    #s45-cam { position: absolute; inset: 0; }
+    #s45-art { position: absolute; overflow: hidden; }
+    .s45-ray { fill: var(--k-accent-3); }
+    #s45-rays { mix-blend-mode: screen; }
+    .s45-star { fill: var(--k-accent-3); stroke: var(--k-ink); stroke-width: 5; stroke-linejoin: round; }
+    #s45-meter { position: absolute; background: var(--k-surface); border: 4px solid var(--k-ink); border-radius: var(--k-radius); box-shadow: 8px 8px 0 var(--k-ink); color: var(--k-on-surface); }
+    .s45-lab { display: flex; justify-content: space-between; font: 700 0.75em/1 var(--k-font-mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    #s45-pct { font: 800 1em/1 var(--k-font-display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+    .s45-buf { font: 700 0.7em/1.2 var(--k-font-mono); color: var(--k-accent-t); white-space: nowrap; }
+    #s45-bar { height: 0.45em; margin: 0.4em 0; border: 3px solid var(--k-ink); border-radius: 999px; }
+    #s45-bar .k-bar-fill { background: var(--k-accent-2); }
+    #s45-ribbon { position: absolute; background: var(--k-accent); clip-path: polygon(0 0, 100% 0, 97% 50%, 100% 100%, 0 100%, 3% 50%); }
+    #s45-lyric { font: 800 1em/0.92 var(--k-font-display); letter-spacing: -0.035em; text-transform: uppercase; color: var(--k-on-accent); }
+    #s45-lyric { --k-key-bg: var(--k-ink); }
+    #s45-flash { position: absolute; inset: 0; background: var(--k-surface); opacity: 0; pointer-events: none; }
+</style>
+<style frame="wide">
+    #s45-art { inset: 0; }
+    #s45-meter { left: 1310px; top: 110px; width: 540px; padding: 22px 26px; font-size: 30px; }
+    #s45-pct { font-size: 120px; margin-top: 22px; }
+    #s45-ribbon { left: 40px; top: 752px; width: 1840px; height: 250px; padding: 22px 90px; }
+    #s45-lyric { font-size: 108px; }
+</style>
+<style frame="vert">
+    #s45-art { left: 0; top: 0; width: 1080px; height: 1300px; }
+    #s45-meter { left: 48px; top: 1000px; width: 560px; padding: 18px 24px; font-size: 30px; }
+    #s45-pct { font-size: 96px; margin-top: 18px; }
+    #s45-ribbon { left: 20px; top: 1330px; width: 1040px; height: 380px; padding: 26px 120px 26px 70px; }
+    #s45-lyric { font-size: 104px; }
+</style>
+<body>
+    <div id="s45-cam" data-layout-allow-overflow data-bleed><div id="s45-art"></div></div>
+    <div id="s45-meter">
+      <div class="s45-lab"><span>lossless-o-meter</span><span>v2.0</span></div>
+      <div id="s45-pct">0%</div>
+      <div class="k-bar" id="s45-bar"></div>
+      <div class="s45-buf">1% still buffering</div>
+    </div>
+    <div id="s45-ribbon"><div id="s45-lyric"></div></div>
+    <div id="s45-flash"></div>
+</body>
+<script>
+    (() => {
+      const id = 's45', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], ls = L.words.filter(x => /^lossless/.test(x.w)).map(x => x.t);
+      const [d1, d2] = [S.downbeats[0] ?? 1.18, S.downbeats[1] ?? 3.81];
+
+      // closer than s25: the grin and the thumb
+      const vb = vert ? '640 40 1260 1517' : '450 0 1900 1069';
+      const shot = K.shot($('#s45-art'), 's25-thumbs-up', { viewBox: vb, inks: [K.tok(root, 'paper'), K.tok(root, 'ink')] });
+      const ov = K.overlay(shot, vb), HX = 1550, HY = 420;
+      // key-light rays turning behind his head, screened over the night sky
+      const rays = K.svg('g', { id: 's45-rays' }, ov);
+      for (let i = 0; i < 18; i++) { const a0 = i / 18 * Math.PI * 2, a1 = a0 + Math.PI / 30; K.svg('path', { class: 's45-ray', d: `M${HX} ${HY} L${HX + Math.cos(a0) * 2600} ${HY + Math.sin(a0) * 2600} L${HX + Math.cos(a1) * 2600} ${HY + Math.sin(a1) * 2600} Z`, opacity: 0.32 }, rays); }
+      ov.insertBefore(rays, ov.firstChild);
+      tl.fromTo(rays, { rotation: 0, svgOrigin: `${HX} ${HY}` }, { rotation: 24, svgOrigin: `${HX} ${HY}`, duration: S.dur, ease: 'none' }, 0);
+      gsap.set($('#s45-cam'), { transformOrigin: vert ? '50% 30%' : '52% 40%' });
+      tl.fromTo($('#s45-cam'), { scale: 1 }, { scale: 1.06, duration: S.dur, ease: 'none' }, 0);
+
+      // a white flash and sparkles on each downbeat
+      const star = 'M0 -1 L0.2 -0.2 L1 0 L0.2 0.2 L0 1 L-0.2 0.2 L-1 0 L-0.2 -0.2 Z';
+      [[1180, 170, 80], [1960, 230, 100], [2150, 640, 64], [760, 250, 70], [1850, 70, 50]].forEach(([x, y, s], i) => {
+        const g = K.svg('g', {}, ov); K.svg('path', { d: star, class: 's45-star', transform: `translate(${x} ${y}) scale(${s})`, 'vector-effect': 'non-scaling-stroke' }, g);
+        gsap.set(g, { opacity: 0 });
+        [d1, d2].forEach(d => {
+          tl.fromTo(g, { opacity: 0, scale: 0.2, svgOrigin: `${x} ${y}` }, { opacity: 1, scale: 1, svgOrigin: `${x} ${y}`, duration: 0.24, ease: 'back.out(3)', immediateRender: false }, d + i * 0.04);
+          tl.to(g, { opacity: 0, duration: 0.3 }, d + 1 + i * 0.05);
+        });
+      });
+      [d1, d2].forEach(d => { tl.set($('#s45-flash'), { opacity: 0.8 }, d); tl.set($('#s45-flash'), { opacity: 0.35 }, d + K.F); tl.set($('#s45-flash'), { opacity: 0 }, d + 2 * K.F); });
+
+      // the meter climbs to 99 and stays there
+      const fill = K.el('div', 'k-bar-fill', $('#s45-bar')), cl = x => Math.max(0, Math.min(1, x));
+      K.drive(tl, 0, S.dur, t => {
+        const v = t < d1 ? 0.9 * cl(t / d1) : 0.99 - 0.09 * Math.exp(-6 * (t - d1));
+        $('#s45-pct').textContent = Math.round(v * 100) + '%'; fill.style.transform = `scaleX(${v.toFixed(3)})`;
+      }, 0, S.dur);
+
+      // the proclamation, the second LOSSLESS in the black block
+      const { spans } = K.words($('#s45-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [2, 3] : [3] });
+      K.reveal(tl, spans, L, 'slam');
+      ls.forEach(t => K.shake(tl, $('#s45-ribbon'), t + 0.12, 8, 3));
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,71 @@
+<scene look="halation-14b4c2">
+<!-- br_3 "Give it freely, feel it fully, don't swallow the sound": luminous bloom. Hand on his chest, eyes shut, singing
+     out under a spotlight, the art inked in Halation's navy and pale. Rings of light pour out of his chest on the sung
+     words and beats. The mic-muted card beside him cracks on "don't" and breaks on "swallow": mic live. -->
+<style>
+    #s53-cam { position: absolute; inset: 0; }
+    #s53-art { position: absolute; overflow: hidden; }
+    .s53-ring { fill: none; mix-blend-mode: screen; }
+    .s53-card { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    #s53-mic { display: flex; align-items: center; gap: 0.6em; padding: 0.6em 0.9em; font: 600 0.8em/1 var(--k-font-body); white-space: nowrap; }
+    #s53-mic svg { width: 1.8em; height: 1.8em; overflow: visible; }
+    #s53-mic .live { display: none; color: var(--k-accent-t); }
+    #s53-mic.on .live { display: inline; }
+    #s53-mic.on .mute { display: none; }
+    #s53-lyric { font: 600 1em/1 var(--k-font-display); letter-spacing: -0.01em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s53-art { inset: 0; }
+    #s53-mic { right: 70px; top: 130px; font-size: 34px; }
+    #s53-lcard { left: 60px; top: 170px; width: 700px; padding: 30px 36px 36px; font-size: 104px; }
+</style>
+<style frame="vert">
+    #s53-art { left: 0; top: 0; width: 1080px; height: 1920px; }
+    #s53-mic { left: 540px; top: 270px; font-size: 34px; }
+    #s53-lcard { left: 48px; top: 1330px; width: 984px; padding: 26px 100px 30px 34px; font-size: 96px; }
+</style>
+<body>
+    <div id="s53-cam" data-layout-allow-overflow data-bleed><div id="s53-art"></div></div>
+    <div class="s53-card" id="s53-mic"><svg viewBox="0 0 32 32" id="s53-icon"><path d="M4 12 h6 l8 -7 v22 l-8 -7 h-6 Z" fill="var(--k-ink)"/><path id="s53-slash" d="M22 10 L30 22 M30 10 L22 22" stroke="var(--k-ink)" stroke-width="3" stroke-linecap="round"/><path id="s53-waves" d="M22 11 q4 5 0 10 M26 7 q7 9 0 18" fill="none" stroke="var(--k-accent)" stroke-width="3" stroke-linecap="round" opacity="0"/><path id="s53-crack" d="M3 3 L13 14 L9 17 L19 29" fill="none" stroke="var(--k-accent)" stroke-width="2.5" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1"/></svg><span class="mute">mic muted</span><span class="live">mic live</span></div>
+    <div class="s53-card" id="s53-lcard"><div id="s53-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's53', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tDont = at(/^don/), tSwallow = at(/^swallow/);
+
+      // the plate in navy and pale: the spotlight stays bright, the dark room turns night-blue
+      const vb = vert ? '1030 0 942 1674' : '0 0 3000 1674';
+      const shot = K.shot($('#s53-art'), 's53-singing', { viewBox: vb, inks: [K.tok(root, 'paper'), K.tok(root, 'ink')] });
+      gsap.set($('#s53-cam'), { transformOrigin: vert ? '50% 40%' : '50% 45%' });
+      tl.fromTo($('#s53-cam'), { scale: 1.04 }, { scale: 1.1, duration: S.dur, ease: 'none' }, 0);
+
+      // rings of light out of his chest, on each sung word and each beat, bloomed
+      const ov = K.overlay(shot, vb), CX = 1500, CY = 950;
+      const bloom = K.svg('filter', { id: 's53-bloom', x: '-50%', y: '-50%', width: '200%', height: '200%' }, K.svg('defs', {}, ov));
+      K.svg('feGaussianBlur', { stdDeviation: 14, result: 'b' }, bloom);
+      const mg = K.svg('feMerge', {}, bloom); K.svg('feMergeNode', { in: 'b' }, mg); K.svg('feMergeNode', { in: 'SourceGraphic' }, mg);
+      const times = [...L.words.map(w => w.t), ...S.beats].sort((a, b) => a - b).filter((t, i, a) => !i || t - a[i - 1] > 0.12);
+      times.forEach((t, i) => {
+        const c = K.svg('circle', { cx: CX, cy: CY, r: 40, class: 's53-ring', stroke: `var(--k-${i % 2 ? 'accent-2' : 'accent'})`, filter: 'url(#s53-bloom)' }, ov);
+        gsap.set(c, { opacity: 0 });
+        tl.fromTo(c, { opacity: 1, attr: { r: 60, 'stroke-width': 26 } }, { opacity: 0, attr: { r: 1500, 'stroke-width': 3 }, duration: 1.4, ease: 'power2.out', immediateRender: false }, t);
+      });
+
+      // the mute card: cracks on "don't", breaks on "swallow", then it is live
+      tl.to($('#s53-crack'), { strokeDashoffset: 0, duration: 0.14, ease: 'none' }, tDont);
+      K.shake(tl, $('#s53-mic'), tDont, 5, 3);
+      K.drive(tl, 0, S.dur, t => $('#s53-mic').classList.toggle('on', t >= tSwallow), 0, S.dur);
+      tl.set([$('#s53-slash'), $('#s53-crack')], { opacity: 0 }, tSwallow);
+      tl.set($('#s53-waves'), { opacity: 1 }, tSwallow);
+      tl.fromTo($('#s53-mic'), { scale: 1.2 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tSwallow);
+
+      // the line, SOUND in the periwinkle block
+      const { spans } = K.words($('#s53-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [3, 6] : [3, 6, 8] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.3 });
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,57 @@
+/* kit.css: shared scene components. Every colour, face, radius and shadow reads a --k-* token, which each scene
+   declares on its own #root, so a look swap restyles all of it. No transitions or keyframes: GSAP drives all motion. */
+[data-hf-inner-root], [data-hf-inner-root] *, [data-hf-inner-root] *::before, [data-hf-inner-root] *::after { box-sizing: border-box; }
+/* text-safe accents: an accent used as a text colour. In a scene's own look they are the accents themselves; a restyle
+   look (looks.json) sets them to its accents pulled toward its ink until they read on its paper and surface */
+[data-hf-inner-root], [data-hf-inner-root] * { --k-accent-t: var(--k-accent); --k-accent-2-t: var(--k-accent-2); --k-accent-3-t: var(--k-accent-3); }
+.k-line { display: inline; }
+.k-w { display: inline-block; white-space: pre; transform-origin: 50% 70%; }
+/* the key block paints from a pseudo-element under the word's own positioned text span (tree order, no negative
+   z-index), so tight display leading never reads as text overflowing a coloured box */
+.k-key { position: relative; color: oklch(from var(--k-key-bg, var(--k-accent)) clamp(0, (0.62 - l) * 1000, 1) 0 0); padding: 0.02em 0.14em 0.04em; margin: 0 -0.04em; }
+.k-key::before { content: ''; position: absolute; inset: 0; background: var(--k-key-bg, var(--k-accent)); }
+.k-kt { position: relative; }
+
+
+.k-slabs { position: absolute; inset: 0; z-index: 40; overflow: hidden; }
+.k-slab { position: absolute; top: -20%; height: 140%; width: 78%; left: 0; transform-origin: 0 50%; }
+.k-slab-a { background: var(--k-accent); }
+.k-slab-b { background: var(--k-ink); }
+
+.k-flash { position: absolute; inset: 0; z-index: 45; background: var(--k-paper); opacity: 0; pointer-events: none; }
+.k-flash.ink { background: var(--k-ink); }
+
+.k-stamp { position: absolute; display: inline-block; padding: 0.12em 0.4em 0.08em; border: 0.09em solid var(--k-accent); color: var(--k-accent-t);
+  font: 900 64px/1 var(--k-font-display); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; border-radius: var(--k-radius); opacity: 0; }
+.k-stamp.solid { background: var(--k-accent); color: oklch(from var(--k-accent) clamp(0, (0.62 - l) * 1000, 1) 0 0); }
+
+.k-cursor { position: absolute; left: 0; top: 0; z-index: 35; overflow: visible; }
+.k-ring { position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px; border: 4px solid var(--k-accent); border-radius: 50%; opacity: 0; z-index: 34; }
+
+.k-strike { position: absolute; left: -0.1em; right: -0.1em; top: 52%; height: 0.12em; background: var(--k-accent); transform: scaleX(0); transform-origin: 0 50%; }
+
+.k-bar { position: relative; overflow: hidden; background: var(--k-line); border-radius: var(--k-radius); }
+.k-bar-fill { position: absolute; inset: 0; background: var(--k-accent); transform: scaleX(0); transform-origin: 0 50%; }
+
+.k-toggle { position: relative; display: inline-block; width: 2.2em; height: 1.2em; border-radius: 0.6em; vertical-align: middle; flex: none; }
+.k-toggle-off, .k-toggle-on { position: absolute; inset: 0; border-radius: inherit; }
+.k-toggle-off { background: var(--k-line); }
+.k-toggle-on { background: var(--k-accent); }
+.k-toggle-knob { position: absolute; top: 0.12em; left: 0.12em; width: 0.96em; height: 0.96em; border-radius: 50%; background: var(--k-surface); box-shadow: 0 0 0 0.04em var(--k-line); }
+
+.k-check { position: relative; display: inline-block; width: 1em; height: 1em; border: 0.1em solid var(--k-on-surface); border-radius: calc(var(--k-radius) / 4); vertical-align: middle; flex: none; }
+.k-check svg { position: absolute; inset: -0.15em; width: 1.3em; height: 1.3em; overflow: visible; }
+
+.k-caret { display: inline-block; width: 0.08em; height: 1em; margin-left: 0.04em; vertical-align: -0.12em; background: currentColor; }
+.k-grain { position: absolute; inset: -10%; z-index: 39; pointer-events: none; }
+
+/* die-cut stickers (K.stickers): a token-coloured shape with a white cut edge and a hard ink shadow */
+.k-stk { position: absolute; display: grid; place-items: center; font: 400 1em/1 var(--k-font-display); text-transform: uppercase; letter-spacing: 0.02em; color: oklch(from var(--stk) clamp(0, (0.62 - l) * 1000, 1) 0 0); white-space: nowrap; }
+.k-stk-t { position: relative; }
+.k-stk-pill, .k-stk-round, .k-stk-tag { background: var(--stk); border: 4px solid var(--k-ink); box-shadow: 0 0 0 7px var(--k-surface), 7px 7px 0 7px var(--k-ink); }
+.k-stk-pill { padding: 0.35em 0.8em 0.3em; border-radius: 999px; }
+.k-stk-round { width: 3.6em; height: 3.6em; border-radius: 50%; font-size: 0.9em; text-align: center; white-space: normal; line-height: 0.95; }
+.k-stk-tag { padding: 0.45em 0.7em 0.4em; border-radius: 12px; }
+.k-stk-burst { width: 3.8em; height: 3.8em; font-size: 0.85em; text-align: center; white-space: normal; line-height: 0.95; }
+.k-stk-flower { width: 2.4em; height: 2.4em; }
+.k-stk-bg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }

@@ -1,0 +1,69 @@
+<scene look="caustic-e72873">
+<!-- c2_4 "Keep the parts that sound like truth": the spectrum from chorus 1, fully restored, as spectral light on dark
+     glass. A ring of bars, low to high round the circle in cyan, pink and amber, breathing with the beat; the last
+     quarter is the 16-22 kHz band, "truth", whole this time. On "truth" the centre stamps 100% and the band flares. -->
+<style>
+    #s42-glass { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); overflow: hidden; }
+    #s42-glass svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s42-h { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; padding: 0.8em 1em; font: 500 0.7em/1 var(--k-font-mono); color: var(--k-muted); letter-spacing: 0.06em; white-space: nowrap; }
+    .s42-h b { color: var(--k-ink); font-weight: 600; }
+    .s42-lab { font: 600 26px/1 var(--k-font-mono); letter-spacing: 3px; }
+    .s42-pct { font: 700 120px/1 var(--k-font-display); fill: var(--k-ink); letter-spacing: -4px; }
+    .s42-sub { font: 500 24px/1 var(--k-font-mono); fill: var(--k-muted); letter-spacing: 3px; }
+    #s42-lyric { position: absolute; font: 700 1em/0.95 var(--k-font-display); letter-spacing: -0.035em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s42-glass { left: 80px; top: 110px; width: 900px; height: 880px; font-size: 34px; }
+    #s42-lyric { left: 1040px; top: 190px; width: 800px; font-size: 136px; }
+</style>
+<style frame="vert">
+    #s42-glass { left: 48px; top: 250px; width: 984px; height: 1062px; font-size: 34px; }
+    .s42-h { padding-right: 100px; }
+    #s42-lyric { left: 48px; top: 1352px; width: 912px; font-size: 104px; }
+</style>
+<body>
+    <div id="s42-glass"><svg id="s42-svg" data-layout-ignore></svg><div class="s42-h"><b>spectrum · abhinav.flac</b><span>20 Hz – 22 kHz</span></div></div>
+    <div id="s42-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's42', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tTruth = at(/^truth/);
+      const g = $('#s42-glass'), GW = g.clientWidth, GH = g.clientHeight, sv = $('#s42-svg'), cx = GW / 2, cy = GH / 2 + 30;
+      sv.setAttribute('viewBox', `0 0 ${GW} ${GH}`);
+
+      // a ring of bars: the first three quarters 20 Hz-16 kHz in cyan then pink, the last quarter (the truth band) amber
+      const N = 132, R0 = Math.min(GW, GH) * 0.26, R1 = Math.min(GW, GH) * 0.44, r = K.rng(42), bars = [];
+      for (let i = 0; i < N; i++) {
+        const u = i / N, a = -Math.PI / 2 + u * Math.PI * 2, truth = u >= 0.75, tone = truth ? 'accent-3' : u < 0.4 ? 'accent' : 'accent-2';
+        const b = K.svg('line', { x1: cx + Math.cos(a) * R0, y1: cy + Math.sin(a) * R0, stroke: `var(--k-${tone})`, 'stroke-width': Math.PI * 2 * R0 / N * 0.62, 'stroke-linecap': 'round' }, sv);
+        bars.push({ b, a, truth, base: 0.45 + 0.35 * Math.abs(Math.sin(i * 0.37)) + 0.2 * r(), ph: r() * 6.28 });
+      }
+      // the truth band's arc and label
+      const arcR = R1 + 26, a0 = Math.PI, a1 = Math.PI * 1.5, pt = (a, R) => [cx + Math.cos(a) * R, cy + Math.sin(a) * R];
+      const band = K.svg('path', { d: `M${pt(a0, arcR)} A${arcR} ${arcR} 0 0 1 ${pt(a1, arcR)}`, fill: 'none', stroke: 'var(--k-accent-3)', 'stroke-width': 4, 'stroke-dasharray': '10 10' }, sv);
+      const tlab = K.svg('text', { x: pt(a0 + Math.PI / 4, arcR + 44)[0], y: pt(a0 + Math.PI / 4, arcR + 44)[1], 'text-anchor': 'middle', class: 's42-lab', fill: 'var(--k-accent-3)' }, sv); tlab.textContent = 'truth';
+      const pct = K.svg('text', { x: cx, y: cy + 40, 'text-anchor': 'middle', class: 's42-pct' }, sv);
+      const sub = K.svg('text', { x: cx, y: cy + 84, 'text-anchor': 'middle', class: 's42-sub' }, sv);
+      const beat = t => Math.max(0, ...S.beats.map(b => (t >= b ? Math.exp(-(t - b) * 6) : 0)));
+      K.drive(tl, 0, S.dur, t => {
+        const k = beat(t), flare = t >= tTruth ? Math.exp(-(t - tTruth) * 2.5) : 0;
+        bars.forEach(({ b, a, truth, base, ph }) => {
+          const len = R0 + (R1 - R0) * Math.min(1.15, base * (0.82 + 0.1 * Math.sin(t * 7 + ph)) + 0.14 * k + (truth ? 0.25 * flare : 0));
+          b.setAttribute('x2', (cx + Math.cos(a) * len).toFixed(1)); b.setAttribute('y2', (cy + Math.sin(a) * len).toFixed(1));
+        });
+        pct.textContent = t < tTruth ? `${Math.min(99, 88 + Math.floor(t / tTruth * 11))}%` : '100%';
+        sub.textContent = t < tTruth ? 'RESTORING' : 'RESTORED · EVERY BAND';
+      }, 0, S.dur);
+      tl.fromTo(pct, { scale: 1.5, svgOrigin: `${cx} ${cy}` }, { scale: 1, svgOrigin: `${cx} ${cy}`, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tTruth);
+      tl.fromTo(band, { opacity: 0.5 }, { opacity: 1, duration: 0.2, immediateRender: false }, tTruth);
+
+      // the line, TRUTH in the cyan block
+      const { spans } = K.words($('#s42-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [3, 5] : [2, 4, 6] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

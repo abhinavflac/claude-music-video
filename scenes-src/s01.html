@@ -1,0 +1,150 @@
+<scene look="regler-4d9806">
+<!-- Cold open: an export dialog picks 128 kbps "for yourself"; the cursor clicks EXPORT on a downbeat and the encoding
+     starts (the chrome's pill appears on the same beat); the log lists what the codec discards, which s03 then shows. -->
+<tokens>--k-muted: #5E594F; --k-accent-2: #2E3133;</tokens>
+<style>
+    #s01-desk { position: absolute; inset: -60px; opacity: 0.35; background: radial-gradient(circle, var(--k-line) 2px, transparent 2.5px) 0 0 / 36px 36px; }
+    #s01-cam { position: absolute; inset: 0; }
+    #s01-win { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow), 0 0 0 1px var(--k-line); overflow: hidden; }
+    #s01-bar { display: flex; align-items: center; gap: 18px; border-bottom: 2px solid var(--k-line); color: var(--k-on-surface); }
+    .s01-dots { display: flex; gap: 10px; }
+    .s01-dots i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--k-accent-2); display: block; }
+    .s01-bar-t { font-weight: 600; }
+    .s01-bar-f { margin-left: auto; font-family: var(--k-font-mono); color: var(--k-muted); }
+    #s01-title { margin: 0; font: 600 1em/1.05 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-on-surface); }
+    #s01-title em { font-style: normal; color: var(--k-on-surface); border-bottom: 0.08em solid var(--k-accent); }
+    .s01-opt { position: relative; display: flex; align-items: center; gap: 0.6em; border: 2px solid var(--k-line); border-radius: calc(var(--k-radius) * 0.6); color: var(--k-on-surface); }
+    .s01-opt.sel { border-color: var(--k-accent-2); }
+    .s01-radio { width: 0.9em; height: 0.9em; border-radius: 50%; border: 0.1em solid var(--k-accent-2); display: grid; place-items: center; flex: none; }
+    .s01-radio i { width: 0.44em; height: 0.44em; border-radius: 50%; background: var(--k-accent); display: block; }
+    .s01-name { font-weight: 600; }
+    .s01-chip { margin-left: auto; font: 500 0.62em/1 var(--k-font-mono); letter-spacing: 0.08em; text-transform: uppercase; padding: 0.45em 0.7em; border-radius: 99px; border: 2px solid var(--k-accent-2); color: var(--k-on-surface); }
+    .s01-chip.hot { background: var(--k-accent); border-color: var(--k-accent); color: var(--k-on-accent); }
+    #s01-check { display: flex; align-items: center; gap: 0.6em; color: var(--k-on-surface); }
+    #s01-btns { display: flex; gap: 18px; justify-content: flex-end; }
+    .s01-btn { display: grid; place-items: center; border-radius: 99px; border: 2px solid var(--k-accent-2); color: var(--k-on-surface); font-weight: 600; }
+    .s01-btn.go { background: var(--k-accent); border-color: var(--k-accent); color: var(--k-on-accent); }
+    #s01-knob { position: absolute; }
+    #s01-knob svg { width: 100%; height: 100%; overflow: visible; }
+    .s01-knob-l { position: absolute; left: 0; right: 0; text-align: center; font: 500 0.5em/1 var(--k-font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--k-muted); }
+    #s01-log { position: absolute; background: var(--k-surface); border: 2px solid var(--k-accent-2); border-radius: calc(var(--k-radius) * 0.6); font-family: var(--k-font-mono); color: var(--k-on-surface); opacity: 0; }
+    #s01-log h3 { margin: 0 0 0.6em; font: 600 1em/1 var(--k-font-mono); letter-spacing: 0.06em; text-transform: uppercase; }
+    .s01-gone { display: block; white-space: nowrap; opacity: 0; }
+    .s01-gone b { color: var(--k-on-surface); font-weight: 600; }
+    #s01-remain { display: flex; justify-content: space-between; margin-top: 0.8em; padding-top: 0.6em; border-top: 2px solid var(--k-line); }
+    #s01-bar2 { margin-top: 0.6em; }
+    #s01-bar2 .k-bar { height: 12px; }
+    #s01-pass { display: block; margin-top: 0.5em; font-size: 0.8em; color: var(--k-muted); }
+    #s01-tip { position: absolute; padding: 0.5em 0.8em; background: var(--k-surface); border: 2px solid var(--k-accent-2); border-radius: 10px; font: 500 0.7em/1 var(--k-font-mono); color: var(--k-on-surface); white-space: nowrap; opacity: 0; }
+</style>
+<style frame="wide">
+    #s01-win { left: 250px; top: 150px; width: 1420px; height: 790px; font-size: 34px; }
+    #s01-bar { height: 76px; padding: 0 28px; font-size: 26px; }
+    #s01-title { position: absolute; left: 60px; top: 120px; font-size: 64px; width: 900px; }
+    #s01-opts { position: absolute; left: 60px; top: 300px; width: 820px; display: grid; gap: 16px; }
+    .s01-opt { height: 84px; padding: 0 26px; }
+    #s01-check { position: absolute; left: 60px; top: 626px; font-size: 30px; }
+    #s01-knob { left: 1000px; top: 150px; width: 330px; height: 330px; font-size: 40px; }
+    .s01-knob-l { top: 350px; }
+    #s01-btns { position: absolute; right: 60px; bottom: 50px; }
+    .s01-btn { height: 84px; padding: 0 44px; font-size: 32px; }
+    #s01-log { left: 940px; top: 120px; width: 420px; padding: 26px 28px; font-size: 22px; line-height: 1.7; }
+    #s01-tip { left: 660px; top: 596px; font-size: 30px; }
+</style>
+<style frame="vert">
+    #s01-win { left: 48px; top: 270px; width: 984px; height: 1470px; font-size: 44px; }
+    #s01-bar { height: 96px; padding: 0 30px; font-size: 32px; }
+    .s01-bar-f { display: none; }
+    #s01-title { position: absolute; left: 48px; top: 140px; font-size: 84px; width: 880px; }
+    #s01-opts { position: absolute; left: 48px; top: 520px; width: 888px; display: grid; gap: 22px; }
+    .s01-opt { height: 118px; padding: 0 30px; }
+    #s01-check { position: absolute; left: 48px; top: 966px; font-size: 40px; }
+    #s01-knob { left: 640px; top: 1090px; width: 250px; height: 250px; font-size: 40px; }
+    .s01-knob-l { top: 262px; }
+    #s01-btns { position: absolute; left: 48px; bottom: 60px; justify-content: flex-start; }
+    .s01-btn { height: 118px; padding: 0 56px; font-size: 44px; }
+    #s01-log { left: 48px; top: 520px; width: 888px; padding: 34px 36px; font-size: 38px; line-height: 1.6; }
+    #s01-tip { left: 400px; top: 990px; font-size: 38px; }
+    #s01-file { position: absolute; left: 48px; top: 1765px; font: 500 30px/1 var(--k-font-mono); color: var(--k-ink); }
+</style>
+<body>
+    <div id="s01-desk" data-bleed data-layout-ignore></div>
+    <div id="s01-cam" data-layout-allow-overflow>
+      <div id="s01-win">
+        <div id="s01-bar"><span class="s01-dots"><i></i><i></i><i></i></span><span class="s01-bar-t">Export audio</span><span class="s01-bar-f">abhinav.wav · 4:08 · 24-bit / 96 kHz · 71.4 MB</span></div>
+        <h1 id="s01-title">Choose export quality <em>for yourself</em></h1>
+        <div id="s01-opts">
+          <div class="s01-opt sel" id="s01-o1"><span class="s01-radio"><i></i></span><span class="s01-name">MP3 · 128 kbps</span><span class="s01-chip hot">recommended</span></div>
+          <div class="s01-opt" id="s01-o2"><span class="s01-radio"></span><span class="s01-name">AAC · 256 kbps</span></div>
+          <div class="s01-opt" id="s01-o3"><span class="s01-radio"></span><span class="s01-name">FLAC · lossless</span><span class="s01-chip">too big</span></div>
+        </div>
+        <div id="s01-check"><span id="s01-chk"></span><span>you won’t notice the difference</span></div>
+        <div id="s01-knob"><svg id="s01-knob-svg" viewBox="-110 -110 220 220"></svg><div class="s01-knob-l">quality · 128</div></div>
+        <div id="s01-log">
+          <h3>discarding*</h3>
+          <span class="s01-gone">− harmonics above <b>16 kHz</b></span>
+          <span class="s01-gone">− room tone</span>
+          <span class="s01-gone">− breath_03</span>
+          <span class="s01-gone">− string decay <b>(too long)</b></span>
+          <span class="s01-gone">− the tremble</span>
+          <div id="s01-remain"><span>time left</span><span id="s01-left">3:50</span></div>
+          <div id="s01-bar2"></div><span id="s01-pass">analysing · pass 1 of 2</span>
+        </div>
+        <div id="s01-btns"><span class="s01-btn">Cancel</span><span class="s01-btn go" id="s01-go">Export</span></div>
+      </div>
+      <div id="s01-tip">too big. you won’t notice.</div>
+    </div>
+</body>
+<body frame="vert">
+    <div id="s01-file">abhinav.wav · 4:08 · 24-bit / 96 kHz</div>
+</body>
+<script>
+    (() => {
+      const id = 's01', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true });
+      const click = K.exportAt() - S.start, end = K.sceneStart('s67');
+
+      // camera and a knurled quality knob that breathes on the beat
+      K.push(tl, $('#s01-cam'), S.dur, 1, 1.06);
+      tl.fromTo($('#s01-desk'), { x: 0 }, { x: -40, duration: S.dur, ease: 'none' }, 0);
+      const svg = $('#s01-knob-svg');
+      K.svg('circle', { r: 104, fill: 'none', stroke: 'var(--k-line)', 'stroke-width': 2 }, svg);
+      const dial = K.svg('g', {}, svg);
+      for (let i = 0; i < 72; i++) K.svg('line', { x1: 0, y1: -96, x2: 0, y2: -80, stroke: 'var(--k-accent-2)', 'stroke-width': 3, transform: `rotate(${i * 5})` }, dial);
+      K.svg('circle', { r: 76, fill: 'var(--k-surface)', stroke: 'var(--k-accent-2)', 'stroke-width': 3 }, dial);
+      K.svg('line', { x1: 0, y1: -64, x2: 0, y2: -30, stroke: 'var(--k-accent)', 'stroke-width': 8, 'stroke-linecap': 'round' }, dial);
+      gsap.set(dial, { rotation: -120, svgOrigin: '0 0' });
+      K.onBeats(S, (b, i) => tl.to(dial, { rotation: -120 + (i % 2 ? 4 : -4), svgOrigin: '0 0', duration: 0.2, ease: 'power2.out' }, b));
+
+      // the checkbox is already ticked for you
+      K.check($('#s01-chk'), true);
+
+      // the cursor: FLAC (too big), the pre-ticked box, then EXPORT on the downbeat
+      const cur = K.cursor($('#s01-cam')), ring = K.el('div', 'k-ring', $('#s01-cam'));
+      const P = vert ? { a: [900, 1480], flac: [880, 1131], box: [120, 1262], go: [520, 1619], out: [900, 1700] }
+                     : { a: [1600, 980], flac: [1060, 694], box: [330, 795], go: [1505, 846], out: [1780, 1010] };
+      K.glide(tl, cur, [[0, ...P.a], [1.3, ...P.flac], [2.5, ...P.flac], [3.4, ...P.box], [3.9, ...P.box], [click - 0.05, ...P.go], [click + 1.4, ...P.out]]);
+      tl.to($('#s01-o3'), { x: 8, duration: 0.12, ease: 'power2.out' }, 1.3);
+      tl.to($('#s01-o3'), { x: 0, duration: 0.2, ease: 'power2.out' }, 2.5);
+      tl.fromTo($('#s01-tip'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.18, ease: 'power3.out' }, 1.45);
+      tl.to($('#s01-tip'), { opacity: 0, duration: 0.15 }, 2.55);
+      K.click(tl, cur, ring, click, ...P.go);
+      tl.to($('#s01-go'), { scale: 0.94, duration: 0.06 }, click);
+      tl.to($('#s01-go'), { scale: 1, duration: 0.14 }, click + 0.06);
+
+      // encoding: the options dim, the discard log fills on the beats, time left counts down to the end card
+      tl.to($('#s01-knob'), { opacity: 0, duration: 0.2 }, click + 0.1);
+      tl.to([$('#s01-opts'), $('#s01-check')], { opacity: vert ? 0 : 0.28, duration: 0.25 }, click + 0.1);
+      tl.fromTo($('#s01-log'), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.25, ease: 'power3.out' }, click + 0.12);
+      const gone = [...root.querySelectorAll('.s01-gone')], beatsAfter = S.beats.filter(b => b > click + 0.2);
+      gone.forEach((g, i) => tl.fromTo(g, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.16, ease: 'power2.out' }, beatsAfter[i] ?? click + 0.4 + i * 0.3));
+      const bar = K.bar($('#s01-bar2'));
+      K.drive(tl, click, S.dur, v => {
+        const left = Math.max(0, end - (S.start + v));
+        $('#s01-left').textContent = `${Math.floor(left / 60)}:${String(Math.floor(left % 60)).padStart(2, '0')}`;
+        bar.fill.style.transform = `scaleX(${Math.max(0, (v - click) / (S.dur - click))})`;
+      }, click, S.dur);
+
+      window.__timelines[id] = tl;
+    })();
+</script>

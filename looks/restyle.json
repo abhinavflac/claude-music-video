@@ -1,0 +1,92 @@
+[
+ {
+  "slug": "ringback",
+  "id": "en-019ef863-a6d4-78f2-86b7-5c05d5eb44ae",
+  "name": "Ringback",
+  "url": "https://katagami.ai/language/en-019ef863-a6d4-78f2-86b7-5c05d5eb44ae",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b9-b3b1-7053-9c32-a7ecc6055dc8",
+  "tags": [
+   "ringback",
+   "carrier-spine",
+   "ring-node",
+   "held-line",
+   "dark-night-ground",
+   "ink-violet"
+  ]
+ },
+ {
+  "slug": "risograph",
+  "id": "en-019efd20-71ad-70d0-8ae9-148e7ce76d37",
+  "name": "Risograph",
+  "url": "https://katagami.ai/language/en-019efd20-71ad-70d0-8ae9-148e7ce76d37",
+  "thumb": "https://katagami.ai/api/file/fl-019efd22-6f09-7fe3-95aa-89e7556971f6",
+  "tags": [
+   "risograph",
+   "screenprint",
+   "spot-ink",
+   "misregistration",
+   "halftone",
+   "overprint"
+  ]
+ },
+ {
+  "slug": "lantern",
+  "id": "en-019ef94b-23a6-7ff3-bbe5-6bd693b94931",
+  "name": "Lantern",
+  "url": "https://katagami.ai/language/en-019ef94b-23a6-7ff3-bbe5-6bd693b94931",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9be-e85a-7683-9622-3a1685dd3321",
+  "tags": [
+   "lit-from-behind",
+   "translucent-tissue",
+   "leaded-pane",
+   "overlap-multiply",
+   "night-ground",
+   "lantern-walk"
+  ]
+ },
+ {
+  "slug": "confetti",
+  "id": "en-019f8aff-7550-7ee3-8429-d90ca52e7b5c",
+  "name": "Confetti",
+  "url": "https://katagami.ai/language/en-019f8aff-7550-7ee3-8429-d90ca52e7b5c",
+  "thumb": "https://katagami.ai/api/file/fl-019f8b04-2a60-7bf0-9e1f-c06cd928ce60",
+  "tags": [
+   "memphis",
+   "confetti",
+   "die-cut",
+   "hard-shadow",
+   "electric-accents",
+   "terrazzo"
+  ]
+ },
+ {
+  "slug": "rosee",
+  "id": "en-019ef74d-5ccb-73e1-8e3a-59b2526346d3",
+  "name": "Rosée",
+  "url": "https://katagami.ai/language/en-019ef74d-5ccb-73e1-8e3a-59b2526346d3",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9c0-8379-71a3-bc69-7c555a4ca983",
+  "tags": [
+   "readable-glass",
+   "dew-bead",
+   "frosted-translucency",
+   "warm-mist-ground",
+   "sorbet-candy-accent",
+   "asymmetric-editorial"
+  ]
+ },
+ {
+  "slug": "lampblack",
+  "id": "en-019ef882-27ca-7fc0-ae5d-e96dc8bcaab7",
+  "name": "Lampblack",
+  "url": "https://katagami.ai/language/en-019ef882-27ca-7fc0-ae5d-e96dc8bcaab7",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b9-ef07-7352-b31c-6fdb574e659f",
+  "tags": [
+   "sumi-ink",
+   "ink-wash",
+   "editorial-spread",
+   "bone-paper",
+   "asymmetric-void",
+   "calligraphic-gesture"
+  ]
+ }
+]

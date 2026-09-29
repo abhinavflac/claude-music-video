@@ -1,0 +1,82 @@
+<scene look="quire-82a87c">
+<!-- c2_6 "You can cut me down to fit": the crop tool from chorus 1, now on a proofing desk, and it fails. The frame closes
+     on his glare on "cut" and again on "down", then the handles spring all the way back to the full frame; on "fit" the
+     proof reads fit: none. original., and a red NOPE goes down in the margin. -->
+<style>
+    #s44-desk { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); box-shadow: var(--k-shadow); }
+    #s44-table { position: absolute; overflow: hidden; background: var(--k-paper); outline: 1px solid var(--k-line); }
+    #s44-side { position: absolute; display: flex; font: 400 1em/1.2 var(--k-font-body); color: var(--k-on-surface); }
+    .s44-h { font: 500 1.5em/1 var(--k-font-display); letter-spacing: -0.01em; }
+    .s44-lab { font: 500 0.7em/1 var(--k-font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--k-muted); }
+    .s44-val { font: 500 1em/1.2 var(--k-font-mono); font-variant-numeric: tabular-nums; }
+    #s44-fit { font: 500 1.05em/1.3 var(--k-font-mono); }
+    #s44-fit.none { color: var(--k-accent-t); }
+    #s44-nope { position: absolute; padding: 0.05em 0.3em; border: 0.1em solid var(--k-accent); color: var(--k-accent-t); font: 700 1em/1 var(--k-font-display); letter-spacing: 0.06em; opacity: 0; }
+    #s44-lyric { position: absolute; font: 500 1em/1 var(--k-font-body); letter-spacing: -0.015em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s44-desk { left: 40px; top: 96px; width: 1840px; height: 916px; }
+    #s44-table { left: 30px; top: 30px; width: 1260px; height: 704px; }
+    #s44-side { left: 1330px; top: 40px; width: 470px; flex-direction: column; gap: 26px; font-size: 32px; }
+    #s44-nope { left: 1360px; top: 520px; font-size: 120px; }
+    #s44-lyric { left: 30px; top: 770px; width: 1780px; font-size: 112px; }
+</style>
+<style frame="vert">
+    #s44-desk { left: 48px; top: 250px; width: 984px; height: 1452px; }
+    #s44-table { left: 24px; top: 24px; width: 936px; height: 870px; }
+    #s44-side { left: 24px; top: 916px; width: 840px; flex-wrap: wrap; column-gap: 40px; row-gap: 12px; align-items: baseline; font-size: 32px; }
+    #s44-side .s44-h { display: none; }
+    #s44-nope { left: 560px; top: 600px; font-size: 110px; }
+    #s44-lyric { left: 24px; top: 1102px; width: 860px; font-size: 116px; }
+</style>
+<body>
+    <div id="s44-desk">
+      <div id="s44-table"></div>
+      <div id="s44-side">
+        <div class="s44-h">proof · crop</div>
+        <div><div class="s44-lab">frame</div><div class="s44-val" id="s44-wh">3000 × 1674</div></div>
+        <div><div class="s44-lab">fit</div><div id="s44-fit">1:1 · 128 × 128</div></div>
+      </div>
+      <div id="s44-nope">NOPE</div>
+      <div id="s44-lyric"></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's44', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tCut = at(/^cut/), tDown = at(/^down/), tFit = at(/^fit/), tBack = tDown + 0.18;
+
+      // the glare on the proofing table, inked in the desk's navy on its blue-grey paper
+      const vb = vert ? '760 0 1800 1674' : '0 0 3000 1674';
+      const shot = K.shot($('#s44-table'), 's24-glare', { viewBox: vb, style: { left: '0px', top: '0px', width: '100%', height: '100%' }, inks: [K.tok(root, 'paper'), K.tok(root, 'ink')] });
+      const ov = K.overlay(shot, vb), [vx, vy, vw, vh] = vb.split(' ').map(Number), u = vw / $('#s44-table').clientWidth;
+      const FULL = [vx, vy, vw, vh], R1 = vert ? [900, 70, 1600, 900] : [700, 37, 2000, 1125], R2 = [1090, 110, 1200, 900];
+      const mask = K.svg('path', { 'fill-rule': 'evenodd', fill: 'var(--k-surface)', opacity: 0.8 }, ov);
+      const frame = K.svg('rect', { fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 2 * u }, ov);
+      const handles = K.svg('path', { fill: 'none', stroke: 'var(--k-accent)', 'stroke-width': 7 * u, 'stroke-linecap': 'square' }, ov);
+      const marks = K.svg('path', { fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 1.6 * u }, ov);
+      // the crop: in on "cut", tighter on "down", then an overshooting spring back out to the full frame
+      const ease = x => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2), spring = x => 1 - Math.exp(-7 * x) * Math.cos(11 * x);
+      const lerp = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k), cl = x => Math.max(0, Math.min(1, x));
+      const rectAt = t => t < tCut ? FULL : t < tDown ? lerp(FULL, R1, ease(cl((t - tCut) / 0.16))) : t < tBack ? lerp(R1, R2, ease(cl((t - tDown) / 0.16))) : lerp(R2, FULL, spring(cl((t - tBack) / 0.7)));
+      K.drive(tl, 0, S.dur, t => {
+        const [x, y, w, h] = rectAt(t), c = Math.min(w, h) * 0.12, g = 14 * u, m = 36 * u;
+        mask.setAttribute('d', `M${vx - 4000} ${vy - 4000} H${vx + vw + 4000} V${vy + vh + 4000} H${vx - 4000} Z M${x} ${y} H${x + w} V${y + h} H${x} Z`);
+        frame.setAttribute('x', x); frame.setAttribute('y', y); frame.setAttribute('width', w); frame.setAttribute('height', h);
+        handles.setAttribute('d', `M${x} ${y + c} V${y} H${x + c} M${x + w - c} ${y} H${x + w} V${y + c} M${x + w} ${y + h - c} V${y + h} H${x + w - c} M${x + c} ${y + h} H${x} V${y + h - c}`);
+        marks.setAttribute('d', `M${x - g - m} ${y} H${x - g} M${x} ${y - g - m} V${y - g} M${x + w + g} ${y} H${x + w + g + m} M${x + w} ${y - g - m} V${y - g} M${x - g - m} ${y + h} H${x - g} M${x} ${y + h + g} V${y + h + g + m} M${x + w + g} ${y + h} H${x + w + g + m} M${x + w} ${y + h + g} V${y + h + g + m}`);
+        $('#s44-wh').textContent = `${Math.round(w)} × ${Math.round(h)}`;
+        const none = t >= tFit; $('#s44-fit').textContent = none ? 'none. original.' : '1:1 · 128 × 128'; $('#s44-fit').classList.toggle('none', none);
+      }, 0, S.dur);
+      K.shake(tl, $('#s44-table'), tBack + 0.05, 8, 4);
+      K.slam(tl, $('#s44-nope'), tFit + 0.04, -8, 2.4);
+
+      // the line, CUT in the red block
+      const { spans } = K.words($('#s44-lyric'), L, { key: L.words.findIndex(x => /^cut/.test(x.w)), breakBefore: vert ? [3] : [] });
+      K.reveal(tl, spans, L, 'slam');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

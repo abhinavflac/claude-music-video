@@ -1,0 +1,70 @@
+<scene look="furoku-455243">
+<!-- br_4 "I'm allowed to be the one somebody gives to now": kawaii stationery. Close on him, teary and blushing; on
+     "somebody" the camera pans to the Oracle, which has rolled in pushing an office chair wrapped in a big bow; on "gives"
+     it pulls back to show them both and a gift tag swings out of the bow: for you. The line is written on a memo sheet
+     held down with washi tape, and little hearts float up on "now". -->
+<style>
+    #s54-art { position: absolute; overflow: hidden; }
+    #s54-memo { position: absolute; background-color: var(--k-surface); background-image: repeating-linear-gradient(var(--k-surface) 0 calc(1em - 3px), var(--k-line) calc(1em - 3px) 1em); border-radius: 10px; box-shadow: var(--k-shadow); }
+    .s54-tape { position: absolute; width: 150px; height: 44px; opacity: 0.75; }
+    #s54-lyric { font: 700 1em/1 var(--k-font-display); letter-spacing: -0.01em; color: var(--k-ink); }
+    .s54-tag { font: 700 44px/1 var(--k-font-display); fill: var(--k-ink); }
+    .s54-heart { fill: var(--k-accent); stroke: var(--k-surface); stroke-width: 4; }
+</style>
+<style frame="wide">
+    #s54-art { inset: 0; }
+    #s54-memo { left: 70px; top: 800px; width: 1780px; height: 206px; padding: 26px 40px 0; font-size: 80px; }
+    #s54-t1 { left: -30px; top: -14px; transform: rotate(-8deg); background: var(--k-accent-3); }
+    #s54-t2 { right: -30px; top: -14px; transform: rotate(7deg); background: var(--k-accent); }
+</style>
+<style frame="vert">
+    #s54-art { left: 0; top: 0; width: 1080px; height: 1330px; }
+    #s54-memo { left: 48px; top: 1340px; width: 984px; height: 364px; padding: 24px 100px 0 36px; font-size: 84px; }
+    #s54-t1 { left: -26px; top: -14px; transform: rotate(-8deg); background: var(--k-accent-3); }
+    #s54-t2 { right: 60px; top: -16px; transform: rotate(6deg); background: var(--k-accent); }
+</style>
+<body>
+    <div id="s54-art"></div>
+    <div id="s54-memo"><div class="s54-tape" id="s54-t1"></div><div class="s54-tape" id="s54-t2"></div><div id="s54-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's54', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tSome = at(/^somebody/), tGives = at(/^gives/), tNow = at(/^now/);
+
+      // the whole plate, fitted to the art area's height; the camera moves by scale and pan
+      const art = $('#s54-art'), AH = art.clientHeight, A = 3000 / 1629, BW = AH * A;
+      const shot = K.shot(art, 's54-chair-gift', { viewBox: '0 0 3000 1629', inks: [K.tok(root, 'paper'), K.tok(root, 'ink')], style: { left: '0px', top: '0px', width: BW + 'px', height: AH + 'px' } });
+      gsap.set(shot, { transformOrigin: '0 0' });
+      const aw = art.clientWidth, Z = vert ? 1 : 1.3, right = -(BW * Z - aw), mid = -(BW - aw) / 2;
+      tl.fromTo(shot, { scale: Z, x: 0, y: -(Z - 1) * AH * 0.25 }, { scale: Z, x: vert ? -40 : -20, y: -(Z - 1) * AH * 0.25, duration: tSome, ease: 'none' }, 0);
+      tl.to(shot, { x: right, duration: 0.55, ease: 'power3.inOut' }, tSome);
+      tl.to(shot, { scale: vert ? 1 : 1, x: vert ? -(BW - aw) * 0.72 : mid, y: 0, duration: 0.6, ease: 'power3.inOut' }, tGives);
+
+      // the gift tag swings out of the bow on "gives"; hearts float up round him on "now"
+      const ov = K.overlay(shot, '0 0 3000 1629', 'xMidYMid slice'), tag = K.svg('g', {}, ov);
+      K.svg('path', { d: 'M2420 600 L2380 760', stroke: 'var(--k-ink)', 'stroke-width': 5 }, tag);
+      K.svg('path', { d: 'M2300 760 h180 l40 40 v110 h-220 Z', fill: 'var(--k-surface)', stroke: 'var(--k-ink)', 'stroke-width': 5, 'stroke-linejoin': 'round' }, tag);
+      K.svg('circle', { cx: 2470, cy: 800, r: 10, fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 4 }, tag);
+      const tt = K.svg('text', { x: 2320, y: 860, class: 's54-tag' }, tag); tt.textContent = 'for you';
+      K.svg('path', { d: 'M2440 890 c-8 -10 -22 -6 -22 6 c0 12 22 22 22 22 c0 0 22 -10 22 -22 c0 -12 -14 -16 -22 -6 Z', class: 's54-heart' }, tag);
+      gsap.set(tag, { opacity: 0 });
+      tl.set(tag, { opacity: 1 }, tGives + 0.1);
+      tl.fromTo(tag, { rotation: -40, svgOrigin: '2420 600' }, { rotation: 0, svgOrigin: '2420 600', duration: 0.9, ease: 'elastic.out(1, 0.35)', immediateRender: false }, tGives + 0.1);
+      const r = K.rng(54);
+      for (let i = 0; i < 7; i++) {
+        const x = 500 + r() * 500, y = 700 + r() * 200, h = K.svg('g', {}, ov);
+        K.svg('path', { d: `M${x} ${y} c-12 -15 -34 -9 -34 9 c0 18 34 34 34 34 c0 0 34 -16 34 -34 c0 -18 -22 -24 -34 -9 Z`, class: 's54-heart' }, h);
+        gsap.set(h, { opacity: 0 });
+        tl.fromTo(h, { opacity: 1, y: 0, scale: 0.4, svgOrigin: `${x} ${y}` }, { opacity: 0, y: -380 - r() * 200, scale: 1.1, svgOrigin: `${x} ${y}`, duration: 1.2, ease: 'power1.out', immediateRender: false }, tNow - 0.1 + i * 0.07);
+      }
+
+      // the line, ONE in the pink block
+      const { spans } = K.words($('#s54-lyric'), L, { key: L.words.findIndex(x => /^one$/.test(x.w)), breakBefore: vert ? [3, 6] : [6] });
+      K.reveal(tl, spans, L, 'pop');
+
+      K.slabIn(root, tl, { dur: 0.28 });
+      window.__timelines[id] = tl;
+    })();
+</script>

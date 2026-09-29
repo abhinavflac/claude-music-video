@@ -1,0 +1,87 @@
+<scene look="bulla-f04a69">
+<!-- v2_5 "Waited on a verdict from a judge without a face": tribunal, seals and custody. Tiny him, sweating, looks up at a
+     giant robed judge whose blank head is a loading spinner that never resolves. The docket beside them: VERDICT: PENDING
+     sealed on "verdict", the wait counting its days up to 11, and on "face" the head still reads loading. -->
+<style>
+    #s33-cam { position: absolute; inset: 0; }
+    #s33-koma { position: absolute; overflow: hidden; }
+    .s33-card { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s33-h { display: flex; justify-content: space-between; padding-bottom: 0.6em; margin-bottom: 0.7em; border-bottom: 1px solid var(--k-line); font: 500 0.7em/1 var(--k-font-mono); color: var(--k-muted); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+    .s33-row { display: flex; justify-content: space-between; gap: 1em; padding: 0.4em 0; font: 400 0.8em/1.2 var(--k-font-mono); white-space: nowrap; }
+    .s33-row em { font-style: normal; color: var(--k-muted); }
+    #s33-verdict { font: 700 1.25em/1 var(--k-font-display); letter-spacing: 0.02em; text-transform: uppercase; }
+    #s33-verdict b { color: var(--k-accent-t); font-weight: 700; }
+    #s33-seal { position: absolute; width: 3.2em; height: 3.2em; opacity: 0; }
+    #s33-lyric { font: 700 1em/1 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+    .s33-spin { fill: none; stroke: var(--k-accent); stroke-linecap: round; }
+    .s33-load { font: 500 26px/1 var(--k-font-mono); fill: var(--k-paper); letter-spacing: 3px; }
+</style>
+<style frame="wide">
+    #s33-koma { inset: 0; }
+    #s33-docket { left: 48px; top: 120px; width: 470px; padding: 26px 28px 118px; font-size: 30px; }
+    #s33-seal { right: 24px; bottom: 16px; }
+    #s33-lcard { left: 1410px; top: 120px; width: 462px; padding: 28px 30px 32px; font-size: 76px; }
+</style>
+<style frame="vert">
+    #s33-koma { left: 0; top: 180px; width: 1080px; height: 1110px; }
+    #s33-docket { left: 48px; top: 1098px; width: 984px; padding: 20px 100px 22px 28px; font-size: 30px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 30px; }
+    #s33-docket .s33-h { grid-column: 1 / 3; }
+    #s33-seal { display: none; }
+    #s33-lcard { left: 48px; top: 1330px; width: 984px; padding: 24px 100px 26px 28px; font-size: 84px; }
+</style>
+<body>
+    <div id="s33-cam" data-layout-allow-overflow data-bleed><div id="s33-koma"></div></div>
+    <div class="s33-card" id="s33-docket">
+      <div class="s33-h"><span>case 2F-44871</span><span>docket</span></div>
+      <div id="s33-verdict">verdict: <b>pending</b></div>
+      <div>
+        <div class="s33-row"><em>waiting</em><span id="s33-days">day 1</span></div>
+        <div class="s33-row"><em>judge</em><span>automated</span></div>
+      </div>
+      <svg id="s33-seal" viewBox="0 0 100 100"><path d="M50 4 l8 9 12 -3 3 12 12 3 -3 12 9 8 -9 8 3 12 -12 3 -3 12 -12 -3 -8 9 -8 -9 -12 3 -3 -12 -12 -3 3 -12 -9 -8 9 -8 -3 -12 12 -3 3 -12 12 3 Z" fill="var(--k-accent)"/><circle cx="50" cy="50" r="24" fill="none" stroke="var(--k-on-accent)" stroke-width="3"/><path d="M40 50 h20 M50 40 v20" stroke="var(--k-on-accent)" stroke-width="3"/></svg>
+    </div>
+    <div class="s33-card" id="s33-lcard"><div id="s33-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's33', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tVerdict = at(/^verdict/), tJudge = at(/^judge/), tFace = at(/^face/);
+
+      // the plate, inked in the tribunal's cream on near-black
+      const vb = vert ? '505 0 1195 1228' : '0 0 2200 1228', koma = $('#s33-koma');
+      const shot = K.shot(koma, 's33-judge', { viewBox: vb, inks: [K.tok(root, 'ink'), K.tok(root, 'paper')] });
+      const ov = K.overlay(shot, vb), HX = 1103, HY = 165;
+      // the head: a loading spinner that never resolves
+      const spin = K.svg('g', {}, ov);
+      K.svg('circle', { cx: HX, cy: HY, r: 58, fill: 'none', stroke: 'var(--k-line)', 'stroke-width': 14 }, spin);
+      const arc = K.svg('path', { class: 's33-spin', d: `M${HX} ${HY - 58} A58 58 0 0 1 ${HX + 58} ${HY}`, 'stroke-width': 14 }, spin);
+      const load = K.svg('text', { x: HX, y: HY + 96, 'text-anchor': 'middle', class: 's33-load' }, ov); load.textContent = 'loading';
+      K.drive(tl, 0, S.dur, t => {
+        arc.setAttribute('transform', `rotate(${((t * 420) % 360).toFixed(1)} ${HX} ${HY})`);
+        load.textContent = 'loading' + '.'.repeat(Math.floor(t * 3) % 4);
+      }, 0, S.dur);
+      // a second sweat drop sliding down his cheek
+      const drop = K.svg('path', { d: 'M1150 812 q-12 20 0 30 q12 -10 0 -30 Z', fill: 'var(--k-accent)', stroke: 'var(--k-paper)', 'stroke-width': 3 }, ov);
+      tl.fromTo(drop, { y: 0, opacity: 1 }, { y: 44, opacity: 0, duration: 1.1, ease: 'power2.in' }, 0.3);
+      tl.fromTo(drop, { y: 0, opacity: 1 }, { y: 44, opacity: 0, duration: 1.0, ease: 'power2.in', immediateRender: false }, 1.45);
+
+      // camera: a slow tilt up the robe to the blank head
+      gsap.set($('#s33-cam'), { transformOrigin: vert ? '50% 20%' : '50% 16%' });
+      // one piecewise function of time (two tweens on one property would fight, and depend on seek history)
+      const cam = $('#s33-cam'), ez = x => (x < 0.5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2);
+      K.drive(tl, 0, S.dur, t => gsap.set(cam, { scale: 1 + 0.08 * t / S.dur + 0.08 * ez(Math.max(0, Math.min(1, (t - tJudge) / 0.5))) }), 0, S.dur);
+
+      // the docket: sealed PENDING on "verdict", the wait counting up in days
+      tl.fromTo($('#s33-verdict'), { scale: 1.25 }, { scale: 1, duration: 0.25, ease: 'back.out(3)', immediateRender: false }, tVerdict);
+      tl.fromTo($('#s33-seal'), { opacity: 0, scale: 2, rotation: -30 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.18, ease: 'power4.in' }, tVerdict + 0.05);
+      K.drive(tl, 0, S.dur, t => { $('#s33-days').textContent = `day ${Math.min(11, 1 + Math.floor(t / (tFace / 10)))}`; }, 0, S.dur);
+
+      // the line, FACE in the cyan block
+      const { spans } = K.words($('#s33-lyric'), L, { key: L.words.length - 1 });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

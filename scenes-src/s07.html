@@ -1,0 +1,92 @@
+<scene look="cathode-f5f775">
+<!-- v1_1 "Two a.m., the fans are roaring, Arch just broke again": a 2 a.m. system upgrade scrolls into red errors; the fan
+     readout climbs on "roaring"; the breakage counter ticks from 46 to 47 on "again". -->
+<tokens>--k-accent-2: #7DD7F0; --k-accent-3: #FF5F56; --k-radius: 0px;</tokens>
+<style>
+    #s07-cam { position: absolute; inset: 0; }
+    #s07-term { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); }
+    #s07-tbar { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--k-line); color: var(--k-muted); font-family: var(--k-font-mono); }
+    #s07-out { font-family: var(--k-font-mono); color: var(--k-on-surface); white-space: pre; overflow: hidden; }
+    .s07-l { display: block; }
+    .s07-l.err { color: var(--k-accent-3-t); }
+    .s07-l.ok { color: var(--k-accent-t); }
+    .s07-l.dim { color: var(--k-muted); }
+    #s07-fan { position: absolute; display: grid; align-content: start; gap: 12px; border: 2px solid var(--k-line); background: var(--k-surface); font-family: var(--k-font-mono); color: var(--k-on-surface); }
+    #s07-fan svg { width: 100%; height: auto; overflow: visible; }
+    #s07-rpm { font-weight: 600; }
+    #s07-lyric { position: absolute; font: 600 1em/1.02 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+    #s07-count { position: absolute; font-family: var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    #s07-count b { color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s07-term { left: 80px; top: 120px; width: 1360px; height: 610px; }
+    #s07-tbar { height: 52px; padding: 0 22px; font-size: 20px; }
+    #s07-out { height: 540px; padding: 16px 24px; font-size: 25px; line-height: 1.5; }
+    #s07-fan { left: 1480px; top: 120px; width: 360px; height: 610px; padding: 26px; font-size: 24px; }
+    #s07-rpm { font-size: 64px; }
+    #s07-lyric { left: 80px; top: 764px; width: 1760px; font-size: 84px; line-height: 1.12; }
+    #s07-count { right: 80px; top: 1000px; font-size: 22px; }
+</style>
+<style frame="vert">
+    #s07-term { left: 48px; top: 270px; width: 984px; height: 700px; }
+    #s07-tbar { height: 60px; padding: 0 22px; font-size: 26px; }
+    #s07-out { height: 630px; padding: 16px 22px; font-size: 27px; line-height: 1.45; }
+    #s07-fan { left: 48px; top: 994px; width: 984px; height: 300px; padding: 24px 28px; font-size: 30px; grid-template-columns: 250px 1fr; align-items: center; }
+    #s07-fan svg { grid-row: span 3; }
+    #s07-rpm { font-size: 80px; }
+    #s07-lyric { left: 48px; top: 1348px; width: 984px; font-size: 76px; line-height: 1.12; }
+    #s07-count { left: 48px; top: 1716px; font-size: 32px; }
+</style>
+<body>
+    <div id="s07-cam" data-layout-allow-overflow>
+      <div id="s07-term"><div id="s07-tbar"><span>abhinav@rig: ~</span><span id="s07-clock">02:00</span></div><div id="s07-out"></div></div>
+      <div id="s07-fan"><svg id="s07-fan-svg" viewBox="-100 -100 200 200"></svg><span>fan0</span><span id="s07-rpm">1,800</span><span>rpm</span></div>
+      <div id="s07-lyric"></div>
+      <div id="s07-count">times arch broke this month: <b id="s07-n">46</b></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's07', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], w = re => L.words.find(x => re.test(x.w));
+      K.push(tl, $('#s07-cam'), S.dur, 1, 1.04);
+
+      // the upgrade: typed command, then output lines keyed to the sung words
+      const out = $('#s07-out'), cmd = vert ? '[02:00] $ sudo pacman -Syu' : '[02:00] abhinav@rig:~$ sudo pacman -Syu';
+      const first = K.el('span', 's07-l', out);
+      K.type(tl, first, cmd, 0, 0.3);
+      const lines = [
+        [w(/^the$/).t, 'dim', ':: Synchronizing package databases...'],
+        [w(/^fans/).t, 'dim', ':: Starting full system upgrade...'],
+        [w(/^are/).t, '', vert ? 'resolving dependencies...' : 'resolving dependencies... looking for conflicts...'],
+        [w(/^roaring/).t, 'err', vert ? 'error: failed to commit (conflicts)' : 'error: failed to commit transaction (conflicting files)'],
+        [w(/^roaring/).t + 0.2, 'err', vert ? 'error: vmlinuz exists in filesystem' : 'error: /boot/vmlinuz-linux exists in filesystem'],
+        [w(/^Arch/).t, 'err', 'error: GPGME error: No data'],
+        [w(/^just/).t, 'err', vert ? 'error: failed to synchronize all dbs' : 'error: failed to synchronize all databases'],
+        [w(/^broke/).t, 'err', ':: the system is broken again'],
+        [w(/^again/).t, 'ok', vert ? '[02:00] $ _' : '[02:00] abhinav@rig:~$ _'],
+      ];
+      lines.forEach(([t, cls, txt]) => { const l = K.el('span', 's07-l ' + cls, out, txt); tl.fromTo(l, { opacity: 0 }, { opacity: 1, duration: K.F }, t); });
+
+      // the fan: spins faster, rpm climbs on "roaring"
+      const fs = $('#s07-fan-svg');
+      K.svg('circle', { r: 92, fill: 'none', stroke: 'var(--k-line)', 'stroke-width': 4 }, fs);
+      const blades = K.svg('g', {}, fs);
+      for (let i = 0; i < 7; i++) K.svg('path', { d: 'M0 -12 C 30 -40, 70 -40, 80 -8 C 50 -14, 30 -6, 0 12 Z', fill: 'var(--k-accent)', transform: `rotate(${i * 360 / 7})` }, blades);
+      K.svg('circle', { r: 16, fill: 'var(--k-surface)', stroke: 'var(--k-accent)', 'stroke-width': 4 }, fs);
+      const roar = w(/^roaring/).t;
+      K.drive(tl, 0, S.dur, t => {
+        const ang = t < roar ? t * 540 : roar * 540 + (t - roar) * 540 * 3.4;
+        blades.setAttribute('transform', `rotate(${(ang % 360).toFixed(1)})`);
+        $('#s07-rpm').textContent = Math.round(t < roar ? 1800 : Math.min(5400, 1800 + (t - roar) / 0.5 * 3600)).toLocaleString('en-US');
+      }, 0, S.dur);
+
+      const key = L.words.findIndex(x => /^broke/.test(x.w));
+      const { spans } = K.words($('#s07-lyric'), L, { key, breakBefore: vert ? [4, 6] : [6] });
+      K.reveal(tl, spans, L, 'rise');
+      K.count(tl, $('#s07-n'), 46, 47, w(/^again/).t, w(/^again/).t + 0.1, v => String(Math.round(v)));
+      K.shake(tl, $('#s07-cam'), w(/^broke/).t, 9, 3);
+
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,77 @@
+<scene look="halide-b1649d">
+<!-- pc1_3 "They swear you'll never miss the parts they throw away": a spectrograph ledger. A LOW-PASS 16 kHz line slides in
+     and every band above it falls away; the box "you'll never miss it" is ticked for you; TRUST US lands on "away". -->
+<style>
+    #s17-cam { position: absolute; inset: 0; }
+    #s17-lyric { position: absolute; font: 800 1em/1.04 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-ink); }
+    #s17-plot { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); color: var(--k-on-surface); overflow: hidden; }
+    #s17-plot svg { position: absolute; width: 100%; height: 100%; }
+    .s17-ax { font: 400 18px/1 var(--k-font-mono); fill: var(--k-muted); }
+    #s17-lp { position: absolute; top: 0; bottom: 0; width: 5px; margin-left: -2px; background: var(--k-accent-3); }
+    #s17-lp span { position: absolute; top: 16px; left: 12px; padding: 6px 10px; border: 2px solid var(--k-accent-3); background: var(--k-surface); color: var(--k-on-surface); font: 600 0.8em/1 var(--k-font-mono); white-space: nowrap; }
+    #s17-opt { position: absolute; display: flex; align-items: center; gap: 16px; font-family: var(--k-font-body); color: var(--k-ink); }
+    #s17-meta { position: absolute; font: 400 0.7em/1.4 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    #s17-stamp { font-size: 90px; }
+</style>
+<style frame="wide">
+    #s17-lyric { left: 80px; top: 116px; width: 1760px; font-size: 100px; }
+    #s17-plot { left: 80px; top: 380px; width: 1760px; height: 520px; font-size: 26px; }
+    #s17-opt { left: 80px; top: 930px; font-size: 34px; }
+    #s17-meta { right: 80px; top: 938px; font-size: 32px; text-align: right; }
+    #s17-stamp { left: 1210px; top: 520px; }
+</style>
+<style frame="vert">
+    #s17-plot { left: 48px; top: 270px; width: 984px; height: 860px; font-size: 26px; }
+    #s17-opt { left: 48px; top: 1160px; font-size: 40px; }
+    #s17-meta { left: 48px; top: 1236px; font-size: 38px; }
+    #s17-lyric { left: 48px; top: 1336px; width: 984px; font-size: 102px; }
+    #s17-stamp { left: 470px; top: 560px; font-size: 96px; }
+</style>
+<body>
+    <div id="s17-cam" data-layout-allow-overflow>
+      <div id="s17-lyric"></div>
+      <div id="s17-plot"><svg id="s17-svg" preserveAspectRatio="none" data-layout-ignore></svg><div id="s17-lp"><span>LOW-PASS 16 kHz</span></div></div>
+      <div id="s17-opt"><span id="s17-chk"></span><span>you'll never miss it</span></div>
+      <div id="s17-meta">20 Hz – 22 kHz · log</div>
+    </div>
+    <div class="k-stamp" id="s17-stamp" data-layout-allow-occlusion data-layout-allow-overlap>trust us</div>
+</body>
+<script>
+    (() => {
+      const id = 's17', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], w = re => L.words.find(x => re.test(x.w));
+      K.push(tl, $('#s17-cam'), S.dur, 1, 1.04);
+
+      // 56 log-spaced bands; heights move with a seeded pulse, and bands past the cutoff fall to the floor
+      const PW = vert ? 984 : 1760, PH = vert ? 860 : 520, svg = $('#s17-svg'), n = 56, gap = 4, bw = (PW - 40) / n - gap;
+      svg.setAttribute('viewBox', `0 0 ${PW} ${PH}`);
+      const freq = i => 20 * Math.pow(22000 / 20, i / (n - 1)), cutIdx = Math.round(Math.log(16000 / 20) / Math.log(22000 / 20) * (n - 1));
+      [100, 1000, 10000].forEach(f => { const x = 20 + Math.log(f / 20) / Math.log(22000 / 20) * (PW - 40); K.svg('line', { x1: x, x2: x, y1: 0, y2: PH, stroke: 'var(--k-line)', 'stroke-width': 2 }, svg); const t = K.svg('text', { x: x + 8, y: PH - 14, class: 's17-ax' }, svg); t.textContent = f >= 1000 ? `${f / 1000}k` : `${f}`; });
+      const r = K.rng(1716), seeds = Array.from({ length: n }, () => [r(), r() * 6.28]);
+      const bars = seeds.map((s, i) => K.svg('rect', { x: 20 + i * (bw + gap), width: bw, fill: i >= cutIdx ? 'var(--k-accent-2)' : 'var(--k-accent)' }, svg));
+      const cutT0 = w(/^never/).t, cutT1 = w(/^miss/).t + 0.2, cutX = 20 + cutIdx * (bw + gap) - gap / 2;
+      K.drive(tl, 0, S.dur, t => {
+        const lp = Math.min(1, Math.max(0, (t - cutT0) / (cutT1 - cutT0))), lpX = PW + 20 - (PW + 20 - cutX) * (1 - Math.pow(1 - lp, 3));
+        $('#s17-lp').style.transform = `translateX(${lpX}px)`;
+        bars.forEach((b, i) => {
+          const [a, ph] = seeds[i], tilt = 1 - i / n * 0.45;
+          let h = (0.35 + 0.45 * a + 0.2 * Math.sin(t * 7 + ph)) * tilt * (PH - 60);
+          const x = 20 + i * (bw + gap);
+          if (x > lpX) h *= Math.max(0, 1 - (t - cutT0 - (x - cutX) / PW * 0.3) * 3);
+          h = Math.max(2, h);
+          b.setAttribute('y', PH - 40 - h); b.setAttribute('height', h);
+        });
+      }, 0, S.dur);
+
+      const chk = K.check($('#s17-chk'));
+      K.tick(tl, chk, w(/^you'll/).t);
+      K.slam(tl, $('#s17-stamp'), w(/^away/).t, -7);
+      K.shake(tl, $('#s17-cam'), w(/^away/).t + 0.15, 9, 3);
+
+      const key = L.words.findIndex(x => /^never/.test(x.w));
+      const { spans } = K.words($('#s17-lyric'), L, { key, breakBefore: vert ? [3, 6] : [5] });
+      K.reveal(tl, spans, L, 'rise');
+
+      window.__timelines[id] = tl;
+    })();
+</script>

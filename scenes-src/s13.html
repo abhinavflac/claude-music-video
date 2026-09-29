@@ -1,0 +1,75 @@
+<scene look="kissaten-b9a655">
+<!-- v1_7 "Funny how the machine learned what I never could": a slice-of-life koma beside a soft terminal pane. The panel
+     opens on the Oracle, beaming behind its tent card, I DON'T KNOW written on it in code; sparkles pop on "learned",
+     then the camera whips left to him, chin on hand, side-eyeing it with a half smile, and eases in on "never could".
+     The line is the tail of his thoughts.log. -->
+<style>
+    .s13-koma { position: absolute; overflow: hidden; border: 6px solid var(--k-ink); background: var(--k-paper); }
+    .s13-pane { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s13-bar { display: flex; justify-content: space-between; padding: 0.55em 0.8em; border-bottom: 2px solid var(--k-line); font: 400 0.75em/1 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s13-prompt { padding: 0.9em 0.8em 0.3em; font: 400 0.8em/1.2 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    #s13-lyric { padding: 0 0.3em; font: 400 1em/1.08 var(--k-font-display); color: var(--k-ink); }
+    .s13-sign { font: 400 96px/1 var(--k-font-display); fill: var(--k-ink); }
+    .s13-spark { fill: var(--k-paper); stroke: var(--k-ink); stroke-width: 7; stroke-linejoin: round; }
+</style>
+<style frame="wide">
+    #s13-pane { left: 40px; top: 104px; width: 560px; height: 920px; font-size: 32px; }
+    #s13-lyric { font-size: 104px; padding: 0 0.24em; }
+    #s13-koma { left: 632px; top: 100px; width: 1248px; height: 940px; }
+</style>
+<style frame="vert">
+    #s13-koma { left: 36px; top: 250px; width: 1008px; height: 1064px; }
+    #s13-pane { left: 36px; top: 1338px; width: 1008px; height: 372px; font-size: 30px; }
+    #s13-lyric { font-size: 84px; }
+    #s13-pane .s13-prompt { padding-top: 0.6em; }
+    #s13-pane .s13-bar { padding-right: 100px; }
+    #s13-pane #s13-lyric { padding-right: 90px; }
+</style>
+<body>
+    <div class="s13-koma" id="s13-koma" data-layout-allow-overflow></div>
+    <div class="s13-pane" id="s13-pane"><div class="s13-bar"><span>notes · tty1</span><span>02:03</span></div><div class="s13-prompt">~/desk $ tail -f thoughts.log</div><div id="s13-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's13', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tMachine = at(/^machine/), tLearned = at(/^learned/), tNever = at(/^never/);
+
+      // the plate wider than the koma, so the camera can pan from the Oracle (right) to him (left)
+      const koma = $('#s13-koma'), PW = koma.clientWidth, PH = koma.clientHeight;
+      const vb = vert ? '500 150 2300 1463' : '380 180 2620 1433', [, , vw, vh] = vb.split(' ').map(Number), BW = PH * vw / vh;
+      const shot = K.shot(koma, 's13-side-eye', { viewBox: vb, inks: [K.tok(root, 'paper'), K.tok(root, 'ink')], style: { left: '0px', top: '0px', width: BW + 'px', height: PH + 'px' } });
+
+      // I DON'T KNOW on the tent card, mapped onto its face (corners traced from the plate)
+      const ov = K.overlay(shot, vb);
+      const card = K.svg('g', { transform: 'matrix(1 0.156 -0.241 1 1818 1218)' }, ov);
+      [['I DON’T', 122], ['KNOW', 228]].forEach(([t, y]) => { const e = K.svg('text', { x: 215, y, 'text-anchor': 'middle', class: 's13-sign' }, card); e.textContent = t; });
+      tl.fromTo(card, { scale: 1 }, { scale: 1.06, svgOrigin: '215 135', duration: 0.08, yoyo: true, repeat: 1, ease: 'power2.out', immediateRender: false }, tMachine);
+
+      // sparkles round the proud lamp on "learned"
+      const star = 'M0 -1 L0.22 -0.22 L1 0 L0.22 0.22 L0 1 L-0.22 0.22 L-1 0 L-0.22 -0.22 Z';
+      [[1880, 430, 70], [2640, 340, 90], [2600, 900, 56], [1720, 1150, 64], [2330, 170, 48]].forEach(([x, y, s], i) => {
+        const g = K.svg('g', { transform: `translate(${x} ${y})` }, ov), p = K.svg('path', { d: star, class: 's13-spark', transform: `scale(${s})`, 'vector-effect': 'non-scaling-stroke' }, g);
+        gsap.set(g, { opacity: 0 });
+        tl.fromTo(g, { opacity: 0, scale: 0.2, svgOrigin: `${x} ${y}` }, { opacity: 1, scale: 1, svgOrigin: `${x} ${y}`, duration: 0.22, ease: 'back.out(3)' }, tLearned + i * 0.05);
+        tl.to(g, { rotation: 45, svgOrigin: `${x} ${y}`, duration: 0.6, ease: 'power1.out' }, tLearned + i * 0.05);
+        tl.to(g, { opacity: 0, duration: 0.15 }, tNever + i * 0.03);
+      });
+
+      // camera: hold on the machine, whip left to him after "learned", ease in on "never could"
+      const range = BW - PW;
+      tl.fromTo(shot, { x: -range }, { x: -range * 0.92, duration: tLearned + 0.2, ease: 'none' }, 0);
+      tl.to(shot, { x: 0, duration: 0.36, ease: 'power3.inOut' }, tLearned + 0.24);
+      gsap.set(shot, { transformOrigin: vert ? '30% 30%' : '35% 32%' });
+      tl.fromTo(shot, { scale: 1 }, { scale: 1.06, duration: S.dur - tNever, ease: 'power2.out', immediateRender: false }, tNever);
+
+      // the log line, LEARNED in the sage block, a caret after it
+      const { spans } = K.words($('#s13-lyric'), L, { key: L.words.findIndex(x => /^learned/.test(x.w)) });
+      K.reveal(tl, spans, L, 'rise');
+      const caret = K.el('span', 'k-caret', $('#s13-lyric'));
+      K.caret(tl, caret, 0, S.dur);
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

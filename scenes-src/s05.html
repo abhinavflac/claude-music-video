@@ -1,0 +1,73 @@
+<scene look="nightwatch-e27a7c">
+<!-- i3 "I noticed.": an extreme close-up of his eye, closed, snapping open on "noticed". A Nightwatch scan frame locks
+     onto it, speed lines burst out, and a tiny waveform glints in the iris. The line sits on a dossier slip. -->
+<tokens>--k-surface: #F4F0E8; --k-on-surface: #0B0C12;</tokens>
+<style>
+    #s05-cam { position: absolute; inset: 0; }
+    .s05-plate { position: absolute; inset: 0; }
+    #s05-slip { position: absolute; background: var(--k-surface); color: var(--k-on-surface); box-shadow: 0 0 0 3px var(--k-accent); }
+    #s05-meta { display: flex; justify-content: space-between; font: 400 0.2em/1 var(--k-font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+    #s05-lyric { font: 800 1em/0.95 var(--k-font-display); letter-spacing: -0.035em; color: var(--k-on-surface); }
+    .s05-lbl { font-family: var(--k-font-mono); font-size: 34px; letter-spacing: 3px; text-transform: uppercase; }
+</style>
+<style frame="wide">
+    #s05-slip { left: 80px; bottom: 96px; padding: 22px 34px 26px; font-size: 150px; }
+    #s05-meta { margin-bottom: 18px; gap: 40px; }
+</style>
+<style frame="vert">
+    #s05-slip { left: 48px; right: 48px; top: 1330px; padding: 26px 34px 30px; font-size: 176px; }
+    #s05-meta { margin-bottom: 20px; font-size: 0.18em; }
+</style>
+<body>
+    <div id="s05-cam" data-layout-allow-overflow data-bleed>
+      <div class="s05-plate" id="s05-closed"></div>
+      <div class="s05-plate" id="s05-open"></div>
+    </div>
+    <div id="s05-slip"><div id="s05-meta"><span>observation 03 · cam 2</span><span>02:00:47</span></div><div id="s05-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's05', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], w = re => L.words.find(x => re.test(x.w));
+      const n = w(/^noticed/).t, IW = 3000, IH = 1674, EX = 1356, EY = 752;
+      const vb = vert ? `${EX - 470} 0 941 ${IH}` : `0 0 ${IW} ${IH}`;
+
+      // two frames of the same eye, swapped on "noticed"
+      const shut = K.shot($('#s05-closed'), 's05-eye-closed', { viewBox: vb, style: { left: 0, top: 0, width: '100%', height: '100%' } });
+      const open = K.shot($('#s05-open'), 's05-eye-open', { viewBox: vb, style: { left: 0, top: 0, width: '100%', height: '100%' } });
+      gsap.set($('#s05-open'), { opacity: 0 });
+      tl.set($('#s05-open'), { opacity: 1 }, n);
+      tl.set($('#s05-closed'), { opacity: 0 }, n);
+
+      // overlay in the plate's pixels: speed lines, the scan frame, the waveform in the iris
+      const ov = K.overlay(open, vb);
+      const lines = K.speedLines(ov, EX, EY, 72, 430, 2600, 5);
+      gsap.set(lines, { opacity: 0 });
+      for (let i = 0; i < 12; i++) tl.set(lines, { opacity: i % 2 ? 0.55 : 0.85 }, n + i * 2 * K.F);
+      const box = K.svg('g', {}, ov), bx = 1060, by = 520, bw = 600, bh = 460, c = 70;
+      [[bx, by, 1, 1], [bx + bw, by, -1, 1], [bx, by + bh, 1, -1], [bx + bw, by + bh, -1, -1]].forEach(([x, y, sx, sy]) =>
+        K.svg('path', { d: `M${x} ${y + sy * c} L${x} ${y} L${x + sx * c} ${y}`, fill: 'none', stroke: 'var(--k-accent)', 'stroke-width': 14 }, box));
+      const lbl = K.svg('text', { x: bx, y: by - 26, fill: 'var(--k-accent)', class: 's05-lbl' }, box); lbl.textContent = 'subject · noticed';
+      gsap.set(box, { opacity: 0, svgOrigin: `${EX} ${EY}` });
+      tl.fromTo(box, { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, svgOrigin: `${EX} ${EY}`, duration: 0.16, ease: 'power4.in' }, n + 0.02);
+      const wave = K.svg('path', { fill: 'none', stroke: 'var(--k-accent)', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0 }, ov);
+      tl.set(wave, { opacity: 1 }, n + 0.2);
+      K.drive(tl, 0, S.dur, t => {
+        let d = '';
+        for (let i = 0; i <= 24; i++) { const x = EX - 60 + i * 5, a = Math.sin(i * 0.9 + t * 14) * Math.sin(i * 0.26) * 26; d += `${i ? 'L' : 'M'}${x} ${(EY - 18 + a).toFixed(1)} `; }
+        wave.setAttribute('d', d);
+      }, 0, S.dur);
+
+      // camera: a slow push on the shut eye, a snap zoom when it opens
+      gsap.set($('#s05-cam'), { transformOrigin: vert ? '50% 45%' : '45% 45%' });
+      tl.fromTo($('#s05-cam'), { scale: 1 }, { scale: 1.07, duration: n, ease: 'none' }, 0);
+      tl.to($('#s05-cam'), { scale: 1.2, duration: 0.08, ease: 'power4.out' }, n);
+      tl.to($('#s05-cam'), { scale: 1.26, duration: S.dur - n - 0.08, ease: 'none' }, n + 0.08);
+      K.shake(tl, $('#s05-cam'), n + 0.02, 16, 3);
+
+      const { spans } = K.words($('#s05-lyric'), L, { key: L.words.findIndex(x => /^noticed/.test(x.w)) });
+      K.reveal(tl, spans, L, 'slam');
+
+      window.__timelines[id] = tl;
+    })();
+</script>

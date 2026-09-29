@@ -1,0 +1,56 @@
+<scene look="phosphor-4bc1e3">
+<!-- bd_1 "Minus one.": a notebook cell on true black. labels = DBSCAN(eps=0.5).fit_predict(life); the cell runs on
+     "Minus" and on "one." the output prints -1, alone and huge: the label clustering gives to noise. -->
+<style>
+    #s49-nb { position: absolute; font: 400 1em/1.3 var(--k-font-mono); color: var(--k-ink); }
+    .s49-md { font: 400 2.4em/1 var(--k-font-display); color: var(--k-ink); }
+    .s49-cell { display: grid; grid-template-columns: 5.2em 1fr; align-items: start; margin-top: 0.9em; }
+    .s49-in { color: var(--k-muted); white-space: nowrap; }
+    .s49-code { padding: 0.5em 0.7em; border: 1px solid var(--k-line); border-radius: calc(var(--k-radius) / 2); background: var(--k-surface); white-space: pre; }
+    .s49-code .kw { color: var(--k-accent-3-t); }
+    .s49-code .fn { color: var(--k-accent-t); }
+    #s49-out { font: 400 1em/1 var(--k-font-display); color: var(--k-accent-t); text-shadow: 0 0 40px var(--k-accent-2); opacity: 0; }
+    #s49-lyric { font: 400 1em/1 var(--k-font-display); color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s49-nb { left: 120px; top: 120px; width: 1680px; font-size: 32px; }
+    #s49-out { font-size: 480px; margin-top: 0.02em; }
+    #s49-lyric { position: absolute; right: 120px; top: 640px; font-size: 150px; }
+</style>
+<style frame="vert">
+    #s49-nb { left: 48px; top: 280px; width: 912px; font-size: 30px; }
+    .s49-cell { grid-template-columns: 1fr; row-gap: 0.4em; }
+    .s49-code { white-space: pre-wrap; }
+    #s49-out { font-size: 560px; text-align: center; }
+    #s49-lyric { position: absolute; left: 48px; top: 1352px; font-size: 176px; }
+</style>
+<body>
+    <div id="s49-nb">
+      <div class="s49-md">cluster.ipynb</div>
+      <div class="s49-cell"><span class="s49-in" id="s49-n">In [47]:</span><div class="s49-code"><span class="kw">from</span> sklearn.cluster <span class="kw">import</span> DBSCAN
+labels = <span class="fn">DBSCAN</span>(eps=0.5).<span class="fn">fit_predict</span>(life)
+labels[me]</div></div>
+      <div class="s49-cell"><span class="s49-in" id="s49-o">Out[47]:</span><div id="s49-out" data-layout-allow-overlap>-1</div></div>
+    </div>
+    <div id="s49-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's49', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tMinus = at(/^Minus/), tOne = at(/^one/);
+
+      // the cell runs on "Minus" (In [*]) and answers on "one."
+      K.drive(tl, 0, S.dur, t => { $('#s49-n').textContent = t >= tMinus && t < tOne ? 'In [*]:' : 'In [47]:'; $('#s49-o').style.opacity = t >= tOne ? 1 : 0; }, 0, S.dur);
+      tl.set($('#s49-out'), { opacity: 1 }, tOne);
+      tl.fromTo($('#s49-out'), { scale: 1.6 }, { scale: 1, duration: 0.14, ease: 'power4.in', immediateRender: false }, tOne);
+      gsap.set($('#s49-out'), { transformOrigin: '0% 60%' });
+      [0, 2, 4].forEach(k => tl.set($('#s49-out'), { x: k === 2 ? -6 : 0 }, tOne + 0.14 + k * F));
+
+      // the line, ONE in the green block
+      const { spans } = K.words($('#s49-lyric'), L, { key: 1 });
+      K.reveal(tl, spans, L, 'cut');
+
+      window.__timelines[id] = tl;
+    })();
+</script>

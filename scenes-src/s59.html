@@ -1,0 +1,74 @@
+<scene look="techo-315181">
+<!-- do_1 "Buy the chair, get the monitor, say it when it hurts a bit": the drums drop out; a planner page, washi tape and
+     stamps, as a self-care checkout. Three boxes tick on their words (the chair, the monitor, saying it when it hurts);
+     ORDER PLACED stamps down after the monitor; and on "bit" a message goes out: hey, that hurt a bit. -->
+<style>
+    #s59-page { position: absolute; background: var(--k-surface); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s59-tape { position: absolute; height: 46px; opacity: 0.8; }
+    .s59-date { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 0.5em; border-bottom: 2px dashed var(--k-line); white-space: nowrap; }
+    .s59-date b { font: 800 1.2em/1 var(--k-font-display); }
+    .s59-date span { font: 500 0.7em/1 var(--k-font-mono); }
+    .s59-list { display: grid; gap: 0.8em; margin-top: 0.9em; }
+    .s59-item { display: flex; align-items: center; gap: 0.7em; font: 600 1em/1.2 var(--k-font-body); white-space: nowrap; }
+    .s59-item .k-check { font-size: 1.3em; border-radius: 6px; }
+    .s59-item s { text-decoration: none; }
+    .s59-tot { display: flex; justify-content: space-between; margin-top: 1.1em; padding-top: 0.6em; border-top: 2px dashed var(--k-line); font: 500 0.8em/1 var(--k-font-mono); white-space: nowrap; }
+    #s59-stamp { position: absolute; padding: 0.15em 0.4em; border: 0.12em solid var(--k-accent); border-radius: 10px; color: var(--k-accent-t); font: 900 1em/1 var(--k-font-display); letter-spacing: 0.06em; white-space: nowrap; opacity: 0; }
+    #s59-msg { position: absolute; display: flex; flex-direction: column; align-items: flex-end; gap: 0.3em; opacity: 0; }
+    #s59-msg .b { padding: 0.55em 0.9em; border-radius: var(--k-radius); border-bottom-right-radius: 6px; background: var(--k-accent-2); color: oklch(from var(--k-accent-2) clamp(0, (0.62 - l) * 1000, 1) 0 0); font: 600 1em/1.2 var(--k-font-body); white-space: nowrap; }
+    #s59-msg span { font: 500 0.6em/1 var(--k-font-mono); color: var(--k-on-surface); }
+    #s59-lyric { position: absolute; font: 800 1em/1 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s59-page { left: 80px; top: 130px; width: 1000px; height: 860px; padding: 50px 56px; font-size: 42px; }
+    #s59-t1 { left: 60px; top: -18px; width: 180px; transform: rotate(-4deg); background: var(--k-accent-3); }
+    #s59-t2 { right: 70px; top: -16px; width: 150px; transform: rotate(5deg); background: var(--k-accent-2); }
+    #s59-stamp { left: 560px; top: 620px; font-size: 64px; }
+    #s59-msg { left: 1160px; top: 720px; font-size: 38px; }
+    #s59-lyric { left: 1140px; top: 150px; width: 710px; font-size: 92px; }
+</style>
+<style frame="vert">
+    #s59-page { left: 48px; top: 260px; width: 984px; height: 1050px; padding: 50px 100px 44px 44px; font-size: 44px; }
+    #s59-t1 { left: 40px; top: -18px; width: 180px; transform: rotate(-4deg); background: var(--k-accent-3); }
+    #s59-t2 { right: 120px; top: -16px; width: 150px; transform: rotate(5deg); background: var(--k-accent-2); }
+    #s59-stamp { left: 330px; top: 700px; font-size: 64px; }
+    #s59-msg { left: 330px; top: 1170px; font-size: 38px; }
+    #s59-lyric { left: 48px; top: 1352px; width: 912px; font-size: 80px; }
+</style>
+<body>
+    <div id="s59-page">
+      <div class="s59-tape" id="s59-t1"></div><div class="s59-tape" id="s59-t2"></div>
+      <div class="s59-date"><b>self-care checkout</b><span>tue · 2:47 am</span></div>
+      <div class="s59-list">
+        <div class="s59-item" id="s59-i0">buy the chair</div>
+        <div class="s59-item" id="s59-i1">get the monitor</div>
+        <div class="s59-item" id="s59-i2">say it when it hurts</div>
+      </div>
+      <div class="s59-tot"><span>total</span><span>worth it</span></div>
+      <div id="s59-stamp" data-layout-allow-overlap>ORDER PLACED</div>
+    </div>
+    <div id="s59-msg"><div class="b">hey, that hurt a bit.</div><span>delivered</span></div>
+    <div id="s59-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's59', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tChair = at(/^chair/), tMon = at(/^monitor/), tHurts = at(/^hurts/), tBit = at(/^bit/);
+
+      // the three boxes tick on their words
+      [[0, tChair], [1, tMon], [2, tHurts]].forEach(([i, t]) => { const c = K.check($('#s59-i' + i), false); $('#s59-i' + i).prepend(c.el); K.tick(tl, c, t, 0.2); tl.fromTo($('#s59-i' + i), { x: 0 }, { x: 10, duration: 0.08, yoyo: true, repeat: 1, ease: 'power2.out', immediateRender: false }, t); });
+      K.slam(tl, $('#s59-stamp'), tMon + 0.4, -10, 2.4);
+      K.shake(tl, $('#s59-page'), tMon + 0.55, 6, 3);
+
+      // the message goes out on "bit"
+      tl.fromTo($('#s59-msg'), { opacity: 0, y: 30, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.25, ease: 'back.out(2)' }, tBit);
+
+      // the line, HURTS in the pink block
+      const { spans } = K.words($('#s59-lyric'), L, { key: L.words.findIndex(x => /^hurts/.test(x.w)), breakBefore: vert ? [3, 6] : [3, 6, 9] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.28 });
+      window.__timelines[id] = tl;
+    })();
+</script>

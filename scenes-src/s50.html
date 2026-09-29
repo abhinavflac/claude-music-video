@@ -1,0 +1,72 @@
+<scene look="gekiga-3ae0ef">
+<!-- (instrumental burst) the music comes back. Gekiga panels: a whip pan across the plate's own speed lines to his face,
+     eyes wide, lit up; on the next downbeat the page cuts to an extreme close-up strip of his eyes with a red !!, then back
+     to the face with halftone emphasis. A narration box says what happened. -->
+<style>
+    #s50-page { position: absolute; inset: 0; background: var(--k-paper); }
+    .s50-koma { position: absolute; overflow: hidden; border: 8px solid var(--k-line); background: var(--k-paper); }
+    #s50-box { position: absolute; padding: 0.5em 0.8em; background: var(--k-ink); color: var(--k-paper); font: 700 1em/1.25 var(--k-font-body); white-space: nowrap; }
+    #s50-sfx { position: absolute; font: 400 1em/1 var(--k-font-display); color: var(--k-accent); -webkit-text-stroke: 8px var(--k-line); paint-order: stroke fill; opacity: 0; }
+    .s50-ring { fill: none; stroke: var(--k-accent); }
+</style>
+<style frame="wide">
+    #s50-main { inset: 0; border: 0; }
+    #s50-eyes { left: 60px; right: 60px; top: 330px; height: 380px; }
+    #s50-box { left: 60px; top: 110px; font-size: 38px; }
+    #s50-sfx { right: 110px; top: 190px; font-size: 220px; }
+</style>
+<style frame="vert">
+    #s50-main { inset: 0; border: 0; }
+    #s50-eyes { left: 36px; right: 36px; top: 720px; height: 420px; }
+    #s50-box { left: 48px; top: 260px; font-size: 40px; }
+    #s50-sfx { left: 640px; top: 1180px; font-size: 220px; }
+</style>
+<body>
+    <div id="s50-page">
+      <div class="s50-koma" id="s50-main"></div>
+      <div class="s50-koma" id="s50-eyes"></div>
+      <div id="s50-box">…and the music came back.</div>
+      <div id="s50-sfx" data-layout-ignore>!!</div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's50', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), d2 = S.downbeats[1] ?? 2.65, inks = [K.tok(root, 'paper'), K.tok(root, 'ink')];
+
+      // the main panel: the whole plate, wider than the frame, so the camera can whip from the speed lines to his face
+      const main = $('#s50-main'), [vx, , vw, vh] = (vert ? '1300 0 1700 1639' : '0 0 3000 1639').split(' ').map(Number), vbM = `${vx} 0 ${vw} ${vh}`;
+      const Z = vert ? 1 : 1.35, PH = H * Z, k = PH / vh, BW = vw * k, top = -(PH - H) * 0.3;
+      const shot = K.shot(main, 's50-wide-eyes', { viewBox: vbM, inks, style: { left: '0px', top: top + 'px', width: BW + 'px', height: PH + 'px' } });
+      // start on the speed lines at the left edge, end with his face (plate x 2230) near the centre
+      const xEnd = Math.max(-(BW - W), Math.min(0, W / 2 - (2230 - vx) * k));
+      tl.fromTo(shot, { x: 0 }, { x: xEnd * 0.12, duration: 0.18, ease: 'power1.in' }, 0);
+      tl.to(shot, { x: xEnd, duration: 0.3, ease: 'power4.out' }, 0.18);
+      gsap.set(shot, { transformOrigin: vert ? '60% 38%' : '78% 38%' });
+      tl.fromTo(shot, { scale: 1 }, { scale: 1.1, duration: d2 - 0.5, ease: 'none', immediateRender: false }, 0.48);
+      K.shake(tl, main, 0.46, 18, 4);
+      // halftone emphasis: rings pulsing out from his eyes on the beats (in the plate's pixels)
+      const ov = K.overlay(shot, vbM), EX = 2200, EY = 590;
+      K.onBeats(S, b => {
+        const c = K.svg('circle', { cx: EX, cy: EY, r: 120, class: 's50-ring', 'stroke-width': 28 }, ov);
+        gsap.set(c, { opacity: 0 });
+        tl.fromTo(c, { opacity: 0.9, attr: { r: 160, 'stroke-width': 30 } }, { opacity: 0, attr: { r: 1100, 'stroke-width': 4 }, duration: 0.7, ease: 'power2.out', immediateRender: false }, b);
+      }, 0.48);
+
+      // the next downbeat: the eyes strip slams in across the page with a red !!, then leaves
+      const eyes = $('#s50-eyes'), vbE = '1800 430 900 380';
+      K.shot(eyes, 's50-wide-eyes', { viewBox: vbE, inks });
+      gsap.set(eyes, { opacity: 0 });
+      tl.set(eyes, { opacity: 1 }, d2);
+      tl.fromTo(eyes, { scaleY: 0.05 }, { scaleY: 1, duration: 0.12, ease: 'power4.out', immediateRender: false }, d2);
+      tl.set(eyes, { opacity: 0 }, d2 + 1.5);
+      [[0, 1.5], [2, 1.1], [4, 1]].forEach(([k, s]) => tl.set($('#s50-sfx'), { opacity: 1, scale: s, rotation: -8 }, d2 + 0.04 + k * F));
+      tl.set($('#s50-sfx'), { opacity: 0 }, d2 + 1.5);
+      K.shake(tl, $('#s50-page'), d2, 14, 4);
+
+      // the narration box, typed in over the whip
+      tl.fromTo($('#s50-box'), { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.2, ease: 'power2.out' }, 0.6);
+
+      window.__timelines[id] = tl;
+    })();
+</script>

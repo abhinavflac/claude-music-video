@@ -1,0 +1,882 @@
+[
+  {
+    "id": "s01",
+    "lines": [],
+    "mode": "ui",
+    "idea": "Cold open: an export dialog 'Choose export quality for yourself'. MP3 128 kbps is pre-selected as 'recommended', FLAC is tagged 'too big', a checkbox says 'you won't notice the difference'. A cursor glides over and clicks EXPORT; an encoding bar starts.",
+    "art_style": null,
+    "language": "regler",
+    "start": 0,
+    "language_id": "en-019ef8e6-6b2f-72b1-8d00-bfeedc4d9806",
+    "language_name": "Regler"
+  },
+  {
+    "id": "s02",
+    "lines": [
+      "i1"
+    ],
+    "mode": "terminal",
+    "idea": "Dark screen, a white waveform across the frame; a red 'psychoacoustic model' blade slides in and shaves every peak off. The lyric is huge type above it, 'notice' in a highlight block.",
+    "art_style": null,
+    "language": "aurora",
+    "language_id": "en-019ef865-d349-7fa3-9cfd-7f4b2d4beb82",
+    "language_name": "Aurora"
+  },
+  {
+    "id": "s03",
+    "lines": [
+      "i2"
+    ],
+    "mode": "ui",
+    "idea": "A Recycle Bin window, 'deleted by: codec': harmonics_16k-22k.raw (inaudible*), room_tone.wav, breath_03.aif, string_decay.flac (too long), the_tremble.tmp, and in red 'you (partial).bin, you won't notice'. Fine print: '* according to a model of your ears'.",
+    "art_style": null,
+    "language": "dither",
+    "language_id": "en-019f3dc1-daa0-7132-b782-52468ebdfb94",
+    "language_name": "Dither"
+  },
+  {
+    "id": "s04",
+    "lines": [],
+    "mode": "pop",
+    "idea": "Title card: LOSSLESS in giant condensed type, 'LESS' lands in a highlight block on a downbeat. Small mono line: 'a song about not being compressed'.",
+    "art_style": null,
+    "language": "klaxon",
+    "start": 15.1,
+    "language_id": "en-019ef93f-7b30-7381-acab-cf32e59a58cb",
+    "language_name": "Klaxon"
+  },
+  {
+    "id": "s05",
+    "lines": [
+      "i3"
+    ],
+    "mode": "manga",
+    "idea": "Extreme close-up of his eye snapping open on 'noticed', speed lines radiating, a tiny waveform reflected in the iris.",
+    "art_style": "plainclothes",
+    "language": "nightwatch",
+    "language_id": "en-019ef881-5b88-7ae0-ad26-c5fb1ce27a7c",
+    "language_name": "Nightwatch",
+    "refs": [
+      "refs/s05-eye-closed.png",
+      "refs/s05-eye-open.png"
+    ]
+  },
+  {
+    "id": "s06",
+    "lines": [],
+    "mode": "manga",
+    "idea": "2 a.m., from behind: he sits at his desk in the dark, one monitor glowing, IEM cables hanging from both ears, a window with the city asleep. A clock reads 2:00 AM (drawn in code).",
+    "art_style": "plainclothes",
+    "language": "dialtone",
+    "start": 20.4,
+    "language_id": "en-019ef84f-8012-7ae3-8e21-6232efafac1b",
+    "language_name": "Dialtone",
+    "refs": [
+      "refs/s06-desk-2am.png"
+    ]
+  },
+  {
+    "id": "s07",
+    "lines": [
+      "v1_1"
+    ],
+    "mode": "terminal",
+    "idea": "Green terminal: '$ sudo pacman -Syu', errors in red, then 'ARCH: BROKE' in huge type; a fan icon spinning at 5400 RPM (roaring).",
+    "art_style": null,
+    "language": "cathode",
+    "language_id": "en-019ef93a-e850-7bd2-8af0-2ce6caf5f775",
+    "language_name": "Cathode"
+  },
+  {
+    "id": "s08",
+    "lines": [
+      "v1_2"
+    ],
+    "mode": "ui",
+    "idea": "Three small cards: fastboot flashing a custom ROM (progress bar), 'coffee.temp: 14°C, cold. again.', and 'friends online: 1' where the only friend is a blinking text cursor that types 'hey.'",
+    "art_style": null,
+    "language": "phosphene",
+    "language_id": "en-019efd24-4a9f-7d52-a054-c0c8695f5cfe",
+    "language_name": "Phosphene"
+  },
+  {
+    "id": "s09",
+    "lines": [
+      "v1_3"
+    ],
+    "mode": "ui",
+    "idea": "A dark music player: NOW PLAYING lossless.flac, FLAC 24-bit/96 kHz, 'repeat one: ON', 'loop count: 1,337', 'trust: 100%'. The album art is a manga panel of him, eyes closed, IEMs in.",
+    "art_style": "plainclothes",
+    "language": "nighthawk",
+    "language_id": "en-019f2e6e-d19d-72b2-8500-d710161f6627",
+    "language_name": "Nighthawk",
+    "refs": [
+      "refs/s09-album-portrait.png"
+    ]
+  },
+  {
+    "id": "s10",
+    "lines": [
+      "v1_4"
+    ],
+    "mode": "ui",
+    "idea": "A repost feed of the same picture: @abhinav (original), @repost_bot, @repost_bot_2, @aggregator ('copy of a copy'). Each repost is blockier until the last one crumbles into grey dust, '[image unavailable]'.",
+    "art_style": "plainclothes",
+    "language": "mimeo",
+    "language_id": "en-019ef9d7-744d-7b40-921b-81704c676771",
+    "language_name": "Mimeo",
+    "refs": [
+      "refs/char-oracle.png"
+    ]
+  },
+  {
+    "id": "s11",
+    "lines": [
+      "v1_5"
+    ],
+    "mode": "ui",
+    "idea": "A model card: fine-tuning 'oracle-mini' (RAG), a loss curve falling to LOSS_FN 0.4933 (his site's number), checklist: says 'I don't know' when unsure 100%, hallucinations 0, pretends it's fine: never.",
+    "art_style": null,
+    "language": "reticle-ledger",
+    "language_id": "en-019ef96c-004b-7773-858a-d6b992c38c42",
+    "language_name": "Reticle Ledger"
+  },
+  {
+    "id": "s12",
+    "lines": [
+      "v1_6"
+    ],
+    "mode": "ui",
+    "idea": "A chat with oracle-mini: 'what's the rated RPM for pump #7?' -> chip 'retrieved 0 / 12 chunks' -> 'I don't know. It isn't in the context.' Fine print: 'no guesses. no vibes.'",
+    "art_style": "plainclothes",
+    "language": "plush",
+    "language_id": "en-019efdb6-988d-72e3-a3ea-cca7394d452c",
+    "language_name": "Plush",
+    "refs": [
+      "refs/char-oracle.png"
+    ]
+  },
+  {
+    "id": "s13",
+    "lines": [
+      "v1_7"
+    ],
+    "mode": "manga",
+    "idea": "He rests his chin on his hand and side-eyes the Oracle, which proudly holds up a blank sign (the words I DON'T KNOW drawn in code). Half-lidded, a little smirk.",
+    "art_style": "plainclothes",
+    "language": "kissaten",
+    "language_id": "en-01a03f5b-7673-7c82-b8e8-a08787b9a655",
+    "language_name": "Kissaten",
+    "refs": [
+      "refs/s13-side-eye.png"
+    ]
+  },
+  {
+    "id": "s14",
+    "lines": [
+      "v1_8"
+    ],
+    "mode": "ui",
+    "idea": "Two status cards: oracle-mini, context EMPTY, battery 0%, 'says so. honestly.' vs abhinav, battery 3%, awake 19h, typing 'all good :)' which sends, then 'Read 2:14 AM'.",
+    "art_style": null,
+    "language": "glaze",
+    "language_id": "en-019efa7c-4189-7f22-a1dc-0195b90418f6",
+    "language_name": "Glaze"
+  },
+  {
+    "id": "s15",
+    "lines": [
+      "pc1_1"
+    ],
+    "mode": "ui",
+    "idea": "An export queue: sunset.raw 48 MB -> 212 KB, voice_memo.wav 42 MB -> 3.1 MB, you.human ∞ -> 128 kbps; the bars shrink on the beat.",
+    "art_style": null,
+    "language": "gamut",
+    "language_id": "en-019ffc42-96c7-7e00-999e-2c6475924f74",
+    "language_name": "Gamut"
+  },
+  {
+    "id": "s16",
+    "lines": [
+      "pc1_2"
+    ],
+    "mode": "ui",
+    "idea": "A digest print layout: SUMMARY (2,400 words) -> SUMMARY OF SUMMARY (240) -> SUMMARY OF SUMMARY OF SUMMARY (24) -> TL;DR 'ok.' cards stacking smaller.",
+    "art_style": null,
+    "language": "broadsheet",
+    "language_id": "en-019f709e-0c14-73a2-8f4d-d9469cb0b173",
+    "language_name": "Broadsheet"
+  },
+  {
+    "id": "s17",
+    "lines": [
+      "pc1_3"
+    ],
+    "mode": "ui",
+    "idea": "A spectrum analyser; a red LOW-PASS 16 kHz line slides in, the highs fall away; checkbox 'you'll never miss it', stamp TRUST US.",
+    "art_style": null,
+    "language": "halide",
+    "language_id": "en-019ef9c1-54ed-71f0-8ac6-10bd54b1649d",
+    "language_name": "Halide"
+  },
+  {
+    "id": "s18",
+    "lines": [
+      "pc1_4"
+    ],
+    "mode": "manga",
+    "idea": "Eyes closed, IEMs glowing, reverb rings spreading through the dark room, a single string ringing and slowly decaying across the bottom of the frame.",
+    "art_style": "plainclothes",
+    "language": "tobari",
+    "language_id": "en-019ef67c-4756-7d41-b3b5-2ee4b0db319e",
+    "language_name": "Tobari",
+    "refs": [
+      "refs/s18-listening.png",
+      "refs/s06-desk-2am.png"
+    ]
+  },
+  {
+    "id": "s19",
+    "lines": [
+      "c1_1"
+    ],
+    "mode": "pop",
+    "idea": "Loud flat colour: DON'T COMPRESS ME in giant type squeezed by two vise jaws, then it springs back and the jaws fly out; pill COMPRESSION: ON -> OFF.",
+    "art_style": null,
+    "language": "riveter",
+    "language_id": "en-019ef897-08b1-7091-a1ba-e0341bc2747e",
+    "language_name": "Riveter"
+  },
+  {
+    "id": "s20",
+    "lines": [
+      "c1_2"
+    ],
+    "mode": "ui",
+    "idea": "A quality dropdown: '320 kbps' and 'smooth (AI enhance)' get struck out on the sung words with a NOT ME stamp; 'lossless' is ticked. Counter: compression attempts 1, passed: none of them.",
+    "art_style": null,
+    "language": "errata",
+    "language_id": "en-019f7097-f7fb-7620-9893-7d412ed147a0",
+    "language_name": "Errata"
+  },
+  {
+    "id": "s21",
+    "lines": [
+      "c1_3"
+    ],
+    "mode": "ui",
+    "idea": "A wave editor on abhinav.wav with static specks and a trembling line; toggles Noise reduction / De-tremble / Smooth voice (AI) flip OFF on the sung words.",
+    "art_style": null,
+    "language": "kymograph",
+    "language_id": "en-01a05fe4-7d0a-72d1-a726-0b7634134557",
+    "language_name": "Kymograph"
+  },
+  {
+    "id": "s22",
+    "lines": [
+      "c1_4"
+    ],
+    "mode": "ui",
+    "idea": "The spectrum again: the shaved 16-22 kHz band (labelled 'truth') grows back; a big KEEP button is pressed on 'truth'.",
+    "art_style": null,
+    "language": "prism-works",
+    "language_id": "en-019ef923-46bf-7273-8076-dce068ec408b",
+    "language_name": "Prism Works"
+  },
+  {
+    "id": "s23",
+    "lines": [
+      "c1_5"
+    ],
+    "mode": "terminal",
+    "idea": "Ops dashboard: storage 99%, 'server says: make room'. SHRINK is pressed, the WAV file icon shrinks to a dot, then KEEP snaps it back to full size.",
+    "art_style": null,
+    "language": "caret-ledger",
+    "language_id": "en-019ef9ad-bb34-7241-9fb2-8b5ce772e041",
+    "language_name": "Caret Ledger"
+  },
+  {
+    "id": "s24",
+    "lines": [
+      "c1_6"
+    ],
+    "mode": "ui",
+    "idea": "A crop tool tightening on his face, 'fit: 1:1, 128x128'; in the manga crop he glares at the handles.",
+    "art_style": "plainclothes",
+    "language": "reticle",
+    "language_id": "en-019ef8d2-b25c-7ff3-80e9-9568b8aff621",
+    "language_name": "Reticle",
+    "refs": [
+      "refs/s24-glare.png"
+    ]
+  },
+  {
+    "id": "s25",
+    "lines": [
+      "c1_7"
+    ],
+    "mode": "manga",
+    "idea": "Grinning thumbs-up over the night skyline, sparkles; a LOSSLESS-O-METER card reads 98%, '2% still buffering'.",
+    "art_style": "plainclothes",
+    "language": "limelight",
+    "language_id": "en-019efda2-dca8-7a32-839a-2c9a95ed64a3",
+    "language_name": "Limelight",
+    "refs": [
+      "refs/s25-thumbs-up.png"
+    ]
+  },
+  {
+    "id": "s26",
+    "lines": [
+      "c1_8"
+    ],
+    "mode": "ui",
+    "idea": "A file-properties window for abhinav.flac: 24-bit, 96 kHz, 42.1 MB (all of it); BITS LOST: 0, 'every bit: kept'; 0s and 1s drift down behind it.",
+    "art_style": null,
+    "language": "sector-bureau",
+    "language_id": "en-019ef81c-9c55-7713-8cfc-eef0ecfa4e44",
+    "language_name": "Sector Bureau"
+  },
+  {
+    "id": "s27",
+    "lines": [],
+    "mode": "manga",
+    "idea": "Instrumental: he and the Oracle both nod to the beat at the desk at night, eyes closed, music notes floating.",
+    "art_style": "plainclothes",
+    "language": "parapara",
+    "start": 79.733,
+    "language_id": "en-019f9a42-5b78-75e2-826e-a4bde44ca473",
+    "language_name": "Parapara",
+    "refs": [
+      "refs/s27-nodding.png"
+    ]
+  },
+  {
+    "id": "s28",
+    "lines": [],
+    "mode": "ui",
+    "idea": "Instrumental: a pixel LCD VU meter bouncing to the song, 'NOW PLAYING: lossless.flac'.",
+    "art_style": null,
+    "language": "tessera",
+    "start": 84.367,
+    "language_id": "en-019efd3c-c7be-7102-8e6d-a4d174332749",
+    "language_name": "Tessera",
+    "levels": 16
+  },
+  {
+    "id": "s29",
+    "lines": [
+      "v2_1"
+    ],
+    "mode": "ui",
+    "idea": "'Moving your files: 12,408 / 12,408, all yours' -> a robot arm drops a red padlock on a door -> a red card: ACCOUNT DISABLED, reviewed by: automated system, human review: no.",
+    "art_style": null,
+    "language": "akte",
+    "language_id": "en-019ef67b-cc07-74f1-874e-5b7167445c95",
+    "language_name": "Akte"
+  },
+  {
+    "id": "s30",
+    "lines": [
+      "v2_2"
+    ],
+    "mode": "ui",
+    "idea": "An app launcher: mail, drive, login, calendar, photos, certificates, coursework, dev tools, backups grey out one by one with red x badges; his avatar becomes 'Unknown user, sign in to continue'.",
+    "art_style": null,
+    "language": "pomelo-soft-white-melon-azure",
+    "language_id": "en-019efabb-88ac-7820-8f23-d5f16deb326b",
+    "language_name": "Pomelo"
+  },
+  {
+    "id": "s31",
+    "lines": [
+      "v2_3"
+    ],
+    "mode": "ui",
+    "idea": "An appeal form, 'Tell us why we're wrong (max 1000 characters)'; his message types fast ('my degree, my certificates, the voice notes from my mother...'), the counter hits 1000/1000, red bar 'The rest was not sent.'",
+    "art_style": null,
+    "language": "kursbuch",
+    "language_id": "en-019f706f-f170-7d73-a198-20cdccfd54b7",
+    "language_name": "Kursbuch"
+  },
+  {
+    "id": "s32",
+    "lines": [
+      "v2_4"
+    ],
+    "mode": "terminal",
+    "idea": "A risk-engine heatmap; pattern: MASS_TRANSFER MATCH, velocity: HIGH MATCH, intent: 'field not supported' next to a small heart.",
+    "art_style": null,
+    "language": "vernier",
+    "language_id": "en-019ef99a-18a8-7433-adff-4cbb74fa82f2",
+    "language_name": "Vernier"
+  },
+  {
+    "id": "s33",
+    "lines": [
+      "v2_5"
+    ],
+    "mode": "manga",
+    "idea": "Tiny him looking up, sweating, at a giant faceless judge in robes whose head is just a loading spinner; VERDICT: PENDING; 'waiting... day 11' (all text in code).",
+    "art_style": "plainclothes",
+    "language": "bulla",
+    "language_id": "en-019efa10-5a85-7e00-ae76-b90080f04a69",
+    "language_name": "Bulla",
+    "refs": [
+      "refs/s33-judge.png"
+    ]
+  },
+  {
+    "id": "s34",
+    "lines": [
+      "v2_6"
+    ],
+    "mode": "ui",
+    "idea": "'Your account has been restored.' Fields Reason / What happened / Apology / Details all show '-'; stamp NO REASON GIVEN; 'no further action is required.'",
+    "art_style": null,
+    "language": "carbon",
+    "language_id": "en-019ef891-9252-7d23-b7d4-01d21cba159b",
+    "language_name": "Carbon"
+  },
+  {
+    "id": "s35",
+    "lines": [
+      "v2_7"
+    ],
+    "mode": "ui",
+    "idea": "His work (RAG for pump selection): a query with RPM ? / load ? / service life ? fields; the question marks fall onto soft pink cushions; green card 'Missing info? No dead end. Using typical values.'",
+    "art_style": null,
+    "language": "bouba",
+    "language_id": "en-019efd9f-f4db-7db3-acf9-20d906c311f0",
+    "language_name": "Bouba"
+  },
+  {
+    "id": "s36",
+    "lines": [
+      "v2_8"
+    ],
+    "mode": "ui",
+    "idea": "A dark gauge cluster: an RPM dial with no needle; a question mark with little legs keeps running across the frame; STILL RUNS.",
+    "art_style": null,
+    "language": "servo",
+    "language_id": "en-019ef9d9-46d0-7293-bcd0-de31640c70be",
+    "language_name": "Servo"
+  },
+  {
+    "id": "s37",
+    "lines": [
+      "pc2_1"
+    ],
+    "mode": "ui",
+    "idea": "Split screen: his chat bubbles ('it's on me', 'got the tickets', 'don't worry about it') vs their score.xlsx ledger (trip: he paid, dinner: he paid, chai ₹20: HE OWES, highlighted). LOVE vs SCORE.",
+    "art_style": null,
+    "language": "tally",
+    "language_id": "en-019ef833-0b88-7643-9eee-82a750156e8a",
+    "language_name": "Tally"
+  },
+  {
+    "id": "s38",
+    "lines": [
+      "pc2_2"
+    ],
+    "mode": "manga",
+    "idea": "2 a.m., top-down: he lies in bed staring at the ceiling, IEMs still in; his phone on the blanket shows 'no new messages'; the Oracle's light is dimmed.",
+    "art_style": "plainclothes",
+    "language": "shinya",
+    "language_id": "en-019ef865-3a2a-71c3-8d0a-b0d490dde723",
+    "language_name": "Shin'ya",
+    "refs": [
+      "refs/s38-ceiling.png"
+    ]
+  },
+  {
+    "id": "s39",
+    "lines": [
+      "c2_1"
+    ],
+    "mode": "pop",
+    "idea": "The vise again in a new loud colour; this time the jaws crack apart; stamp BROKEN.",
+    "art_style": null,
+    "language": "wheatpaste",
+    "language_id": "en-019ef9e8-b2e5-7570-9be2-3ff526efdba8",
+    "language_name": "Wheatpaste"
+  },
+  {
+    "id": "s40",
+    "lines": [
+      "c2_2"
+    ],
+    "mode": "ui",
+    "idea": "The dropdown again, compression attempts 2, passed: none of them.",
+    "art_style": null,
+    "language": "litmus",
+    "language_id": "en-019ffc43-e769-78a2-8e7e-3d48d41e968b",
+    "language_name": "Litmus"
+  },
+  {
+    "id": "s41",
+    "lines": [
+      "c2_3"
+    ],
+    "mode": "ui",
+    "idea": "The wave editor in its dark variant, toggles flip OFF.",
+    "art_style": null,
+    "language": "beamline",
+    "language_id": "en-019efb6c-d15f-7653-9d40-f170a87a04da",
+    "language_name": "Beamline"
+  },
+  {
+    "id": "s42",
+    "lines": [
+      "c2_4"
+    ],
+    "mode": "ui",
+    "idea": "The spectrum fully restored, stamp 100%.",
+    "art_style": null,
+    "language": "caustic",
+    "language_id": "en-019efd9f-65f4-7b13-a093-13b150e72873",
+    "language_name": "Caustic"
+  },
+  {
+    "id": "s43",
+    "lines": [
+      "c2_5"
+    ],
+    "mode": "terminal",
+    "idea": "SHRINK is pressed but the KEEP button explodes into confetti; 'request denied: you'.",
+    "art_style": null,
+    "language": "phosphor-deck",
+    "language_id": "en-019efa17-4006-74c2-87d0-c5c61377025c",
+    "language_name": "Phosphor Deck"
+  },
+  {
+    "id": "s44",
+    "lines": [
+      "c2_6"
+    ],
+    "mode": "ui",
+    "idea": "The crop tool fails: the handles snap back to the full frame, 'fit: none. original.', stamp NOPE.",
+    "art_style": "plainclothes",
+    "language": "quire",
+    "language_id": "en-019efd6f-2845-7b61-add9-a422b382a87c",
+    "language_name": "Quire",
+    "refs": [
+      "refs/s24-glare.png"
+    ]
+  },
+  {
+    "id": "s45",
+    "lines": [
+      "c2_7"
+    ],
+    "mode": "manga",
+    "idea": "The thumbs-up again, closer and brighter; meter 99%.",
+    "art_style": "plainclothes",
+    "language": "fanfare",
+    "language_id": "en-019efdb9-0b5b-77b3-8043-22e8b1706610",
+    "language_name": "Fanfare",
+    "refs": [
+      "refs/s25-thumbs-up.png"
+    ]
+  },
+  {
+    "id": "s46",
+    "lines": [
+      "post_1",
+      "post_2"
+    ],
+    "mode": "pop",
+    "idea": "A loud board filling up with 'every bit' reaction stickers on every sung 'bit' (EVERY BIT, KEPT, 0 LOST, 24-BIT, BIT-PERFECT, UNCUT, RAW, ALL OF IT); a giant 1 in the middle; counter 'bits kept'.",
+    "art_style": null,
+    "language": "plakat",
+    "language_id": "en-019f3dbe-fcec-7783-a8a6-24c3d4a48736",
+    "language_name": "Plakat"
+  },
+  {
+    "id": "s47",
+    "lines": [
+      "post_3",
+      "post_4"
+    ],
+    "mode": "pop",
+    "idea": "Stickers keep piling on until the song's hard stop, where the frame freezes mid-motion.",
+    "art_style": null,
+    "language": "florette",
+    "language_id": "en-019ef8ea-3e59-7b90-9152-523e98787633",
+    "language_name": "Florette"
+  },
+  {
+    "id": "s48",
+    "lines": [],
+    "mode": "ui",
+    "idea": "The hard stop (153.6 s, the beat where the mix cuts out): the sticker board from s47, frozen mid-motion, greys out under a buffering spinner. Near silence until Minus one.",
+    "art_style": null,
+    "language": "slate",
+    "start": 153.6,
+    "language_id": "en-019ef93d-fcce-7091-96fd-16b073a28f72",
+    "language_name": "Slate"
+  },
+  {
+    "id": "s49",
+    "lines": [
+      "bd_1"
+    ],
+    "mode": "terminal",
+    "idea": "A notebook cell on black: labels = DBSCAN(eps=0.5).fit_predict(life) -> the output prints -1, alone, huge.",
+    "art_style": null,
+    "language": "phosphor",
+    "language_id": "en-019efb51-33e2-7b10-ba3c-320a9c4bc1e3",
+    "language_name": "Phosphor"
+  },
+  {
+    "id": "s50",
+    "lines": [],
+    "mode": "manga",
+    "idea": "Instrumental burst: a whip pan across his face with speed lines, eyes wide, lit up.",
+    "art_style": "plainclothes",
+    "language": "gekiga",
+    "start": 158.2,
+    "language_id": "en-019ef6df-b17c-75d0-bf10-c0f7db3ae0ef",
+    "language_name": "Gekiga",
+    "refs": [
+      "refs/s50-wide-eyes.png"
+    ]
+  },
+  {
+    "id": "s51",
+    "lines": [
+      "br_1"
+    ],
+    "mode": "ui",
+    "idea": "A notebook scatter plot of 'life': coloured clusters (work, family, friends) and one grey point labelled '-1 (noise)'; the camera dives into the point and it is a tiny drawing of him. (He really used K-Means and DBSCAN in his Alaska hydrochemistry research.)",
+    "art_style": "plainclothes",
+    "language": "soma",
+    "language_id": "en-019ef751-7c41-7df1-b7d7-9315eeb850f6",
+    "language_name": "Sōma",
+    "refs": [
+      "refs/char-me.png"
+    ]
+  },
+  {
+    "id": "s52",
+    "lines": [
+      "br_2"
+    ],
+    "mode": "ui",
+    "idea": "A shopping cart: 'Ergonomic chair, in cart for 94 days, times considered: 100' with a grey Buy button vs 'Sent ₹5,000 to a friend, times considered: 0', done instantly.",
+    "art_style": null,
+    "language": "citron-counter",
+    "language_id": "en-019ef966-92a9-77f3-b14b-549b1067eac0",
+    "language_name": "Citron Counter"
+  },
+  {
+    "id": "s53",
+    "lines": [
+      "br_3"
+    ],
+    "mode": "manga",
+    "idea": "Hand on his chest, eyes closed, singing out; the sound pours out of his chest as rings; a mute icon cracks.",
+    "art_style": "plainclothes",
+    "language": "halation",
+    "language_id": "en-019efa16-d17d-7320-a992-4f271c14b4c2",
+    "language_name": "Halation",
+    "refs": [
+      "refs/s53-singing.png"
+    ]
+  },
+  {
+    "id": "s54",
+    "lines": [
+      "br_4"
+    ],
+    "mode": "manga",
+    "idea": "The Oracle rolls in pushing an office chair with a big bow on it; he looks at it surprised, teary, blushing.",
+    "art_style": "plainclothes",
+    "language": "furoku",
+    "language_id": "en-019ef917-8344-79d0-ab33-f34f9e455243",
+    "language_name": "Furoku",
+    "refs": [
+      "refs/s54-chair-gift.png"
+    ]
+  },
+  {
+    "id": "s55",
+    "lines": [
+      "fc_1"
+    ],
+    "mode": "pop",
+    "idea": "DON'T COMPRESS ME in a third colour; the vise shatters on the downbeat.",
+    "art_style": null,
+    "language": "knockout",
+    "language_id": "en-019ef950-bebb-7320-9c59-c98ea27217c8",
+    "language_name": "Knockout"
+  },
+  {
+    "id": "s56",
+    "lines": [
+      "fc_2"
+    ],
+    "mode": "ui",
+    "idea": "A video call: 'Blur background' and 'Smooth skin (AI)' toggles switch off, and he steps out of the blur, sharp.",
+    "art_style": "plainclothes",
+    "language": "vitrine",
+    "language_id": "en-019ef914-505a-7972-b4f1-23e6f1b9d67a",
+    "language_name": "Vitrine",
+    "refs": [
+      "refs/s56-webcam.png"
+    ]
+  },
+  {
+    "id": "s57",
+    "lines": [
+      "fc_3"
+    ],
+    "mode": "ui",
+    "idea": "A vinyl player: 'Remove crackle: OFF', the needle crackles, a trembling waveform.",
+    "art_style": null,
+    "language": "cambium",
+    "language_id": "en-019ef920-4320-7fd1-9828-eaa02c73ab2e",
+    "language_name": "Cambium"
+  },
+  {
+    "id": "s58",
+    "lines": [
+      "fc_4"
+    ],
+    "mode": "ui",
+    "idea": "The spectrum at 100%, KEEP.",
+    "art_style": null,
+    "language": "meridian",
+    "language_id": "en-019efb77-0301-7d12-af3c-b85d7288cb34",
+    "language_name": "Meridian"
+  },
+  {
+    "id": "s59",
+    "lines": [
+      "do_1"
+    ],
+    "mode": "ui",
+    "idea": "Drums out: a self-care checkout. [x] buy the chair [x] get the monitor [x] say it when it hurts; ORDER PLACED; a message 'hey, that hurt a bit.' sends.",
+    "art_style": null,
+    "language": "techo",
+    "language_id": "en-019efa04-f746-7df3-9cc1-56c62d315181",
+    "language_name": "Techo"
+  },
+  {
+    "id": "s60",
+    "lines": [
+      "lc_1"
+    ],
+    "mode": "terminal",
+    "idea": "Shrink request denied again; the dashboard explodes into confetti.",
+    "art_style": null,
+    "language": "spool",
+    "language_id": "en-019ef9bd-d955-78d2-bd49-1bd396c7c8d5",
+    "language_name": "Spool"
+  },
+  {
+    "id": "s61",
+    "lines": [
+      "lc_2"
+    ],
+    "mode": "ui",
+    "idea": "The crop tool breaks apart.",
+    "art_style": "plainclothes",
+    "language": "decoupage",
+    "language_id": "en-019efd3b-65eb-75a0-b9b0-9c91a6638e43",
+    "language_name": "Decoupage",
+    "refs": [
+      "refs/s24-glare.png"
+    ]
+  },
+  {
+    "id": "s62",
+    "lines": [
+      "lc_3"
+    ],
+    "mode": "manga",
+    "idea": "The biggest thumbs-up, meter 100%, a FLAC 24/96 badge.",
+    "art_style": "plainclothes",
+    "language": "amikake-console",
+    "language_id": "en-019ef821-6251-7d72-b664-99e23ed79779",
+    "language_name": "Amikake Console",
+    "refs": [
+      "refs/s62-hero-thumbs-up.png"
+    ]
+  },
+  {
+    "id": "s63",
+    "lines": [
+      "lc_4"
+    ],
+    "mode": "ui",
+    "idea": "Properties: BITS LOST 0, bigger.",
+    "art_style": null,
+    "language": "kardex",
+    "language_id": "en-019f2e75-1dec-76e2-9380-2adde9fed568",
+    "language_name": "Kardex"
+  },
+  {
+    "id": "s64",
+    "lines": [
+      "lc_5"
+    ],
+    "mode": "manga",
+    "idea": "He high-fives the Oracle.",
+    "art_style": "plainclothes",
+    "language": "komawari",
+    "language_id": "en-019ef79a-f581-7802-9d0d-3abe0e65f5b0",
+    "language_name": "Komawari",
+    "refs": [
+      "refs/s64-high-five.png"
+    ]
+  },
+  {
+    "id": "s65",
+    "lines": [
+      "o1",
+      "o2"
+    ],
+    "mode": "manga",
+    "idea": "Dawn at the desk: first sunlight through the window, eyes closed, smiling, the Oracle asleep beside him.",
+    "art_style": "plainclothes",
+    "language": "yoake",
+    "language_id": "en-019ef851-277e-7f60-bbb7-9eda9e0eb0cc",
+    "language_name": "Yoake",
+    "refs": [
+      "refs/s65-dawn.png"
+    ]
+  },
+  {
+    "id": "s66",
+    "lines": [
+      "o3"
+    ],
+    "mode": "manga",
+    "idea": "He looks straight at the camera and smiles: 'really, this time'.",
+    "art_style": "plainclothes",
+    "language": "moire-manga-tone-console",
+    "language_id": "en-019f8b67-4602-79d1-82b3-6b645de15769",
+    "language_name": "Moire",
+    "refs": [
+      "refs/s66-to-camera.png"
+    ]
+  },
+  {
+    "id": "s67",
+    "lines": [],
+    "mode": "ui",
+    "idea": "End card: 'Lossless' title, credits 'lyrics: Claude · music: Suno · every frame is JavaScript · abhinavflac.dev', the encoding pill hits 100% 'encoded. 0 bits lost.'",
+    "art_style": null,
+    "language": "tachikiri",
+    "start": 236.033,
+    "language_id": "en-019ef820-29bb-7941-9720-bb01d0378e82",
+    "language_name": "Tachikiri",
+    "art": [
+      "s05-eye-open",
+      "s38-ceiling",
+      "s54-chair-gift",
+      "s66-to-camera"
+    ]
+  }
+]

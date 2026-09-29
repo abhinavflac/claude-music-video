@@ -1,0 +1,146 @@
+{
+ "i2": {
+  "why": "draft line kept: the first voiced bump at 11.98 is \"what\" (4 syllable bumps before the \"away\" plateau at 12.59); the aligner started it at 12.17, 0.2 s late",
+  "words": {
+   "0": [
+    11.95,
+    12.2
+   ],
+   "1": [
+    12.2,
+    12.4
+   ],
+   "2": [
+    12.4,
+    12.62
+   ],
+   "3": [
+    12.62,
+    13.3
+   ]
+  }
+ },
+ "c1_1": {
+  "why": "draft line kept: \"Don't\" rises from the dip at 57.22; the draft sits on it, the aligner 0.06 s later",
+  "words": {
+   "0": [
+    57.24,
+    57.64
+   ],
+   "1": [
+    57.64,
+    58.36
+   ],
+   "2": [
+    58.36,
+    58.71
+   ]
+  }
+ },
+ "v2_1": {
+  "why": "draft line kept: \"Moved\" starts at the /m/ onset at 88.82 after the instrumental break; the aligner put it 0.12 s late",
+  "words": {
+   "0": [
+    88.824,
+    89.224
+   ],
+   "1": [
+    89.224,
+    89.384
+   ],
+   "2": [
+    89.384,
+    89.544
+   ],
+   "3": [
+    89.544,
+    90.024
+   ],
+   "4": [
+    90.024,
+    90.184
+   ],
+   "5": [
+    90.184,
+    90.424
+   ],
+   "6": [
+    90.424,
+    90.584
+   ],
+   "7": [
+    90.584,
+    90.984
+   ],
+   "8": [
+    90.984,
+    91.224
+   ],
+   "9": [
+    91.224,
+    91.304
+   ],
+   "10": [
+    91.304,
+    91.524
+   ]
+  }
+ },
+ "v1_4": {
+  "why": "the aligner pushed \"to dust\" into v1_5 (and squeezed v1_5's \"I\"); the /t/ closure of \"dust\" ends at 33.97",
+  "words": {
+   "11": [
+    33.76,
+    33.85
+   ],
+   "12": [
+    33.85,
+    33.97
+   ]
+  }
+ },
+ "v1_5": {
+  "why": "the aligner squeezed \"I\" (loss 3.7) against \"trained\"; \"I\" is voiced from 33.99, right after the closure of \"dust\"",
+  "words": {
+   "0": [
+    33.99,
+    34.08
+   ]
+  }
+ },
+ "v1_8": {
+  "why": "\"It\" rises right after the dip at 41.80; the aligner put it at 41.93, 0.11 s late at a scene cut",
+  "words": {
+   "0": [
+    41.82,
+    42.02
+   ]
+  }
+ },
+ "post_1": {
+  "why": "the aligner squeezed the second \"bit\" and the third \"every\" (loss 6.1); the /b/ closures sit at 143.00 and 143.66, on the half-beat grid, as in the draft",
+  "words": {
+   "5": [
+    143,
+    143.3
+   ],
+   "6": [
+    143.33,
+    143.62
+   ],
+   "7": [
+    143.66,
+    144
+   ]
+  }
+ },
+ "post_2": {
+  "why": "the last \"bit\" starts at the /b/ closure at 145.65 (draft); the aligner put it 0.29 s late, off the half-beat rhythm",
+  "words": {
+   "5": [
+    145.65,
+    145.98
+   ]
+  }
+ }
+}

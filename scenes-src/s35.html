@@ -1,0 +1,95 @@
+<scene look="bouba-c311f0">
+<!-- v2_7 "So now I build soft landings for the questions half-begun": his own work, a RAG helper for pump selection, in
+     soft inflatable Bouba. The query arrives half-begun: RPM ?, load ?, service life ?. On "soft" three cushions puff up;
+     on "landings" the question marks drop out of the fields and bounce on them; on "questions" a green card says there is
+     no dead end, using typical values, and the fields fill in; on "half-begun" a pump is recommended anyway. -->
+<style>
+    #s35-card { position: absolute; background: var(--k-surface); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s35-h { display: flex; justify-content: space-between; align-items: center; font: 700 1em/1 var(--k-font-display); white-space: nowrap; }
+    .s35-h span { padding: 0.35em 0.7em; border-radius: 999px; background: var(--k-paper); border: 2px solid var(--k-line); color: var(--k-ink); font: 600 0.65em/1 var(--k-font-body); }
+    .s35-fields { display: grid; margin-top: 0.8em; }
+    .s35-f { position: relative; display: flex; justify-content: space-between; align-items: center; padding: 0.5em 0.7em; border: 3px solid var(--k-line); border-radius: calc(var(--k-radius) * 0.7); font: 600 0.85em/1 var(--k-font-body); white-space: nowrap; }
+    .s35-f b { position: relative; min-width: 2.2em; text-align: right; font: 700 1.1em/1 var(--k-font-display); }
+    .s35-q { position: absolute; right: 0.7em; top: 50%; margin-top: -0.55em; font: 800 1.3em/1 var(--k-font-display); color: var(--k-accent-2-t); }
+    .s35-val { opacity: 0; }
+    #s35-pit { position: absolute; left: 0; right: 0; }
+    #s35-pit svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .s35-cush { fill: var(--k-line); stroke: var(--k-accent-2); stroke-width: 5; }
+    #s35-ok { position: absolute; display: flex; align-items: center; gap: 0.6em; padding: 0.7em 0.9em; border-radius: calc(var(--k-radius) * 0.7); background: var(--k-accent); color: var(--k-on-accent); font: 700 0.8em/1.25 var(--k-font-body); opacity: 0; }
+    #s35-ok svg { width: 1.6em; height: 1.6em; flex: none; }
+    #s35-rec { position: absolute; font: 600 0.75em/1 var(--k-font-mono); white-space: nowrap; opacity: 0; }
+    #s35-lyric { position: absolute; font: 800 1em/0.98 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s35-card { left: 80px; top: 110px; width: 900px; height: 880px; padding: 36px 40px; font-size: 38px; }
+    .s35-fields { gap: 18px; }
+    #s35-pit { top: 470px; height: 170px; }
+    #s35-ok { left: 40px; right: 40px; bottom: 96px; }
+    #s35-rec { left: 44px; bottom: 44px; }
+    #s35-lyric { left: 1040px; top: 170px; width: 800px; font-size: 112px; }
+</style>
+<style frame="vert">
+    #s35-card { left: 48px; top: 250px; width: 984px; height: 1064px; padding: 32px 100px 32px 32px; font-size: 40px; }
+    .s35-fields { gap: 18px; }
+    #s35-pit { top: 520px; height: 200px; right: 100px; }
+    #s35-ok { left: 32px; right: 100px; bottom: 100px; }
+    #s35-rec { left: 36px; bottom: 44px; }
+    #s35-lyric { left: 48px; top: 1352px; width: 912px; font-size: 84px; }
+</style>
+<body>
+    <div id="s35-card">
+      <div class="s35-h">pump selection <span>RAG · 214 datasheets</span></div>
+      <div class="s35-fields">
+        <div class="s35-f">rated RPM<b><span class="s35-val">1450</span><span class="s35-q" data-layout-allow-overflow>?</span></b></div>
+        <div class="s35-f">load<b><span class="s35-val">75%</span><span class="s35-q" data-layout-allow-overflow>?</span></b></div>
+        <div class="s35-f">service life<b><span class="s35-val">20k h</span><span class="s35-q" data-layout-allow-overflow>?</span></b></div>
+      </div>
+      <div id="s35-pit"><svg id="s35-svg" data-layout-ignore></svg></div>
+      <div id="s35-ok"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="var(--k-on-accent)"/><path d="M7 12.5 l3.2 3.2 L17 9" fill="none" stroke="var(--k-accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Missing info? No dead end. Using typical values.</span></div>
+      <div id="s35-rec">→ recommended: pump P-7 (typical duty)</div>
+    </div>
+    <div id="s35-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's35', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tSoft = at(/^soft/), tLand = at(/^landings/), tQ = at(/^questions/), tHalf = at(/^half/);
+
+      // three cushions in the pit under the fields, puffing up on "soft"
+      const pit = $('#s35-pit'), PW = pit.clientWidth, PH = pit.clientHeight, sv = $('#s35-svg');
+      sv.setAttribute('viewBox', `0 0 ${PW} ${PH}`);
+      const qs = [...root.querySelectorAll('.s35-q')], cx = [0.2, 0.5, 0.8].map(k => k * PW), cy = PH * 0.62, rw = PW * 0.13, rh = PH * 0.28;
+      const cush = cx.map((x, i) => {
+        const g = K.svg('g', {}, sv);
+        K.svg('path', { class: 's35-cush', d: `M${x - rw} ${cy} C${x - rw} ${cy - rh * 1.3} ${x + rw} ${cy - rh * 1.3} ${x + rw} ${cy} C${x + rw} ${cy + rh * 0.9} ${x - rw} ${cy + rh * 0.9} ${x - rw} ${cy} Z` }, g);
+        gsap.set(g, { scale: 0, svgOrigin: `${x} ${cy + rh * 0.5}` });
+        tl.to(g, { scale: 1, svgOrigin: `${x} ${cy + rh * 0.5}`, duration: 0.35, ease: 'elastic.out(1.1, 0.45)' }, tSoft + i * 0.07);
+        return g;
+      });
+
+      // the question marks drop from their fields onto the cushions and bounce (the cushions squash as they land)
+      const pr = K.pos(pit, $('#s35-card'));
+      qs.forEach((q, i) => {
+        const qp = K.pos(q, $('#s35-card')), dx = pr.x + cx[i] - (qp.x + qp.w / 2), dy = pr.y + cy - rh * 1.25 - (qp.y + qp.h);
+        const t = tLand + i * 0.1;
+        tl.to(q, { x: dx * 0.5, y: -30, rotation: -20, duration: 0.14, ease: 'power2.out' }, t);
+        tl.to(q, { x: dx, y: dy, rotation: 12, duration: 0.28, ease: 'power2.in' }, t + 0.14);
+        tl.to(q, { y: dy - 46, duration: 0.16, ease: 'power2.out' }, t + 0.42);
+        tl.to(q, { y: dy, duration: 0.16, ease: 'power2.in' }, t + 0.58);
+        tl.to(cush[i], { scaleY: 0.72, scaleX: 1.12, svgOrigin: `${cx[i]} ${cy + rh * 0.5}`, duration: 0.07, yoyo: true, repeat: 1, ease: 'power2.out' }, t + 0.42);
+      });
+
+      // no dead end: the card, typical values filling the fields, and a recommendation anyway
+      tl.fromTo($('#s35-ok'), { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'back.out(2.2)' }, tQ);
+      root.querySelectorAll('.s35-val').forEach((v, i) => tl.fromTo(v, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, tQ + 0.08 + i * 0.06));
+      tl.fromTo($('#s35-rec'), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.2, ease: 'power2.out' }, tHalf);
+
+      // the line, SOFT in the mint block
+      const { spans } = K.words($('#s35-lyric'), L, { key: L.words.findIndex(x => /^soft/.test(x.w)), breakBefore: vert ? [5, 8] : [4, 6, 8, 9] });
+      K.reveal(tl, spans, L, 'pop');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

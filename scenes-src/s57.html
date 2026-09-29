@@ -1,0 +1,90 @@
+<scene look="cambium-73ab2e">
+<!-- fc_3 "Keep the crackle, keep the trembling": a record player whose grooves are growth rings. The record turns at 33
+     1/3; on "crackle" Remove crackle switches off and dust pops on the vinyl; on "trembling" Steady pitch switches off and
+     the waveform below starts to wow and flutter. -->
+<style>
+    #s57-deck { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); }
+    #s57-deck svg { position: absolute; overflow: visible; }
+    .s57-ring { fill: none; stroke: var(--k-line); }
+    .s57-lab { font: 600 22px/1 var(--k-font-mono); fill: var(--k-on-accent); letter-spacing: 3px; }
+    #s57-ctl { position: absolute; display: grid; gap: 0.7em; font: 500 1em/1 var(--k-font-body); color: var(--k-on-surface); white-space: nowrap; }
+    .s57-row { display: flex; align-items: center; gap: 0.7em; }
+    .s57-row em { font-style: normal; color: var(--k-muted); }
+    #s57-wave { position: absolute; overflow: visible; }
+    #s57-lyric { position: absolute; font: 600 1em/1 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s57-deck { left: 70px; top: 110px; width: 900px; height: 880px; }
+    #s57-lyric { left: 1020px; top: 140px; width: 860px; font-size: 94px; }
+    #s57-ctl { left: 1020px; top: 470px; font-size: 34px; }
+    #s57-wave { left: 1020px; top: 620px; width: 820px; height: 300px; }
+</style>
+<style frame="vert">
+    #s57-deck { left: 48px; top: 250px; width: 984px; height: 780px; }
+    #s57-ctl { left: 60px; top: 1060px; font-size: 34px; }
+    #s57-wave { left: 60px; top: 1190px; width: 880px; height: 130px; }
+    #s57-lyric { left: 48px; top: 1352px; width: 912px; font-size: 112px; }
+</style>
+<body>
+    <div id="s57-deck"><svg id="s57-rec" data-layout-ignore></svg></div>
+    <div id="s57-lyric"></div>
+    <div id="s57-ctl"><div class="s57-row" id="s57-t0">remove crackle</div><div class="s57-row" id="s57-t1">steady pitch</div></div>
+    <svg id="s57-wave" data-layout-ignore></svg>
+</body>
+<script>
+    (() => {
+      const id = 's57', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tCrackle = at(/^crackle/), tTremble = at(/^trembling/);
+
+      // the record: growth-ring grooves, a label, turning at 33 1/3 rpm; a tonearm resting in the groove
+      const deck = $('#s57-deck'), DW = deck.clientWidth, DH = deck.clientHeight, rec = $('#s57-rec');
+      Object.assign(rec.style, { left: '0px', top: '0px', width: DW + 'px', height: DH + 'px' });
+      rec.setAttribute('viewBox', `0 0 ${DW} ${DH}`);
+      const cx = vert ? DW * 0.42 : DW / 2, cy = DH / 2, R = Math.min(DW, DH) * 0.42, r = K.rng(57);
+      const disc = K.svg('g', {}, rec);
+      K.svg('circle', { cx, cy, r: R, fill: 'var(--k-paper)' }, disc);
+      for (let i = 0; i < 46; i++) { const rr = R * (0.36 + 0.62 * i / 46) + (r() - 0.5) * 3; K.svg('circle', { cx: cx + (r() - 0.5) * 3, cy: cy + (r() - 0.5) * 3, r: rr, class: 's57-ring', 'stroke-width': 0.8 + r() * 1.8 }, disc); }
+      K.svg('circle', { cx, cy, r: R * 0.3, fill: 'var(--k-accent)' }, disc);
+      const lab = K.svg('text', { x: cx, y: cy - 6, 'text-anchor': 'middle', class: 's57-lab' }, disc); lab.textContent = 'LOSSLESS';
+      const lab2 = K.svg('text', { x: cx, y: cy + 26, 'text-anchor': 'middle', class: 's57-lab' }, disc); lab2.textContent = 'SIDE A · 33 RPM';
+      K.svg('circle', { cx, cy, r: 8, fill: 'var(--k-paper)' }, disc);
+      const dust = K.svg('g', {}, rec), specks = Array.from({ length: 40 }, () => { const a = r() * 6.28, d = R * (0.4 + 0.58 * r()); return [K.svg('circle', { cx: cx + Math.cos(a) * d, cy: cy + Math.sin(a) * d, r: 2 + r() * 4, fill: 'var(--k-ink)' }, dust), r()]; });
+      const arm = K.svg('g', {}, rec), px = cx + R * 1.02, py = cy - R * 0.92;
+      K.svg('circle', { cx: px, cy: py, r: 26, fill: 'var(--k-line)', stroke: 'var(--k-muted)', 'stroke-width': 4 }, arm);
+      K.svg('path', { d: `M${px} ${py} L${px - R * 0.1} ${cy + R * 0.3} L${cx + R * 0.62} ${cy + R * 0.5}`, fill: 'none', stroke: 'var(--k-muted)', 'stroke-width': 10, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, arm);
+      K.svg('rect', { x: cx + R * 0.52, y: cy + R * 0.44, width: 44, height: 26, rx: 4, fill: 'var(--k-accent-3)', transform: `rotate(24 ${cx + R * 0.62} ${cy + R * 0.5})` }, arm);
+      const hash = (i, f) => { const x = Math.sin(i * 12.9898 + f * 78.233) * 43758.5453; return x - Math.floor(x); };
+      K.drive(tl, 0, S.dur, t => {
+        disc.setAttribute('transform', `rotate(${((t * 200) % 360).toFixed(1)} ${cx} ${cy})`);
+        const f = Math.floor(t * 30);
+        specks.forEach(([c, k], i) => { c.style.opacity = t < tCrackle ? 0 : (hash(i * 7 + k, f) > 0.72 ? 1 : 0); });
+      }, 0, S.dur);
+
+      // the switches
+      [[0, tCrackle], [1, tTremble]].forEach(([i, t]) => { const tg = K.toggle($('#s57-t' + i), true); $('#s57-t' + i).prepend(tg.el); K.flip(tl, tg, t, false); });
+
+      // the waveform: steady, then wow and flutter once pitch is no longer steadied
+      const wv = $('#s57-wave'), WW = wv.clientWidth, WH = wv.clientHeight;
+      wv.setAttribute('viewBox', `0 0 ${WW} ${WH}`);
+      const wp = K.svg('path', { fill: 'none', stroke: 'var(--k-accent)', 'stroke-width': 4, 'stroke-linejoin': 'round' }, wv);
+      K.drive(tl, 0, S.dur, t => {
+        const wob = t < tTremble ? 0 : Math.min(1, (t - tTremble) / 0.3), N = 220;
+        let d = '';
+        for (let i = 0; i <= N; i++) {
+          const u = i / N, ph = u * 26 + t * 18, wow = 1 + wob * 0.35 * Math.sin(t * 7 + u * 3);
+          const y = WH / 2 + WH * 0.38 * Math.sin(ph * wow) * (0.6 + 0.4 * Math.sin(u * 5 + t * 3)) + wob * (hash(i, Math.floor(t * 30)) - 0.5) * 18;
+          d += `${i ? 'L' : 'M'}${(u * WW).toFixed(1)} ${y.toFixed(1)} `;
+        }
+        wp.setAttribute('d', d);
+      }, 0, S.dur);
+
+      // the line, TREMBLING in the amber block, trembling on its word
+      const { spans } = K.words($('#s57-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [2, 4] : [3] });
+      K.reveal(tl, spans, L, 'rise');
+      K.shake(tl, $('#s57-lyric'), tTremble + 0.1, 7, 8, 57);
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

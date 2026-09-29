@@ -1,0 +1,22 @@
+Make the music video for my song "Lossless", at the reference-level craft described in docs/PIPELINE.md: black-and-white manga panels of a main character and a cute mascot, fast cuts every line, every lyric inside a fake UI (chat apps, terminals, forms, dashboards) in Katagami design languages, big kinetic type with one highlighted word, diagonal slab wipes, a progress pill in the top-left, a counter in the top-right, small "art style / design language, katagami.ai" credits. Same craft, but the story, characters, jokes and layouts are mine; copy nothing from any existing film and do not reuse its characters.
+
+This folder is set up already:
+- song\song.wav is the final take (48 kHz). song\lyrics.json is final and follows the recording.
+- song\timing.json is a DRAFT from word-level recognition. ELEVENLABS_API_KEY is set: run the forced alignment on song\vocals.wav (the isolated vocal, same length as the song) and rebuild timing.json with tools/align-to-timing.mjs. Compare with the draft and keep the better one per line.
+- song\beats.json, song\vocals.wav and song\NOTES.md have the measured tempo (90.99 BPM), key and structure.
+
+Scenes: scenes.json is my draft plan (67 scenes, one idea each, four modes: manga, ui, terminal, pop). Keep the ideas unless a better joke fits the line, and keep every lyric in exactly one scene. Choose the looks with the Katagami MCP and show me the picks with thumbnails before building:
+- manga: first check whether the "Plainclothes" art style is available to me; otherwise ask_library for "black-and-white modern anime manga, posterized greys, screentone, dramatic lighting, a young guy in a hoodie". Make the character sheets first and use them as references in every shot.
+- ui / terminal / pop: a different fitting design language per scene, inside those modes.
+
+Characters (both original designs, not based on any real person):
+- Me: an original anime guy, early 20s, a data/AI engineer who flashes custom ROMs at 2 a.m. and is an audiophile ("flac" is in my handle). Messy black hair with a spiky fringe, sharp dark eyes, slim, black oversized hoodie, wired in-ear monitors in both ears with thin cables running down to his chest. Mostly deadpan, with big expressive reactions when a line calls for it.
+- The Oracle: my RAG bot as a small, cute desk-lamp robot. A round dome shade as its head with two big glossy eyes and blush marks, a springy two-part arm, a round base with small wheels. It glows softly and it is honest: it says "I don't know" when it doesn't.
+
+Reference images: if OPENAI_API_KEY, FAL_KEY or GEMINI_API_KEY is set, generate them with it. If none is set, write every reference prompt (character sheets first, then each shot) to refs\PROMPTS.md with the exact file name to save each image as, then stop and tell me. I will make the images in ChatGPT or Gemini, save them into refs\, and tell you to continue; then trace them into vector plates the way docs\PIPELINE.md describes.
+
+Chrome for my film: a pill in the top-left "encoding abhinav.wav... N%" that fills with the song and ends "encoded. 0 bits lost.", and a bitrate counter in the top-right that climbs 128 kbps -> 320 -> 1411 -> FLAC 24/96, drops to "offline" during the account-suspension verse and "buffering" at the hard stop.
+
+Rules: no real logos or brand marks (generic icons only), all text drawn in code, English only.
+
+Outputs: the 16:9 film, the native 9:16 film, and the tap-to-restyle page. I'll put the page on my Next.js site (abhinavflac.dev) under /lossless, so build it as a static folder I can drop into public/.

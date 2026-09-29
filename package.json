@@ -1,0 +1,45 @@
+{
+  "name": "claude-music-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lossless: a music video drawn entirely in code. 67 scenes in 67 Katagami design languages, manga traced to vectors, rendered with HyperFrames, restylable live in the browser.",
+  "keywords": [
+    "music-video",
+    "hyperframes",
+    "gsap",
+    "katagami",
+    "lyric-video",
+    "generative-design",
+    "claude"
+  ],
+  "homepage": "https://abhinavflac.dev/lossless",
+  "author": "Abhinav <https://abhinavflac.dev>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/dev.mjs",
+    "scenes": "node tools/gen-scenes.mjs",
+    "fonts": "node tools/fetch-fonts.mjs",
+    "build:wide": "node tools/build-film.mjs --frame wide",
+    "build:vert": "node tools/build-film.mjs --frame vert",
+    "render:wide": "node tools/render.mjs wide",
+    "render:vert": "node tools/render.mjs vert",
+    "encode": "node tools/encode.mjs",
+    "site": "node tools/site.mjs",
+    "test:site": "node tools/test-site.mjs",
+    "audit:looks": "node tools/audit-looks.mjs",
+    "lint": "node tools/fromto-lint.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.2.4",
+    "@types/react-dom": "^19.2.0",
+    "gsap": "3.14.2",
+    "hyperframes": "^0.8.81",
+    "next": "^16.2.4",
+    "playwright": "^1.63.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "typescript": "7.0.2"
+  }
+}

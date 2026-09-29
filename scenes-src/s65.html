@@ -1,0 +1,56 @@
+<scene look="yoake-0eb0cc">
+<!-- o1 "Bit-perfect." / o2 "Life is good.": dawn at the desk. He has fallen asleep smiling on his arms, the Oracle asleep
+     beside him, first light slanting in through the window and brightening across the scene. A network-dawn console in
+     the dark corner reports the night: sync complete, 0 bits lost, the clock rolling past six; the two lines land in it. -->
+<style>
+    #s65-cam { position: absolute; inset: 0; }
+    #s65-art { position: absolute; overflow: hidden; }
+    #s65-light { position: absolute; inset: -20%; background: linear-gradient(118deg, transparent 38%, var(--k-accent) 52%, var(--k-accent-2) 62%, transparent 76%); mix-blend-mode: multiply; opacity: 0; pointer-events: none; }
+    #s65-con { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s65-h { display: flex; justify-content: space-between; padding: 0.55em 0.8em; border-bottom: 2px solid var(--k-line); font: 400 1em/1 var(--k-font-mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    .s65-st { padding: 0.5em 0.8em 0; font: 400 1em/1.6 var(--k-font-mono); white-space: nowrap; }
+    .s65-st b { font-weight: 400; background: var(--k-accent); color: oklch(from var(--k-accent) clamp(0, (0.62 - l) * 1000, 1) 0 0); padding: 0 0.3em; }
+    .s65-lines { padding: 6px 24px 18px; }
+    .s65-line { font: 700 var(--lf)/0.98 var(--k-font-display); letter-spacing: -0.01em; text-transform: uppercase; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s65-art { inset: 0; }
+    #s65-con { left: 56px; top: 104px; width: 820px; font-size: 28px; --lf: 118px; }
+</style>
+<style frame="vert">
+    #s65-art { left: 0; top: 0; width: 1080px; height: 1330px; }
+    #s65-con { left: 48px; top: 1250px; width: 984px; font-size: 30px; --lf: 112px; }
+    .s65-h, .s65-st, .s65-lines { padding-right: 100px; }
+</style>
+<body>
+    <div id="s65-cam" data-layout-allow-overflow data-bleed><div id="s65-art"></div><div id="s65-light" data-layout-ignore></div></div>
+    <div id="s65-con">
+      <div class="s65-h"><span>night · summary</span><span id="s65-clock">06:11</span></div>
+      <div class="s65-st">sync: complete · lost: <b>0 bits</b></div>
+      <div class="s65-lines"><div class="s65-line" id="s65-l0"></div><div class="s65-line" id="s65-l1"></div></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's65', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), [L0, L1] = S.lines;
+
+      // dawn: the plate in the console's clean white and ink, a slow push, light rising through the window
+      const vb = vert ? '700 0 1088 1340' : '0 0 2400 1340';
+      K.shot($('#s65-art'), 's65-dawn', { viewBox: vb, inks: [K.tok(root, 'paper'), K.tok(root, 'ink')] });
+      gsap.set($('#s65-cam'), { transformOrigin: vert ? '40% 50%' : '42% 55%' });
+      tl.fromTo($('#s65-cam'), { scale: 1 }, { scale: 1.06, duration: S.dur, ease: 'none' }, 0);
+      tl.fromTo($('#s65-light'), { opacity: 0, x: 60 }, { opacity: 0.55, x: 0, duration: S.dur, ease: 'power1.inOut' }, 0);
+
+      // the clock rolls past six; the lines land in the console, BIT-PERFECT then GOOD in the pale block
+      K.drive(tl, 0, S.dur, t => { $('#s65-clock').textContent = t < S.downbeats[1] ? '06:11' : '06:12'; }, 0, S.dur);
+      [[L0, '#s65-l0'], [L1, '#s65-l1']].forEach(([L, sel]) => {
+        const { box, spans } = K.words($(sel), L, { key: L.words.length - 1 });
+        K.fit(tl, S.dur, $(sel), box, vert ? 836 : 772);
+        K.reveal(tl, spans, L, 'rise');
+      });
+
+      K.slabIn(root, tl, { dur: 0.3 });
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,454 @@
+{
+ "tokens": [
+  "paper",
+  "surface",
+  "ink",
+  "on-surface",
+  "muted",
+  "line",
+  "accent",
+  "accent-2",
+  "accent-3",
+  "on-accent",
+  "font-display",
+  "font-body",
+  "font-mono",
+  "radius",
+  "shadow"
+ ],
+ "looks": [
+  {
+   "id": "original",
+   "name": "Original",
+   "k": null,
+   "inks": null,
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#0A0A0B\"/><path d=\"M7.5 5.5 L15 10 L7.5 14.5 Z\" fill=\"#7CFF9A\"/>"
+  },
+  {
+   "id": "manga",
+   "name": "Manga",
+   "language": "Plainclothes",
+   "url": "https://katagami.ai",
+   "fonts": "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=Share+Tech+Mono&display=swap",
+   "k": {
+    "paper": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "ink": "#120E18",
+    "on-surface": "#120E18",
+    "muted": "#787480",
+    "line": "#120E18",
+    "accent": "#FFF26A",
+    "accent-2": "#FFF26A",
+    "accent-3": "#FFFFFF",
+    "on-accent": "#120E18",
+    "font-display": "'Barlow Condensed', sans-serif",
+    "font-body": "'IBM Plex Sans Condensed', sans-serif",
+    "font-mono": "'Share Tech Mono', monospace",
+    "radius": "24px",
+    "shadow": "none",
+    "accent-t": "#120E18",
+    "accent-2-t": "#120E18",
+    "accent-3-t": "#787480"
+   },
+   "inks": [
+    "#FFFFFF",
+    "#FFF26A",
+    "#120E18"
+   ],
+   "ink": [
+    "#120E18",
+    "#FFF26A",
+    "#FFFFFF"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#FFFFFF\"/><g fill=\"#120E18\"><circle cx=\"4\" cy=\"4\" r=\"1.6\"/><circle cx=\"10\" cy=\"4\" r=\"1.6\"/><circle cx=\"16\" cy=\"4\" r=\"1.6\"/><circle cx=\"7\" cy=\"9\" r=\"2.2\"/><circle cx=\"13\" cy=\"9\" r=\"2.2\"/><circle cx=\"4\" cy=\"15\" r=\"2.9\"/><circle cx=\"10\" cy=\"15\" r=\"2.9\"/><circle cx=\"16\" cy=\"15\" r=\"2.9\"/></g>"
+  },
+  {
+   "id": "comic",
+   "name": "Comic",
+   "language": "Benday",
+   "url": "https://katagami.ai",
+   "fonts": "https://fonts.googleapis.com/css2?family=Bangers&family=Archivo+Narrow:wght@400;500;600;700&family=Share+Tech+Mono&display=swap",
+   "k": {
+    "paper": "#F2C14E",
+    "surface": "#F9E6B4",
+    "ink": "#16130C",
+    "on-surface": "#16130C",
+    "muted": "#63512A",
+    "line": "#16130C",
+    "accent": "#D5311B",
+    "accent-2": "#1F4FE0",
+    "accent-3": "#FBF6EA",
+    "on-accent": "#FBF6EA",
+    "font-display": "'Bangers', sans-serif",
+    "font-body": "'Archivo Narrow', sans-serif",
+    "font-mono": "'Share Tech Mono', monospace",
+    "radius": "0px",
+    "shadow": "none",
+    "accent-t": "#8F1E0B",
+    "accent-2-t": "#1A3FB0",
+    "accent-3-t": "#574522"
+   },
+   "inks": [
+    "#F2C14E",
+    "#D5311B",
+    "#16130C"
+   ],
+   "ink": [
+    "#D5311B",
+    "#1F4FE0",
+    "#F2C14E"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#F2C14E\"/><g fill=\"#D5311B\"><circle cx=\"5\" cy=\"5\" r=\"2\"/><circle cx=\"11\" cy=\"5\" r=\"2\"/><circle cx=\"8\" cy=\"10.5\" r=\"2\"/><circle cx=\"14\" cy=\"10.5\" r=\"2\"/><circle cx=\"5\" cy=\"16\" r=\"2\"/></g><rect x=\"10\" y=\"13\" width=\"8\" height=\"5\" fill=\"#16130C\"/>",
+   "synth": false
+  },
+  {
+   "id": "kissaten",
+   "name": "Kissaten",
+   "language": "Kissaten",
+   "url": "https://katagami.ai/language/en-01a03f5b-7673-7c82-b8e8-a08787b9a655",
+   "fonts": "https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@700&family=Zen+Kaku+Gothic+New:wght@500;700&family=DotGothic16&display=swap",
+   "fit": {
+    "Kaisei Decol": 66,
+    "Zen Kaku Gothic New": 92,
+    "DotGothic16": 94
+   },
+   "k": {
+    "paper": "#FFFFFF",
+    "surface": "#FFFFFF",
+    "ink": "#1E120C",
+    "on-surface": "#1E120C",
+    "muted": "#5E4A3E",
+    "line": "#1E120C",
+    "accent": "#F2A516",
+    "accent-2": "#C8812F",
+    "accent-3": "#A3161E",
+    "on-accent": "#1E120C",
+    "font-display": "'Kaisei Decol Fit', 'Kaisei Decol', serif",
+    "font-body": "'Zen Kaku Gothic New Fit', 'Zen Kaku Gothic New', sans-serif",
+    "font-mono": "'DotGothic16 Fit', 'DotGothic16', monospace",
+    "radius": "0px",
+    "shadow": "none",
+    "accent-t": "#6B3F10",
+    "accent-2-t": "#8A5A20",
+    "accent-3-t": "#A3161E"
+   },
+   "inks": [
+    "#FFFFFF",
+    "#F2A516",
+    "#1E120C"
+   ],
+   "ink": [
+    "#F2A516",
+    "#1E120C",
+    "#A3161E"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#FFFFFF\"/><rect y=\"12\" width=\"20\" height=\"8\" fill=\"#2B1A11\"/><circle cx=\"10\" cy=\"9\" r=\"5.5\" fill=\"#F2A516\"/><circle cx=\"15\" cy=\"15.5\" r=\"3\" fill=\"#A3161E\"/>"
+  },
+  {
+   "id": "lampblack",
+   "name": "Lampblack",
+   "language": "lampblack",
+   "url": "https://katagami.ai/language/en-019ef882-27ca-7fc0-ae5d-e96dc8bcaab7",
+   "fonts": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,640&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+   "k": {
+    "paper": "#ECE6D6",
+    "surface": "#F8F3E6",
+    "ink": "#0B0A08",
+    "on-surface": "#0B0A08",
+    "muted": "#6C655A",
+    "line": "#1A1714",
+    "accent": "#8A5A2B",
+    "accent-2": "#2F5A47",
+    "accent-3": "#2C3E55",
+    "on-accent": "#F8F3E6",
+    "font-display": "'Cormorant Garamond', sans-serif",
+    "font-body": "'Source Serif 4', sans-serif",
+    "font-mono": "'IBM Plex Mono', monospace",
+    "radius": "0px",
+    "shadow": "0 18px 40px rgba(11,10,8,0.16)",
+    "accent-t": "#8A5A2B",
+    "accent-2-t": "#2F5A47",
+    "accent-3-t": "#2C3E55"
+   },
+   "inks": [
+    "#ECE6D6",
+    "#8A5A2B",
+    "#0B0A08"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#ECE6D6\"/><path d=\"M5 15 C8 6, 12 5, 15 9 C13 7, 10 8, 9 12 C12 9, 15 11, 15 15\" fill=\"#0B0A08\"/>",
+   "ink": [
+    "#8A5A2B",
+    "#ECE6D6",
+    "#0B0A08"
+   ]
+  },
+  {
+   "id": "risograph",
+   "name": "Risograph",
+   "language": "risograph",
+   "url": "https://katagami.ai/language/en-019efd20-71ad-70d0-8ae9-148e7ce76d37",
+   "fonts": "https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Archivo+Expanded:wght@700;800;900&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap",
+   "k": {
+    "paper": "#F3EAD8",
+    "surface": "#FBF5E8",
+    "ink": "#211A2E",
+    "on-surface": "#211A2E",
+    "muted": "#6E5A6B",
+    "line": "#E4D6BA",
+    "accent": "#FF2E88",
+    "accent-2": "#1F5CFF",
+    "accent-3": "#FFC21F",
+    "on-accent": "#211A2E",
+    "font-display": "'Archivo', sans-serif",
+    "font-body": "'Space Grotesk', sans-serif",
+    "font-mono": "'Space Mono', monospace",
+    "radius": "16px",
+    "shadow": "none",
+    "accent-t": "#C1286F",
+    "accent-2-t": "#1F59F7",
+    "accent-3-t": "#836427"
+   },
+   "inks": [
+    "#F3EAD8",
+    "#FF2E88",
+    "#211A2E"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#F3EAD8\"/><circle cx=\"8\" cy=\"10\" r=\"5.5\" fill=\"#FF2E88\"/><circle cx=\"12.5\" cy=\"9\" r=\"5\" fill=\"#1F5CFF\" style=\"mix-blend-mode:multiply\"/>",
+   "ink": [
+    "#FF2E88",
+    "#F3EAD8",
+    "#211A2E"
+   ]
+  },
+  {
+   "id": "dither",
+   "name": "Dither",
+   "language": "Dither",
+   "url": "https://katagami.ai/language/en-019f3dc1-daa0-7132-b782-52468ebdfb94",
+   "fonts": "https://fonts.googleapis.com/css2?family=Jersey+10&family=VT323&display=swap",
+   "k": {
+    "paper": "#0A0A0A",
+    "surface": "#161616",
+    "ink": "#F2F2F2",
+    "on-surface": "#F2F2F2",
+    "muted": "#9AA39A",
+    "line": "#3A3F3A",
+    "accent": "#55FF55",
+    "accent-2": "#55FFFF",
+    "accent-3": "#FF55FF",
+    "on-accent": "#0A0A0A",
+    "font-display": "'Jersey 10', monospace",
+    "font-body": "'VT323', monospace",
+    "font-mono": "'VT323', monospace",
+    "radius": "0px",
+    "shadow": "4px 4px 0 #000000",
+    "accent-t": "#55FF55",
+    "accent-2-t": "#55FFFF",
+    "accent-3-t": "#FF55FF"
+   },
+   "inks": [
+    "#0A0A0A",
+    "#55FF55",
+    "#F2F2F2"
+   ],
+   "ink": [
+    "#55FF55",
+    "#FF55FF",
+    "#55FFFF"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#0A0A0A\"/><g fill=\"#FF55FF\"><rect x=\"4\" y=\"4\" width=\"3\" height=\"3\"/><rect x=\"10\" y=\"4\" width=\"3\" height=\"3\"/><rect x=\"7\" y=\"7\" width=\"3\" height=\"3\"/><rect x=\"13\" y=\"7\" width=\"3\" height=\"3\"/></g><rect x=\"4\" y=\"12\" width=\"12\" height=\"4\" fill=\"#55FFFF\"/>",
+   "synth": false
+  },
+  {
+   "id": "pop",
+   "name": "Pop",
+   "language": "Plakat",
+   "url": "https://katagami.ai/language/en-019f3dbe-fcec-7783-a8a6-24c3d4a48736",
+   "fonts": "https://fonts.googleapis.com/css2?family=League+Gothic&family=Sofia+Sans+Condensed:wght@400;500;600;700&family=Share+Tech+Mono&display=swap",
+   "k": {
+    "paper": "#FFF4F8",
+    "surface": "#FFFFFF",
+    "ink": "#141414",
+    "on-surface": "#141414",
+    "muted": "#6A5A66",
+    "line": "#141414",
+    "accent": "#FF2D7A",
+    "accent-2": "#00C7F2",
+    "accent-3": "#FFD84D",
+    "on-accent": "#141414",
+    "font-display": "'League Gothic', sans-serif",
+    "font-body": "'Sofia Sans Condensed', sans-serif",
+    "font-mono": "'Share Tech Mono', monospace",
+    "radius": "16px",
+    "shadow": "4px 4px 0 0 #141414",
+    "accent-t": "#C2185B",
+    "accent-2-t": "#00697A",
+    "accent-3-t": "#8A6D00"
+   },
+   "inks": [
+    "#FFF4F8",
+    "#FF2D7A",
+    "#141414"
+   ],
+   "ink": [
+    "#FF2D7A",
+    "#00C7F2",
+    "#FFD84D"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#FFF4F8\"/><rect x=\"2.5\" y=\"2.5\" width=\"10\" height=\"10\" fill=\"#FF2D7A\" stroke=\"#141414\" stroke-width=\"1.5\"/><circle cx=\"13.5\" cy=\"13.5\" r=\"4.2\" fill=\"#00C7F2\" stroke=\"#141414\" stroke-width=\"1.5\"/>",
+   "synth": false
+  },
+  {
+   "id": "rosee",
+   "name": "Rosée",
+   "language": "rosee",
+   "url": "https://katagami.ai/language/en-019ef74d-5ccb-73e1-8e3a-59b2526346d3",
+   "fonts": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=IBM+Plex+Mono:wght@500&family=Instrument+Sans:wght@400;500;600;700&display=swap",
+   "k": {
+    "paper": "#FBFAF6",
+    "surface": "#FFFFFF",
+    "ink": "#2C2925",
+    "on-surface": "#2C2925",
+    "muted": "#2C2925",
+    "line": "#E5E2DC",
+    "accent": "#EF9A82",
+    "accent-2": "#F2B6C6",
+    "accent-3": "#BEE8D6",
+    "on-accent": "#2C2925",
+    "font-display": "'Fraunces', sans-serif",
+    "font-body": "'Instrument Sans', sans-serif",
+    "font-mono": "'IBM Plex Mono', monospace",
+    "radius": "24px",
+    "shadow": "none",
+    "accent-t": "#956657",
+    "accent-2-t": "#876A6F",
+    "accent-3-t": "#66756C"
+   },
+   "inks": [
+    "#FBFAF6",
+    "#EF9A82",
+    "#2C2925"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#FBFAF6\"/><circle cx=\"10\" cy=\"10\" r=\"5.5\" fill=\"#EF9A82\"/><circle cx=\"14\" cy=\"14\" r=\"3\" fill=\"#BEE8D6\"/>",
+   "ink": [
+    "#EF9A82",
+    "#FBFAF6",
+    "#2C2925"
+   ]
+  },
+  {
+   "id": "ringback",
+   "name": "Ringback",
+   "language": "ringback",
+   "url": "https://katagami.ai/language/en-019ef863-a6d4-78f2-86b7-5c05d5eb44ae",
+   "fonts": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap",
+   "k": {
+    "paper": "#15131F",
+    "surface": "#1E1B2B",
+    "ink": "#EDEBF5",
+    "on-surface": "#EDEBF5",
+    "muted": "#8C88A6",
+    "line": "#34304A",
+    "accent": "#E8B23C",
+    "accent-2": "#2A2638",
+    "accent-3": "#E8B23C",
+    "on-accent": "#1A1408",
+    "font-display": "'Space Grotesk', sans-serif",
+    "font-body": "'Space Grotesk', sans-serif",
+    "font-mono": "'Spline Sans Mono', monospace",
+    "radius": "16px",
+    "shadow": "0 0 0 1px #34304A, 0 0 36px rgba(232,178,60,.14)",
+    "accent-t": "#E8B23C",
+    "accent-2-t": "#888593",
+    "accent-3-t": "#E8B23C"
+   },
+   "inks": [
+    "#EDEBF5",
+    "#E8B23C",
+    "#15131F"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#15131F\"/><circle cx=\"10\" cy=\"10\" r=\"5.5\" fill=\"none\" stroke=\"#E8B23C\" stroke-width=\"2\"/><circle cx=\"10\" cy=\"10\" r=\"1.8\" fill=\"#E8B23C\"/>",
+   "ink": [
+    "#E8B23C",
+    "#EDEBF5",
+    "#15131F"
+   ]
+  },
+  {
+   "id": "lantern",
+   "name": "Lantern",
+   "language": "lantern",
+   "url": "https://katagami.ai/language/en-019ef94b-23a6-7ff3-bbe5-6bd693b94931",
+   "fonts": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,500&family=Inter+Tight:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap",
+   "k": {
+    "paper": "#16122A",
+    "surface": "#211C3E",
+    "ink": "#F4ECDA",
+    "on-surface": "#F4ECDA",
+    "muted": "#9C90BA",
+    "line": "#0A0816",
+    "accent": "#F3A93C",
+    "accent-2": "#F3A93C",
+    "accent-3": "#F3A93C",
+    "on-accent": "#16122A",
+    "font-display": "'Fraunces', sans-serif",
+    "font-body": "'Inter Tight', sans-serif",
+    "font-mono": "'Spline Sans Mono', monospace",
+    "radius": "0px",
+    "shadow": "0 18px 48px rgba(0,0,0,0.55)",
+    "accent-t": "#F3A93C",
+    "accent-2-t": "#F3A93C",
+    "accent-3-t": "#F3A93C"
+   },
+   "inks": [
+    "#F4ECDA",
+    "#F3A93C",
+    "#16122A"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#16122A\"/><rect x=\"7\" y=\"4\" width=\"6\" height=\"12\" rx=\"3\" fill=\"#F3A93C\"/>",
+   "ink": [
+    "#F3A93C",
+    "#F4ECDA",
+    "#16122A"
+   ]
+  },
+  {
+   "id": "confetti",
+   "name": "Confetti",
+   "language": "confetti",
+   "url": "https://katagami.ai/language/en-019f8aff-7550-7ee3-8429-d90ca52e7b5c",
+   "fonts": "https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Bungee&family=IBM+Plex+Mono:wght@400;500;600&display=swap",
+   "k": {
+    "paper": "#F6F3EE",
+    "surface": "#DFF7EE",
+    "ink": "#111111",
+    "on-surface": "#111111",
+    "muted": "#5F5A67",
+    "line": "#111111",
+    "accent": "#12CFD0",
+    "accent-2": "#FF5FA2",
+    "accent-3": "#12CFD0",
+    "on-accent": "#111111",
+    "font-display": "'Bungee', sans-serif",
+    "font-body": "'Archivo', sans-serif",
+    "font-mono": "'IBM Plex Mono', monospace",
+    "radius": "16px",
+    "shadow": "6px 6px 0 #111111",
+    "accent-t": "#127878",
+    "accent-2-t": "#B34674",
+    "accent-3-t": "#127878"
+   },
+   "inks": [
+    "#F6F3EE",
+    "#12CFD0",
+    "#111111"
+   ],
+   "sw": "<rect width=\"20\" height=\"20\" fill=\"#F6F3EE\"/><rect x=\"3\" y=\"3\" width=\"6\" height=\"6\" fill=\"#12CFD0\"/><circle cx=\"13.5\" cy=\"13.5\" r=\"3.5\" fill=\"#FF5FA2\"/><rect x=\"12.5\" y=\"3\" width=\"5\" height=\"5\" fill=\"#F5DD22\"/>",
+   "ink": [
+    "#12CFD0",
+    "#F6F3EE",
+    "#111111"
+   ]
+  }
+ ]
+}

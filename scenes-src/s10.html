@@ -1,0 +1,120 @@
+<scene look="mimeo-676771">
+<!-- v1_4 "The feed's a copy of a copy, every edge ground down to dust": a repost feed of one picture, his photo of the
+     Oracle. @abhinav posts it clean; @repost_bot's copy comes back toner-heavy, @repost_bot_2's blocky, @aggregator's
+     ("copy of a copy") so blocky it crumbles into grey dust, leaving "[image unavailable]". Each copy lands on its own
+     sung word, a little more crooked than the last, and a little more popular. -->
+<style>
+    .s10-defs { position: absolute; width: 0; height: 0; }
+    #s10-head { position: absolute; display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 12px; border-bottom: 5px solid var(--k-ink); white-space: nowrap; }
+    #s10-head b { font: 700 1em/1 var(--k-font-display); letter-spacing: -0.02em; text-transform: uppercase; }
+    #s10-head span { font: 400 0.6em/1 var(--k-font-body); color: var(--k-muted); }
+    #s10-lyric { position: absolute; font: 700 1em/0.95 var(--k-font-display); letter-spacing: -0.025em; color: var(--k-ink); }
+    .s10-card { position: absolute; background: var(--k-surface); border: 3px solid var(--k-ink); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s10-top { display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+    .s10-av { display: grid; place-items: center; flex: none; border: 3px solid var(--k-ink); border-radius: 50%; font: 700 0.9em/1 var(--k-font-display); text-transform: uppercase; }
+    .s10-who b { display: block; font: 700 1em/1.05 var(--k-font-display); letter-spacing: -0.01em; }
+    .s10-who span { display: block; font: 400 0.72em/1.2 var(--k-font-body); color: var(--k-muted); }
+    .s10-img { position: relative; overflow: hidden; border: 2px solid var(--k-ink); background: var(--k-surface); }
+    .s10-in { position: absolute; inset: 0; }
+    .s10-mark { position: absolute; left: 50%; top: 58%; font: 500 0.75em/1 var(--k-font-mono); letter-spacing: 0.08em; color: var(--k-ink); opacity: 0.55; transform: translate(-50%, -50%) rotate(-24deg); white-space: nowrap; }
+    .s10-foot { font: 400 0.72em/1 var(--k-font-body); color: var(--k-muted); white-space: nowrap; }
+    .s10-foot b { color: var(--k-accent-t); font-weight: 600; }
+    #s10-gone { position: absolute; inset: 0; display: grid; place-items: center; font: 500 0.8em/1 var(--k-font-mono); color: var(--k-muted); opacity: 0; white-space: nowrap; }
+    #s10-dust { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+</style>
+<style frame="wide">
+    #s10-head { left: 80px; top: 96px; width: 1760px; font-size: 40px; }
+    #s10-lyric { left: 80px; top: 184px; width: 1760px; font-size: 90px; }
+    .s10-card { top: 410px; width: 410px; padding: 14px; font-size: 30px; }
+    .s10-av { width: 56px; height: 56px; }
+    .s10-img { width: 376px; height: 376px; margin: 12px 0; }
+    #s10-c0 { left: 80px; } #s10-c1 { left: 530px; } #s10-c2 { left: 980px; } #s10-c3 { left: 1430px; }
+</style>
+<style frame="vert">
+    #s10-head { left: 48px; top: 250px; width: 912px; font-size: 44px; }
+    .s10-card { left: 48px; width: 984px; height: 240px; padding: 16px; font-size: 40px; display: grid; grid-template-columns: 200px 1fr; grid-template-rows: auto 1fr auto; column-gap: 24px; }
+    .s10-card .s10-img { grid-row: 1 / 4; grid-column: 1; width: 200px; height: 200px; }
+    .s10-card .s10-top { grid-column: 2; }
+    .s10-card .s10-foot { grid-column: 2; grid-row: 3; font-size: 0.75em; }
+    .s10-av { width: 64px; height: 64px; }
+    #s10-c0 { top: 336px; } #s10-c1 { top: 584px; } #s10-c2 { top: 832px; } #s10-c3 { top: 1080px; }
+    #s10-lyric { left: 48px; top: 1352px; width: 912px; font-size: 92px; font-stretch: 82%; }
+</style>
+<body>
+    <svg class="s10-defs" aria-hidden="true">
+      <filter id="s10-toner" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+        <feMorphology operator="erode" radius="1.2"/><feGaussianBlur stdDeviation="1.6"/>
+        <feComponentTransfer><feFuncR type="linear" slope="2.6" intercept="-0.9"/><feFuncG type="linear" slope="2.6" intercept="-0.9"/><feFuncB type="linear" slope="2.6" intercept="-0.9"/></feComponentTransfer>
+      </filter>
+      <filter id="s10-px7" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+        <feFlood x="3" y="3" width="2" height="2"/><feComposite width="7" height="7"/><feTile result="grid"/>
+        <feComposite in="SourceGraphic" in2="grid" operator="in"/><feMorphology operator="dilate" radius="4"/>
+        <feComponentTransfer><feFuncR type="linear" slope="1.6" intercept="-0.3"/><feFuncG type="linear" slope="1.6" intercept="-0.3"/><feFuncB type="linear" slope="1.6" intercept="-0.3"/></feComponentTransfer>
+      </filter>
+      <filter id="s10-px16" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">
+        <feFlood x="7" y="7" width="2" height="2"/><feComposite width="16" height="16"/><feTile result="grid"/>
+        <feComposite in="SourceGraphic" in2="grid" operator="in"/><feMorphology operator="dilate" radius="8"/>
+        <feComponentTransfer><feFuncR type="linear" slope="2.3" intercept="-0.66"/><feFuncG type="linear" slope="2.3" intercept="-0.66"/><feFuncB type="linear" slope="2.3" intercept="-0.66"/></feComponentTransfer>
+      </filter>
+    </svg>
+    <div id="s10-head"><b>reposts</b><span>sorted by: most copied</span></div>
+    <div id="s10-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's10', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], words = L.words;
+      const copies = words.filter(x => /^copy/.test(x.w)), tEvery = words.find(x => /^every/.test(x.w)).t;
+      const tGround = words.find(x => /^ground/.test(x.w)).t, tDown = words.find(x => /^down/.test(x.w)).t;
+
+      // four generations of one photo: who posted it, how it's labelled, how many reposts, how it degrades, when it lands
+      const gens = [
+        ['a', '@abhinav', 'original', '3', null, 0, 0],
+        ['r', '@repost_bot', 'repost', '1.2k', 's10-toner', copies[0].t, -1.4],
+        ['r2', '@repost_bot_2', 'repost of repost', '48k', 's10-px7', copies[1].t, 1.8],
+        ['ag', '@aggregator', 'copy of a copy', '2.1M', 's10-px16', tEvery, -2.6],
+      ];
+      const ink = [K.tok(root, 'surface'), K.tok(root, 'ink')];
+      const cards = gens.map(([av, handle, tag, n, filter, t, rot], i) => {
+        const c = K.el('div', 's10-card', root); c.id = 's10-c' + i;
+        const top = K.el('div', 's10-top', c);
+        K.el('div', 's10-av', top, av);
+        const who = K.el('div', 's10-who', top); K.el('b', '', who, handle); K.el('span', '', who, tag);
+        const img = K.el('div', 's10-img', c), inn = K.el('div', 's10-in', img);
+        inn.setAttribute('data-layout-allow-overflow', '');
+        K.shot(inn, 'char-oracle', { viewBox: '-40 30 1120 1120', inks: ink });
+        if (filter) { inn.style.filter = `url(#${filter})`; gsap.set(inn, { rotation: rot * 0.6, scale: 1.04 + i * 0.03 }); const wm = K.el('div', 's10-mark', img, handle.slice(1)); wm.setAttribute('data-layout-allow-overflow', ''); wm.setAttribute('data-layout-ignore', ''); }
+        const foot = K.el('div', 's10-foot', c); foot.innerHTML = `reposts <b>${n}</b> · ${['2h', '1h', '40m', 'now'][i]}`;
+        // a sheet dropped on the glass: in from above, a little crooked
+        gsap.set(c, { rotation: rot });
+        if (t > 0) tl.fromTo(c, { opacity: 0, y: -60, rotation: rot - 5 }, { opacity: 1, y: 0, rotation: rot, duration: 0.2, ease: 'power3.out' }, t);
+        return { c, img, inn };
+      });
+
+      // the last copy turns to grey dust from the bottom up on "ground", then falls away; the slot reads [image unavailable]
+      const last = cards[3], N = 12, dust = K.svg('svg', { id: 's10-dust', viewBox: `0 0 ${N} ${N}`, preserveAspectRatio: 'none' }, last.img), r = K.rng(10);
+      const gone = K.el('div', '', last.img, '[image unavailable]'); gone.id = 's10-gone';
+      const cells = [];
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        const rect = K.svg('rect', { x, y, width: 1.02, height: 1.02 }, dust);
+        rect.style.fill = r() < 0.7 ? 'var(--k-muted)' : 'var(--k-line)';
+        cells.push({ rect, order: (N - 1 - y) / N * 0.7 + r() * 0.3, fall: 2 + r() * 6, drift: (r() - 0.5) * 3, spin: (r() - 0.5) * 240 });
+      }
+      const span = tDown - tGround;
+      cells.forEach(({ rect, order, fall, drift, spin }) => {
+        gsap.set(rect, { opacity: 0, transformOrigin: '50% 50%' });
+        tl.set(rect, { opacity: 1 }, tGround + order * span * 0.8);
+        tl.to(rect, { x: drift, y: fall, rotation: spin, opacity: 0, duration: 0.5, ease: 'power2.in' }, tDown + order * 0.08);
+      });
+      tl.set([last.inn, last.img.querySelector('.s10-mark')], { opacity: 0 }, tDown);
+      tl.set($('#s10-gone'), { opacity: 1 }, tDown);
+
+      // the line, the first "copy" in the accent block
+      const { spans } = K.words($('#s10-lyric'), L, { key: words.indexOf(copies[0]), breakBefore: vert ? [] : [7] });
+      K.reveal(tl, spans, L, 'cut');
+      spans.forEach((s, i) => tl.fromTo(s, { x: -3 }, { x: 0, duration: 2 * K.F, ease: 'none', immediateRender: false }, words[i].t));
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

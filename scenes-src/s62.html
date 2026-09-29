@@ -1,0 +1,80 @@
+<scene look="amikake-console-d79779">
+<!-- lc_3 "But I'm lossless, I'm lossless": the hero shot. The biggest thumbs-up, from below, the Oracle beside him, and a
+     console in battery chips and screentone rails: the LOSSLESS battery fills chip by chip to 100% on the first downbeat,
+     a FLAC 24/96 badge clicks on with the second "lossless", and screentone rays burst behind him on each downbeat. -->
+<style>
+    #s62-cam { position: absolute; inset: 0; }
+    #s62-art { position: absolute; overflow: hidden; }
+    .s62-ray { fill: var(--k-paper); }
+    .s62-card { position: absolute; background: var(--k-surface); border: 3px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s62-lab { display: flex; justify-content: space-between; font: 600 0.62em/1 var(--k-font-mono); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+    .s62-bat { display: flex; align-items: center; gap: 0.3em; margin-top: 0.4em; }
+    .s62-chips { display: flex; gap: 0.12em; padding: 0.12em; border: 3px solid var(--k-line); border-radius: 8px; }
+    .s62-chip { width: 0.42em; height: 1.05em; border-radius: 3px; background: var(--k-line); opacity: 0.12; }
+    .s62-chip.on { background: var(--k-accent); opacity: 1; }
+    .s62-nub { width: 0.18em; height: 0.5em; border-radius: 0 3px 3px 0; background: var(--k-line); }
+    #s62-pct { font: 600 1.25em/0.85 var(--k-font-display); letter-spacing: 0.01em; font-variant-numeric: tabular-nums; }
+    #s62-badge { position: absolute; padding: 0.1em 0.45em 0.02em; border: 4px solid var(--k-line); border-radius: 10px; background: var(--k-accent); color: var(--k-on-accent); font: 600 1em/1 var(--k-font-display); letter-spacing: 0.04em; white-space: nowrap; opacity: 0; box-shadow: 6px 6px 0 var(--k-line); }
+    #s62-rail { position: absolute; background-color: var(--k-surface); background-image: radial-gradient(var(--k-accent-2) 22%, transparent 24%); background-size: 14px 14px; border-top: 4px solid var(--k-line); border-bottom: 4px solid var(--k-line); }
+    #s62-lyric { position: relative; display: inline-block; padding: 0 0.2em; font: 600 1em/0.9 var(--k-font-display); letter-spacing: 0.005em; text-transform: uppercase; color: var(--k-ink); }
+    #s62-lyric::before { content: ''; position: absolute; inset: 0; background: var(--k-surface); }
+    #s62-lyric > .k-line { position: relative; }
+</style>
+<style frame="wide">
+    #s62-art { inset: 0; }
+    #s62-bcard { left: 56px; top: 110px; padding: 18px 22px 20px; font-size: 64px; }
+    #s62-badge { left: 1290px; top: 640px; font-size: 96px; }
+    #s62-rail { left: 0; right: 0; top: 770px; height: 224px; padding: 18px 70px; font-size: 128px; }
+</style>
+<style frame="vert">
+    #s62-art { left: 0; top: 0; width: 1080px; height: 1330px; }
+    #s62-bcard { left: 48px; top: 1040px; padding: 16px 20px 18px; font-size: 60px; }
+    #s62-badge { left: 530px; top: 290px; font-size: 76px; }
+    #s62-rail { left: 0; right: 0; top: 1330px; height: 380px; padding: 60px 150px 18px 48px; font-size: 112px; }
+</style>
+<body>
+    <div id="s62-cam" data-layout-allow-overflow data-bleed><div id="s62-art"></div></div>
+    <div class="s62-card" id="s62-bcard">
+      <div class="s62-lab"><span>lossless</span><span>charge</span></div>
+      <div class="s62-bat"><div class="s62-chips" id="s62-chips"></div><div class="s62-nub"></div><div id="s62-pct">0%</div></div>
+    </div>
+    <div id="s62-badge">FLAC 24/96</div>
+    <div id="s62-rail"><div id="s62-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's62', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], ls = L.words.filter(x => /^lossless/.test(x.w)).map(x => x.t);
+      const [d1, d2] = [S.downbeats[0] ?? 1.22, S.downbeats[1] ?? 3.86];
+
+      // the hero plate, from below; screentone rays burst behind him on each downbeat
+      const vb = vert ? '840 0 1370 1674' : '0 0 3000 1674';
+      const shot = K.shot($('#s62-art'), 's62-hero-thumbs-up', { viewBox: vb, inks: [K.tok(root, 'paper'), K.tok(root, 'ink')] });
+      const ov = K.overlay(shot, vb), HX = 1200, HY = 420, rays = K.svg('g', {}, ov);
+      for (let i = 0; i < 24; i++) { const a0 = i / 24 * Math.PI * 2, a1 = a0 + Math.PI / 48; K.svg('path', { class: 's62-ray', d: `M${HX} ${HY} L${HX + Math.cos(a0) * 3000} ${HY + Math.sin(a0) * 3000} L${HX + Math.cos(a1) * 3000} ${HY + Math.sin(a1) * 3000} Z` }, rays); }
+      ov.insertBefore(rays, ov.firstChild);
+      gsap.set(rays, { opacity: 0 });
+      [d1, d2].forEach(d => { tl.fromTo(rays, { opacity: 0.55, rotation: 0, svgOrigin: `${HX} ${HY}` }, { opacity: 0, rotation: 8, svgOrigin: `${HX} ${HY}`, duration: 0.8, ease: 'power2.out', immediateRender: false }, d); });
+      gsap.set($('#s62-cam'), { transformOrigin: vert ? '45% 30%' : '42% 35%' });
+      tl.fromTo($('#s62-cam'), { scale: 1 }, { scale: 1.07, duration: S.dur, ease: 'none' }, 0);
+      [d1, d2].forEach(d => K.shake(tl, $('#s62-art'), d, 12, 3));
+
+      // the battery fills chip by chip to 100 on the first downbeat
+      const chips = [...Array(10)].map(() => K.el('div', 's62-chip', $('#s62-chips')));
+      K.drive(tl, 0, S.dur, t => {
+        const v = Math.min(1, t / d1), n = Math.round(v * 10);
+        chips.forEach((c, i) => c.classList.toggle('on', i < n));
+        $('#s62-pct').textContent = Math.round(v * 100) + '%';
+      }, 0, S.dur);
+      tl.fromTo($('#s62-bcard'), { scale: 1.1 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, d1);
+      // the badge clicks on with the second "lossless"
+      K.slam(tl, $('#s62-badge'), (ls[1] ?? 2.18) + 0.05, -6, 2);
+
+      // the line on the screentone rail, the second LOSSLESS in the lime block
+      const { spans } = K.words($('#s62-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [3] : [] });
+      K.reveal(tl, spans, L, 'slam');
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

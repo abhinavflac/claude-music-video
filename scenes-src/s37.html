@@ -1,0 +1,87 @@
+<scene look="tally-156e8a">
+<!-- pc2_1 "I was playing love while someone else was keeping score": an append-only ledger, split. LOVE: his side of the
+     chat, sending "it's on me", "got the tickets", "don't worry about it" on his words. SCORE: their score.xlsx appending
+     a row per "someone else was keeping": the trip, dinner, the tickets, all his, and on "score" the one row in the
+     accent: chai, 20 rupees, HE OWES. -->
+<style>
+    .s37-pane { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); color: var(--k-on-surface); overflow: hidden; }
+    .s37-h { display: flex; justify-content: space-between; align-items: baseline; padding: 0.6em 0.8em; border-bottom: 1px solid var(--k-line); white-space: nowrap; }
+    .s37-h b { font: italic 600 1.5em/1 var(--k-font-display); letter-spacing: 0.02em; }
+    .s37-h span { font: 400 0.7em/1 var(--k-font-mono); color: var(--k-muted); }
+    #s37-chat { display: flex; flex-direction: column; justify-content: flex-end; gap: 0.6em; padding: 0.8em; }
+    .s37-b { align-self: flex-end; max-width: 80%; padding: 0.5em 0.8em; background: var(--k-accent); color: var(--k-on-accent); font: 500 0.95em/1.25 var(--k-font-body); opacity: 0; }
+    .s37-b.them { align-self: flex-start; background: var(--k-paper); border: 1px solid var(--k-line); color: var(--k-ink); }
+    .s37-tick { display: block; margin-top: 0.2em; font: 400 0.6em/1 var(--k-font-mono); text-align: right; }
+    #s37-sheet { font: 400 0.8em/1 var(--k-font-mono); }
+    .s37-r { display: grid; grid-template-columns: 2.2em 1.3fr 1fr 1fr; border-bottom: 1px solid var(--k-line); white-space: nowrap; }
+    .s37-r > span { padding: 0.55em 0.5em; border-right: 1px solid var(--k-line); }
+    .s37-r > span:first-child { color: var(--k-muted); text-align: center; }
+    .s37-r > span:last-child { border-right: 0; text-align: right; font-variant-numeric: tabular-nums; }
+    .s37-r.hd { color: var(--k-muted); }
+    .s37-r.new { opacity: 0; }
+    .s37-r.owes { background: var(--k-accent); color: var(--k-on-accent); font-weight: 700; }
+    .s37-r.owes > span:first-child { color: var(--k-on-accent); }
+    #s37-lyric { position: absolute; font: 600 1em/1 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s37-love { left: 80px; top: 110px; width: 840px; height: 660px; font-size: 32px; }
+    #s37-chat { height: 566px; }
+    #s37-score { left: 960px; top: 110px; width: 880px; height: 660px; font-size: 32px; }
+    #s37-lyric { left: 80px; top: 810px; width: 1760px; font-size: 88px; }
+</style>
+<style frame="vert">
+    #s37-love { left: 48px; top: 250px; width: 984px; height: 500px; font-size: 32px; }
+    .s37-h { padding-right: 100px; }
+    #s37-chat { height: 408px; padding-right: 100px; }
+    #s37-score { left: 48px; top: 772px; width: 984px; height: 540px; font-size: 32px; }
+    #s37-sheet { margin-right: 100px; }
+    #s37-lyric { left: 48px; top: 1352px; width: 912px; font-size: 80px; }
+</style>
+<body>
+    <div class="s37-pane" id="s37-love">
+      <div class="s37-h"><b>love</b><span>chat · us</span></div>
+      <div id="s37-chat">
+        <div class="s37-b them" style="opacity:1">you sure? :)</div>
+        <div class="s37-b" id="s37-b0">it's on me<span class="s37-tick">read</span></div>
+        <div class="s37-b" id="s37-b1">got the tickets<span class="s37-tick">read</span></div>
+        <div class="s37-b" id="s37-b2">don't worry about it<span class="s37-tick">read</span></div>
+      </div>
+    </div>
+    <div class="s37-pane" id="s37-score">
+      <div class="s37-h"><b>score</b><span>score.xlsx · append only</span></div>
+      <div id="s37-sheet">
+        <div class="s37-r hd"><span></span><span>A · item</span><span>B · paid by</span><span>C · amount</span></div>
+        <div class="s37-r new" id="s37-r0"><span>1</span><span>trip</span><span>he paid</span><span>₹4,800</span></div>
+        <div class="s37-r new" id="s37-r1"><span>2</span><span>dinner</span><span>he paid</span><span>₹1,250</span></div>
+        <div class="s37-r new" id="s37-r2"><span>3</span><span>tickets</span><span>he paid</span><span>₹900</span></div>
+        <div class="s37-r new owes" id="s37-r3"><span>4</span><span>chai</span><span>HE OWES</span><span>₹20</span></div>
+      </div>
+    </div>
+    <div id="s37-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's37', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tPlaying = at(/^playing/), tLove = at(/^love/), tWhile = at(/^while/), tSomeone = at(/^someone/), tElse = at(/^else/), tKeeping = at(/^keeping/), tScore = at(/^score/);
+
+      // his side: a message on each of his words (hidden until sent, so the chat grows up from the bottom)
+      [[0, tPlaying], [1, tLove], [2, tWhile]].forEach(([i, t]) => {
+        const b = $('#s37-b' + i); gsap.set(b, { display: 'none' });
+        tl.set(b, { display: 'block' }, t);
+        tl.fromTo(b, { opacity: 0, y: 20, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 0.2, ease: 'back.out(2)' }, t);
+      });
+
+      // their side: a row appended on each of theirs; the last one lands in the accent on "score"
+      [[0, tSomeone], [1, tElse], [2, tKeeping], [3, tScore]].forEach(([i, t]) => tl.fromTo($('#s37-r' + i), { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.18, ease: 'power3.out' }, t));
+      tl.fromTo($('#s37-r3'), { scale: 1.08 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tScore);
+      K.shake(tl, $('#s37-score'), tScore + 0.02, 6, 3);
+
+      // the line, SCORE in the green block
+      const { spans } = K.words($('#s37-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [4, 7] : [6] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

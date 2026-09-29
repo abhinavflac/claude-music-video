@@ -1,0 +1,64 @@
+<scene look="slate-a28f72">
+<!-- (hard stop) the mix cuts out: s47's sticker board, frozen on its last frame with the final sticker still mid-slap,
+     drains to grey under a broadcast dropout. A buffering spinner turns, the counter stalls at 99%, and a signal bar
+     glitches now and then. Near silence until "Minus one." The board is rebuilt from K.pile47 in s47's own colours. -->
+<style>
+    #s48-frozen { position: absolute; inset: 0; overflow: hidden;
+      --k-paper: #FF2D86; --k-surface: #FFFFFF; --k-ink: #131019; --k-on-surface: #111014; --k-muted: #131019; --k-line: #111014;
+      --k-accent: #1FC8E8; --k-accent-2: #FFD23F; --k-accent-3: #FF2D86; --k-on-accent: #111014;
+      --k-font-display: 'Baloo 2', sans-serif; --k-font-body: 'Nunito', sans-serif; --k-radius: 24px; --k-shadow: 6px 6px 0 #111014;
+      background: var(--k-paper); }
+    #s48-board { position: absolute; inset: 0; }
+    #s48-strip { position: absolute; background: var(--k-surface); border: 5px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); }
+    .s48-line { position: absolute; left: 0.5em; right: 0.5em; top: 0.4em; font: 800 1em/1.02 var(--k-font-display); letter-spacing: -0.01em; color: var(--k-on-surface); }
+    #s48-dim { position: absolute; inset: 0; background: var(--k-paper); opacity: 0; }
+    #s48-slate { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 0.5em; padding: 0.9em 1.3em; background: var(--k-surface); border: 1px solid var(--k-line); color: var(--k-on-surface); font: 500 1em/1 var(--k-font-mono); white-space: nowrap; opacity: 0; }
+    #s48-slate svg { width: 2.6em; height: 2.6em; }
+    #s48-slate b { font: 600 1.5em/1 var(--k-font-display); letter-spacing: 0.06em; text-transform: uppercase; }
+    #s48-slate span { color: var(--k-muted); }
+    #s48-bar { position: absolute; left: 0; right: 0; top: 0; height: 14px; background: var(--k-accent); opacity: 0; }
+</style>
+<style frame="wide">
+    #s48-strip { left: 60px; top: 840px; width: 1800px; height: 160px; font-size: 78px; }
+    #s48-slate { left: 50%; top: 50%; transform: translate(-50%, -60%); font-size: 30px; }
+</style>
+<style frame="vert">
+    #s48-strip { left: 48px; top: 1330px; width: 984px; height: 372px; font-size: 92px; }
+    .s48-line { top: 0.36em; right: 1.2em; }
+    #s48-slate { left: 50%; top: 40%; transform: translate(-50%, -50%); font-size: 34px; }
+</style>
+<body>
+    <div id="s48-frozen" data-layout-ignore><div id="s48-board"></div><div id="s48-strip"><div class="s48-line" id="s48-line"></div></div></div>
+    <div id="s48-dim"></div>
+    <div id="s48-bar" data-layout-ignore></div>
+    <div id="s48-slate"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="none" stroke="var(--k-line)" stroke-width="5"/><path id="s48-spin" d="M24 5 A19 19 0 0 1 43 24" fill="none" stroke="var(--k-accent)" stroke-width="5" stroke-linecap="round"/></svg><b>buffering</b><span id="s48-pct">99%</span></div>
+</body>
+<script>
+    (() => {
+      const id = 's48', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), P = window.FILM.scenes.s47;
+
+      // s47's board, posed on its last frame: build it on a private timeline and park that timeline there
+      const pose = gsap.timeline({ paused: true });
+      K.stickers($('#s48-board'), pose, K.pile47(P, W, H, vert));
+      const L1 = P.lines[1], every = L1.words.map((w, i) => (i && /^every/i.test(w.w) ? i : -1)).filter(i => i > 0);
+      K.words($('#s48-line'), L1, { key: L1.words.findIndex(w => /^bit/.test(w.w)), breakBefore: vert ? every : [] });
+      pose.seek(P.dur - F, true);
+
+      // the freeze drains to grey and dims; the dropout slate fades up with its spinner and a stalled 99%
+      K.drive(tl, 0, S.dur, t => {
+        const g = Math.min(1, t / 0.5);
+        $('#s48-frozen').style.filter = `grayscale(${g.toFixed(3)}) brightness(${(1 - 0.45 * g).toFixed(3)})`;
+        $('#s48-spin').setAttribute('transform', `rotate(${((t * 300) % 360).toFixed(1)} 24 24)`);
+      }, 0, S.dur);
+      tl.fromTo($('#s48-dim'), { opacity: 0 }, { opacity: 0.35, duration: 0.6, ease: 'power1.in' }, 0.1);
+      tl.fromTo($('#s48-slate'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.45);
+      // a signal bar glitches across now and then
+      [[0.9, 0.22, 3], [1.97, 0.6, 5], [2.6, 0.4, 2]].forEach(([t, y, frames]) => {
+        tl.set($('#s48-bar'), { opacity: 0.85, y: Math.round(y * H) }, t);
+        tl.set($('#s48-bar'), { opacity: 0 }, t + frames * F);
+      });
+
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,80 @@
+<scene look="vitrine-b9d67a">
+<!-- fc_2 "I'm not background, I'm not smooth": a liquid-glass video call. His webcam tile runs with Blur background and
+     Smooth skin (AI) on: the room melted, his face airbrushed. On "background" the blur switches off and the room comes
+     back sharp; on "smooth" the skin filter goes too and he steps out sharp, every line. The line runs as live captions. -->
+<style>
+    #s56-tile { position: absolute; overflow: hidden; border-radius: var(--k-radius); background: var(--k-surface); }
+    .s56-layer { position: absolute; inset: 0; }
+    .s56-glass { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    #s56-name { padding: 0.35em 0.7em; font: 600 0.8em/1 var(--k-font-body); white-space: nowrap; }
+    #s56-fx { display: grid; gap: 0.7em; padding: 0.8em 1em; font: 600 0.85em/1 var(--k-font-body); white-space: nowrap; }
+    #s56-fx b { font: 600 1.1em/1 var(--k-font-display); }
+    .s56-row { display: flex; align-items: center; justify-content: space-between; gap: 1.2em; }
+    #s56-bar { display: flex; gap: 0.6em; padding: 0.45em; }
+    .s56-btn { display: grid; place-items: center; width: 2.4em; height: 2.4em; border-radius: 50%; background: var(--k-line); }
+    .s56-btn svg { width: 1.2em; height: 1.2em; fill: none; stroke: var(--k-ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .s56-btn.end { background: var(--k-accent-2); }
+    #s56-cap { padding: 0.35em 0.6em 0.45em; }
+    #s56-cap span.cc { display: block; margin-bottom: 0.3em; font: 600 0.28em/1 var(--k-font-mono); letter-spacing: 0.1em; color: var(--k-muted); text-transform: uppercase; }
+    #s56-lyric { font: 600 1em/1.02 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s56-tile { left: 40px; top: 96px; width: 1840px; height: 900px; }
+    #s56-name { left: 70px; top: 130px; font-size: 30px; }
+    #s56-fx { right: 70px; top: 130px; font-size: 30px; }
+    #s56-cap { left: 70px; bottom: 150px; max-width: 1400px; font-size: 92px; }
+    #s56-bar { left: 50%; bottom: 40px; transform: translateX(-50%); font-size: 30px; }
+</style>
+<style frame="vert">
+    #s56-tile { left: 0; top: 190px; width: 1080px; height: 1130px; border-radius: 0; }
+    #s56-name { left: 48px; top: 250px; font-size: 30px; }
+    #s56-fx { left: 48px; top: 1170px; font-size: 30px; }
+    #s56-cap { left: 48px; top: 1340px; width: 912px; font-size: 92px; }
+    #s56-bar { left: 48px; bottom: 150px; font-size: 30px; display: none; }
+</style>
+<body>
+    <div id="s56-tile"><div class="s56-layer" id="s56-bg"></div><div class="s56-layer" id="s56-me"></div></div>
+    <div class="s56-glass" id="s56-name">abhinav · you</div>
+    <div class="s56-glass" id="s56-fx"><b>effects</b><div class="s56-row" id="s56-t0">blur background</div><div class="s56-row" id="s56-t1">smooth skin (AI)</div></div>
+    <div class="s56-glass" id="s56-cap"><span class="cc">live captions</span><div id="s56-lyric"></div></div>
+    <div class="s56-glass" id="s56-bar">
+      <span class="s56-btn"><svg viewBox="0 0 24 24"><path d="M12 3 a3 3 0 0 1 3 3 v6 a3 3 0 0 1 -6 0 v-6 a3 3 0 0 1 3 -3 Z M6 11 a6 6 0 0 0 12 0 M12 17 v4"/></svg></span>
+      <span class="s56-btn"><svg viewBox="0 0 24 24"><path d="M3 7 h12 v10 h-12 Z M15 10 l6 -3 v10 l-6 -3"/></svg></span>
+      <span class="s56-btn"><svg viewBox="0 0 24 24"><path d="M12 3 l2.5 6 l6 .5 l-4.6 4 l1.5 6 l-5.4 -3.3 l-5.4 3.3 l1.5 -6 l-4.6 -4 l6 -.5 Z"/></svg></span>
+      <span class="s56-btn end"><svg viewBox="0 0 24 24"><path d="M4 14 q8 -8 16 0 l-2 3 l-4 -1 v-3 q-2 -1 -4 0 v3 l-4 1 Z"/></svg></span>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's56', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tBg = at(/^background/), tSmooth = at(/^smooth/);
+
+      // two copies of the webcam plate: the room (blurred until "background") and him, cut out along his silhouette
+      // (blurred a little, the AI skin, until "smooth")
+      const tile = $('#s56-tile'), TW = tile.clientWidth, TH = tile.clientHeight;
+      const vb = vert ? '870 0 1600 1674' : '0 0 3000 1674', inks = [K.tok(root, 'ink'), K.tok(root, 'paper')];
+      K.shot($('#s56-bg'), 's56-webcam', { viewBox: vb, inks });
+      K.shot($('#s56-me'), 's56-webcam', { viewBox: vb, inks });
+      const M = K.map(vb, K.bleed(TW, TH));
+      const SIL = [[780, 1674], [800, 1420], [880, 1020], [1000, 860], [1180, 760], [1230, 640], [1200, 520], [1170, 380], [1210, 230], [1320, 110], [1460, 50], [1620, 60], [1740, 150], [1800, 270], [1790, 420], [1740, 560], [1700, 680], [1840, 760], [2020, 870], [2130, 1060], [2200, 1420], [2220, 1674]];
+      $('#s56-me').style.clipPath = `polygon(${SIL.map(([x, y]) => `${M.x(x).toFixed(1)}px ${M.y(y).toFixed(1)}px`).join(', ')})`;
+      K.drive(tl, 0, S.dur, t => {
+        const b = t < tBg ? 16 : 16 * Math.max(0, 1 - (t - tBg) / 0.35), s = t < tSmooth ? 3 : 3 * Math.max(0, 1 - (t - tSmooth) / 0.3);
+        $('#s56-bg').style.filter = b > 0.05 ? `blur(${b.toFixed(2)}px) brightness(${(0.9 + 0.1 * (1 - b / 16)).toFixed(3)})` : 'none';
+        $('#s56-me').style.filter = s > 0.05 ? `blur(${s.toFixed(2)}px)` : 'none';
+      }, 0, S.dur);
+      tl.fromTo($('#s56-me'), { scale: 1 }, { scale: 1.04, duration: 0.4, ease: 'power2.out', immediateRender: false }, tSmooth);
+      gsap.set($('#s56-me'), { transformOrigin: '50% 60%' });
+
+      // the effect toggles flip off on their words
+      [[0, tBg], [1, tSmooth]].forEach(([i, t]) => { const tg = K.toggle($('#s56-t' + i), true); K.flip(tl, tg, t, false); });
+
+      // live captions: the line, SMOOTH in the cyan block
+      const { spans } = K.words($('#s56-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [3] : [3] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

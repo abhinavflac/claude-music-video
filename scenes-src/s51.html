@@ -1,0 +1,106 @@
+<scene look="soma-b850f6">
+<!-- br_1 "Ran my life through DBSCAN, it filed me under noise": a notebook scatter plot of his life in manga-schematic
+     linework on e-paper. Three clusters plot in (work, family, friends), get their hulls and labels on "DBSCAN", and one
+     grey point is left over: -1 (noise). On "me" the camera dives into that point and it is a tiny drawing of him, standing
+     there; "noise" stamps on the label. The notebook is reused from his hydrochemistry work. -->
+<style>
+    #s51-nb { position: absolute; background: var(--k-surface); border: 2px solid var(--k-ink); box-shadow: var(--k-shadow); color: var(--k-on-surface); overflow: hidden; }
+    .s51-h { display: flex; justify-content: space-between; padding: 0.6em 0.9em; border-bottom: 2px solid var(--k-ink); font: 500 0.7em/1 var(--k-font-mono); white-space: nowrap; }
+    .s51-h span { color: var(--k-muted); }
+    .s51-code { padding: 0.6em 0.9em; border-bottom: 1px solid var(--k-line); font: 400 0.75em/1.35 var(--k-font-mono); white-space: pre; }
+    .s51-code em { font-style: normal; font-weight: 700; color: var(--k-ink); text-decoration: underline 3px var(--k-accent); text-underline-offset: 4px; }
+    #s51-plot { position: absolute; overflow: hidden; }
+    #s51-cam { position: absolute; inset: 0; }
+    #s51-cam svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .s51-ax { stroke: var(--k-ink); stroke-width: 2; }
+    .s51-grid { stroke: var(--k-line); stroke-width: 1; }
+    .s51-pt { fill: var(--k-surface); stroke: var(--k-ink); stroke-width: 2.5; }
+    .s51-hull { fill: none; stroke: var(--k-accent); stroke-width: 3; stroke-dasharray: 9 7; }
+    .s51-lab { font: 600 24px/1 var(--k-font-display); fill: var(--k-ink); letter-spacing: 1px; text-transform: uppercase; }
+    .s51-noise { font: 600 22px/1 var(--k-font-mono); fill: var(--k-muted); }
+    #s51-me { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; overflow: hidden; background: var(--k-surface); }
+    #s51-me-in { position: absolute; inset: 0; }
+    #s51-dot { position: absolute; inset: 0; border-radius: 50%; background: var(--k-muted); }
+    #s51-chip { position: absolute; padding: 0.35em 0.7em; background: var(--k-ink); color: var(--k-paper); font: 600 0.8em/1 var(--k-font-mono); white-space: nowrap; opacity: 0; }
+    #s51-lyric { position: absolute; font: 600 1em/0.95 var(--k-font-display); letter-spacing: -0.01em; text-transform: uppercase; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s51-nb { left: 80px; top: 110px; width: 1120px; height: 880px; font-size: 30px; }
+    #s51-plot { left: 30px; right: 30px; top: 190px; bottom: 30px; }
+    #s51-lyric { left: 1250px; top: 150px; width: 600px; font-size: 108px; }
+</style>
+<style frame="vert">
+    #s51-nb { left: 48px; top: 250px; width: 984px; height: 1062px; font-size: 30px; }
+    .s51-h, .s51-code { padding-right: 100px; }
+    #s51-plot { left: 24px; right: 100px; top: 200px; bottom: 24px; }
+    #s51-lyric { left: 48px; top: 1352px; width: 912px; font-size: 104px; }
+</style>
+<body>
+    <div id="s51-nb">
+      <div class="s51-h"><b>life.ipynb</b><span>cells reused from hydrochem_alaska.ipynb</span></div>
+      <div class="s51-code">labels = <em>DBSCAN</em>(eps=0.5, min_samples=4).fit_predict(life)
+plot(life, labels)</div>
+      <div id="s51-plot"><div id="s51-cam" data-layout-allow-overflow><svg id="s51-svg" data-layout-ignore></svg><div id="s51-me"><div id="s51-me-in"></div><div id="s51-dot"></div></div></div><div id="s51-chip">label: -1 · noise</div></div>
+    </div>
+    <div id="s51-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's51', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tLife = at(/^life/), tDB = at(/^DBSCAN/), tFiled = at(/^filed/), tMe = at(/^me$/), tUnder = at(/^under/), tNoise = at(/^noise/);
+      const plot = $('#s51-plot'), PW = plot.clientWidth, PH = plot.clientHeight, sv = $('#s51-svg');
+      sv.setAttribute('viewBox', `0 0 ${PW} ${PH}`);
+
+      // axes and a faint grid
+      for (let i = 1; i < 8; i++) K.svg('line', { x1: PW * i / 8, x2: PW * i / 8, y1: 0, y2: PH - 40, class: 's51-grid' }, sv);
+      for (let j = 1; j < 6; j++) K.svg('line', { x1: 40, x2: PW, y1: (PH - 40) * j / 6, y2: (PH - 40) * j / 6, class: 's51-grid' }, sv);
+      K.svg('path', { d: `M40 0 V${PH - 40} H${PW}`, fill: 'none', class: 's51-ax' }, sv);
+
+      // three clusters, each with its own marker; the one grey point that belongs to none
+      const r = K.rng(51), C = [['work', 0.27, 0.3, 'c'], ['family', 0.7, 0.26, 's'], ['friends', 0.56, 0.7, 't']];
+      const noise = [0.16, 0.8];
+      C.forEach(([name, cx, cy, m], ci) => {
+        const g = K.svg('g', {}, sv), pts = [];
+        for (let i = 0; i < 16; i++) {
+          const a = r() * 6.28, d = Math.sqrt(r()) * 0.1, x = 40 + (cx + Math.cos(a) * d) * (PW - 40), y = (cy + Math.sin(a) * d * 1.2) * (PH - 40);
+          pts.push([x, y]);
+          const p = m === 'c' ? K.svg('circle', { cx: x, cy: y, r: 9, class: 's51-pt' }, g)
+            : m === 's' ? K.svg('rect', { x: x - 8, y: y - 8, width: 16, height: 16, class: 's51-pt' }, g)
+            : K.svg('path', { d: `M${x} ${y - 10} L${x + 9} ${y + 7} L${x - 9} ${y + 7} Z`, class: 's51-pt' }, g);
+          gsap.set(p, { opacity: 0 });
+          tl.to(p, { opacity: 1, duration: 0.06 }, 0.1 + ci * 0.35 + i * 0.018);
+        }
+        // the hull (a loose circle round the cluster) and the label, on "DBSCAN"
+        const mx = pts.reduce((a, p) => a + p[0], 0) / pts.length, my = pts.reduce((a, p) => a + p[1], 0) / pts.length;
+        const rad = Math.max(...pts.map(([x, y]) => Math.hypot(x - mx, y - my))) + 24;
+        const hull = K.svg('ellipse', { cx: mx, cy: my, rx: rad, ry: rad * 0.9, class: 's51-hull' }, sv);
+        const lab = K.svg('text', { x: mx, y: my - rad - 14, 'text-anchor': 'middle', class: 's51-lab' }, sv); lab.textContent = `${ci}: ${name}`;
+        gsap.set([hull, lab], { opacity: 0 });
+        tl.to([hull, lab], { opacity: 1, duration: 0.12 }, tDB + ci * 0.1);
+      });
+      const nx = 40 + noise[0] * (PW - 40), ny = noise[1] * (PH - 40);
+      const nlab = K.svg('text', { x: nx + 26, y: ny + 8, class: 's51-noise' }, sv); nlab.textContent = '-1 (noise)';
+      gsap.set(nlab, { opacity: 0 }); tl.to(nlab, { opacity: 1, duration: 0.1 }, tFiled);
+
+      // the grey point is him: a tiny figure from his sheet, found by diving in on "me"
+      const me = $('#s51-me'); Object.assign(me.style, { left: nx + 'px', top: ny + 'px' });
+      K.shot($('#s51-me-in'), 'char-me', { viewBox: '520 40 560 1220', fit: 'xMidYMid meet', inks: [K.tok(root, 'surface'), K.tok(root, 'ink')], style: { left: '0px', top: '0px', width: '100%', height: '100%' } });
+      gsap.set(me, { opacity: 0 }); tl.to(me, { opacity: 1, duration: 0.08 }, tFiled);
+      gsap.set($('#s51-cam'), { transformOrigin: `${nx}px ${ny}px` });
+      tl.to($('#s51-cam'), { scale: 16, duration: tUnder - tMe, ease: 'power3.in' }, tMe);
+      tl.to($('#s51-dot'), { opacity: 0, duration: 0.25 }, tMe + (tUnder - tMe) * 0.6);
+      // the plot's own label would blow up with the zoom; a chip at a fixed size names him instead
+      tl.to(nlab, { opacity: 0, duration: 0.1 }, tMe + 0.1);
+      Object.assign($('#s51-chip').style, { left: nx + 200 + 'px', top: ny - 20 + 'px' });
+      tl.fromTo($('#s51-chip'), { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.2, ease: 'power2.out' }, tUnder);
+      tl.fromTo($('#s51-chip'), { scale: 1.3 }, { scale: 1, duration: 0.25, ease: 'back.out(3)', immediateRender: false }, tNoise);
+
+      // the line, NOISE in the cyan block
+      const { spans } = K.words($('#s51-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [4, 7] : [2, 4, 5, 8] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

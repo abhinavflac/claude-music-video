@@ -1,0 +1,169 @@
+/* the page wears the film's own look (Tachikiri); a restyle look replaces these tokens, scene and chrome together */
+:root { --k-paper: #0A0A0B; --k-surface: #0F0F11; --k-ink: #EDEAE2; --k-on-surface: #EDEAE2; --k-muted: #8A8A82; --k-line: #26262A;
+  --k-accent: #7CFF9A; --k-accent-2: #EDEAE2; --k-accent-3: #7CFF9A; --k-on-accent: #06140A;
+  --k-accent-t: #7CFF9A; --k-accent-2-t: #EDEAE2; --k-accent-3-t: #7CFF9A;
+  --k-font-display: 'Anton', sans-serif; --k-font-body: 'Noto Sans', sans-serif; --k-font-mono: 'Kode Mono', monospace;
+  --k-radius: 0px; --k-shadow: none; --sw: 300px; --sh: 170px; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--k-paper); color: var(--k-ink); color-scheme: dark light; overflow: hidden; height: 100%; overscroll-behavior: none; }
+body { height: 100%; -webkit-tap-highlight-color: transparent; font: 400 15px/1.45 var(--k-font-body); }
+.sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+button { font: inherit; color: inherit; }
+
+/* ---------- chrome ---------- */
+.chrome { position: relative; z-index: 20; display: flex; align-items: center; gap: 8px; color: var(--k-ink); white-space: nowrap; -webkit-font-smoothing: antialiased; flex: none; }
+.chrome a { color: inherit; text-decoration: none; }
+.chrome a:hover, .chrome a:focus-visible { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.chrome-bottom { padding: 4px 10px; gap: 7px; font: 400 12px/1 var(--k-font-mono); letter-spacing: 0.01em; }
+.chrome-bottom .x { color: var(--k-ink); font-size: 15px; line-height: 1; margin: 0 3px; vertical-align: -1px; }
+.chrome-bottom .me { width: 14px; height: 14px; border-radius: 50%; object-fit: cover; vertical-align: -3px; margin-right: 4px; }
+.chrome-bottom .buddy { width: 22px; height: 14px; vertical-align: -3px; }
+.chrome-bottom .suno { width: 57px; height: 14px; vertical-align: -3px; color: inherit; }
+.chrome-bottom .l1 a { color: var(--k-accent-t); text-decoration: underline; text-underline-offset: 3px; }
+.chrome-bottom { flex-wrap: wrap; justify-content: center; }
+.chrome-bottom .l1, .chrome-bottom .l2 { display: inline-flex; align-items: center; gap: 7px; }
+html[data-chrome="corners"] .chrome-bottom { flex-direction: column; align-items: flex-start; gap: 5px; padding: 4px 6px; }
+/* phones and small tablets: the credits fold into two centred rows and the marks shrink a touch */
+@media (max-width: 640px) {
+  .chrome-bottom { flex-direction: column; gap: 5px; padding: 6px 10px; }
+  .chrome-bottom .l1, .chrome-bottom .l2 { justify-content: center; flex-wrap: wrap; }
+  .chrome-bottom .me { width: 13px; height: 13px; }
+  .chrome-bottom .buddy { width: 19px; height: 12px; }
+  .chrome-bottom .suno { width: 47px; height: 12px; }
+  .chrome-bottom .x { font-size: 13px; margin: 0 2px; }
+  #about { font-size: 12px; }
+}
+
+/* ---------- the film ---------- */
+#app { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; height: var(--app-h, 100vh); height: var(--app-h, 100dvh); overflow: hidden;
+  padding: max(6px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); box-sizing: border-box; }
+#frame { position: relative; flex: none; display: flex; align-items: center; justify-content: center; }
+#frame:fullscreen { width: 100%; height: 100%; background: #000; }
+#frame:-webkit-full-screen { width: 100%; height: 100%; background: #000; }
+html.immersive #frame { position: fixed; inset: 0; z-index: 60; background: #000; }
+#fsx { display: none; position: absolute; top: max(8px, env(safe-area-inset-top)); right: max(8px, env(safe-area-inset-right)); z-index: 9; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 9999px; background: none; color: #FFFFFF;
+  font: 300 20px/44px var(--k-font-body); text-align: center; cursor: pointer; opacity: 0.85; }
+#fsx::before { content: ""; position: absolute; inset: 7px; z-index: -1; border-radius: 9999px; background: rgba(0, 0, 0, 0.55); }
+#frame:fullscreen #fsx, #frame:-webkit-full-screen #fsx, html.immersive #fsx { display: block; }
+#fs { width: 34px; height: 34px; display: grid; place-items: center; color: var(--k-ink); flex: none; }
+#fs svg { width: 15px; height: 15px; }
+#orient { display: none; flex: none; }
+html.has-tall #orient { display: flex; }
+#orient button { position: relative; width: 44px; height: 34px; display: flex; align-items: center; color: var(--k-ink); background: none; border: 0; padding: 0; cursor: pointer; }
+#orient button::before { content: ""; position: absolute; inset: -5px 0; }
+#orient button[value="vert"] { justify-content: flex-end; padding-right: 6px; }
+#orient button[value="wide"] { justify-content: flex-start; padding-left: 6px; }
+#orient button[aria-pressed="true"] { cursor: default; }
+#orient svg { width: 16px; height: 16px; display: block; }
+#orient rect { fill: none; stroke: currentColor; stroke-width: 2; }
+#orient button[aria-pressed="true"] rect { fill: var(--k-accent); }
+/* the invitation: one big sticker, a finger taps it twice, then it gets out of the way */
+#invite { position: absolute; inset: 0; z-index: 7; display: grid; place-items: center; pointer-events: none; visibility: hidden; }
+#invite.on { visibility: visible; }
+#invite .sticker { position: relative; max-width: 8.2em; padding: 0.34em 0.5em 0.3em; font: 400 var(--is, 34px)/0.92 var(--k-font-display); letter-spacing: -0.035em; text-align: center; color: var(--k-on-accent); background: var(--k-accent);
+  border: calc(var(--is, 34px) * 0.12) solid var(--k-ink); box-shadow: 0 0 0 calc(var(--is, 34px) * 0.13) var(--k-paper), calc(var(--is, 34px) * 0.24) calc(var(--is, 34px) * 0.24) 0 calc(var(--is, 34px) * 0.08) var(--k-ink); transform: rotate(-4deg); }
+#invite.on .sticker { animation: inv-sticker 3.2s cubic-bezier(0.3, 1.35, 0.5, 1) both; }
+#invite .finger { position: absolute; left: 50%; top: 50%; width: calc(var(--is, 34px) * 1.9); margin: calc(var(--is, 34px) * 0.5) 0 0 calc(var(--is, 34px) * 1.05); opacity: 0; transform-origin: 50% 2%; }
+#invite.on .finger { animation: inv-finger 3.2s ease-in-out both; }
+#invite .burst { position: absolute; left: 50%; top: 50%; width: calc(var(--is, 34px) * 8); height: calc(var(--is, 34px) * 8); margin: calc(var(--is, 34px) * -4) 0 0 calc(var(--is, 34px) * -4); opacity: 0;
+  background: repeating-conic-gradient(var(--k-ink) 0 2.4deg, transparent 2.4deg 14deg); -webkit-mask: radial-gradient(circle, transparent 40%, #000 41%, #000 58%, transparent 59%); mask: radial-gradient(circle, transparent 40%, #000 41%, #000 58%, transparent 59%); }
+#invite.on .burst { animation: inv-burst 3.2s linear both; }
+#invite .pulse { position: absolute; left: 50%; top: 50%; width: calc(var(--is, 34px) * 2.6); height: calc(var(--is, 34px) * 2.6); margin: calc(var(--is, 34px) * -1.3) 0 0 calc(var(--is, 34px) * -1.3); border-radius: 9999px;
+  box-shadow: 0 0 0 calc(var(--is, 34px) * 0.12) var(--k-ink), 0 0 0 calc(var(--is, 34px) * 0.22) var(--k-paper); opacity: 0; }
+#invite.on .pulse { animation: inv-pulse 3.2s linear both; }
+@keyframes inv-sticker { 0% { transform: rotate(-4deg) scale(0.2); opacity: 0; } 9% { transform: rotate(-4deg) scale(1.14); opacity: 1; } 14% { transform: rotate(-4deg) scale(0.95); } 18%, 29% { transform: rotate(-4deg) scale(1); } 31% { transform: rotate(-4deg) scale(1.1, 0.86); } 35%, 47% { transform: rotate(-4deg) scale(1); } 49% { transform: rotate(-4deg) scale(1.1, 0.86); } 53%, 84% { transform: rotate(-4deg) scale(1); opacity: 1; } 100% { transform: rotate(-4deg) scale(0.85); opacity: 0; } }
+@keyframes inv-finger { 0%, 12% { opacity: 0; transform: translate(90%, 70%) rotate(-14deg); } 24%, 29% { opacity: 1; transform: translate(0, 0) rotate(-14deg); } 31% { transform: translate(-3%, 3%) rotate(-14deg) scale(0.92); } 37% { transform: translate(8%, -4%) rotate(-14deg); } 45%, 47% { transform: translate(0, 0) rotate(-14deg); } 49% { transform: translate(-3%, 3%) rotate(-14deg) scale(0.92); } 55% { opacity: 1; transform: translate(8%, -4%) rotate(-14deg); } 66%, 100% { opacity: 0; transform: translate(90%, 70%) rotate(-14deg); } }
+@keyframes inv-burst { 0%, 29% { opacity: 0; transform: scale(0.8); } 31% { opacity: 1; transform: scale(1); } 38%, 47% { opacity: 0; transform: scale(1.15); } 49% { opacity: 1; transform: scale(1); } 56%, 100% { opacity: 0; transform: scale(1.15); } }
+@keyframes inv-pulse { 0%, 30% { opacity: 0; transform: scale(0.3); } 31% { opacity: 1; transform: scale(0.4); } 42%, 48% { opacity: 0; transform: scale(1.4); } 49% { opacity: 1; transform: scale(0.4); } 60%, 100% { opacity: 0; transform: scale(1.4); } }
+@media (prefers-reduced-motion: reduce) { #invite.on .sticker { animation: inv-still 3.2s linear both; } #invite.on .finger, #invite.on .burst, #invite.on .pulse { animation: none; opacity: 0; } @keyframes inv-still { 0%, 90% { opacity: 1; } 100% { opacity: 0; } } }
+#stage { position: relative; width: var(--sw); height: var(--sh); flex: none; background: #000; overflow: hidden; isolation: isolate; border-radius: var(--k-radius); -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+/* fullscreen / immersive: the film fills the screen, the controls ride over it and get out of the way when the pointer rests */
+#app:fullscreen { padding: 0; gap: 0; background: #000; }
+#app:fullscreen #bar, html.immersive #bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 52px; width: min(92vw, 1000px); z-index: 70; background: var(--k-surface); color: var(--k-on-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); padding: 8px 12px; transition: opacity 0.35s; }
+#app:fullscreen #bar button, #app:fullscreen #time, html.immersive #bar button, html.immersive #time { color: var(--k-on-surface); }
+#app:fullscreen #chips, html.immersive #chips { position: fixed; left: 0; right: 0; bottom: 0; width: auto; max-width: none; z-index: 70; padding: 6px 10px; background: var(--k-surface); border-top: 1px solid var(--k-line); transition: opacity 0.35s; }
+#app:fullscreen #about, #app:fullscreen .chrome-bottom, html.immersive #about, html.immersive .chrome-bottom { display: none; }
+#app:fullscreen #fsx, html.immersive #fsx { display: block; z-index: 71; }
+html.controls-idle #app:fullscreen #bar, html.controls-idle #app:fullscreen #chips, html.controls-idle.immersive #bar, html.controls-idle.immersive #chips { opacity: 0; pointer-events: none; }
+#film { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; background: #000; z-index: 0; }
+#layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+#layer .seg { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; visibility: hidden; pointer-events: none; background: #000; }
+#layer .seg.on { visibility: visible; }
+#ink { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+#tap { position: absolute; inset: 0; z-index: 3; cursor: pointer; touch-action: pan-y; outline: none; }
+#tap:focus-visible { box-shadow: inset 0 0 0 3px var(--k-accent); }
+#flash { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; pointer-events: none; font-size: var(--fs, 40px); }
+#flash span { display: block; line-height: 1; padding: 0.14em 0.32em 0.1em; opacity: 0; white-space: nowrap; letter-spacing: -0.02em; font: 400 1em/1 var(--k-font-display); color: var(--k-on-accent); background: var(--k-accent); box-shadow: var(--k-shadow); }
+#flash.on span { animation: stamp 1s cubic-bezier(0.2, 0.9, 0.25, 1) both; }
+@keyframes stamp { 0% { opacity: 0; transform: scale(1.45) rotate(-5deg); } 14% { opacity: 1; transform: scale(1) rotate(-2deg); } 72% { opacity: 1; transform: scale(1) rotate(-2deg); } 100% { opacity: 0; transform: scale(1) rotate(-2deg); } }
+@media (prefers-reduced-motion: reduce) { @keyframes stamp { 0% { opacity: 0; } 10% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; } } }
+.pill { position: absolute; left: 50%; z-index: 5; transform: translateX(-50%); pointer-events: none; white-space: nowrap; font: 400 12px/1 var(--k-font-mono); color: var(--k-paper); background: var(--k-ink); padding: 8px 11px; opacity: 0; transition: opacity 0.25s; }
+.pill.on { opacity: 1; }
+#hint { top: 50%; margin-top: 34px; }
+#hud { top: 12px; font-variant-numeric: tabular-nums; }
+.ripple { position: absolute; z-index: 5; width: 140px; height: 140px; margin: -70px 0 0 -70px; pointer-events: none; animation: ripple-life 0.7s linear both; }
+.ripple::before, .ripple::after { content: ""; position: absolute; inset: 0; border-radius: 9999px; will-change: transform, opacity; }
+.ripple::before { background: var(--rip, var(--k-accent)); animation: rip-fill 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.ripple::after { box-shadow: 0 0 0 2px var(--rip, var(--k-accent)), 0 0 0 4px rgba(255, 255, 255, 0.7); animation: rip-ring 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@keyframes rip-fill { 0% { transform: scale(0.12); opacity: 0.5; } 100% { transform: scale(0.9); opacity: 0; } }
+@keyframes rip-ring { 0% { transform: scale(0.15); opacity: 1; } 100% { transform: scale(1.1); opacity: 0; } }
+@keyframes ripple-life { 0%, 100% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .ripple::before, .ripple::after { animation: rip-still 0.5s linear both; } @keyframes rip-still { 0% { opacity: 0.6; } 100% { opacity: 0; } } }
+#coach { position: absolute; left: 50%; top: 50%; z-index: 5; width: 64px; height: 64px; margin: -40px 0 0 -32px; border-radius: 9999px; pointer-events: none; opacity: 0; box-shadow: 0 0 0 3px var(--k-paper), 0 0 0 6px var(--k-ink), inset 0 0 0 3px var(--k-ink); transition: opacity 0.25s; }
+#coach.on { opacity: 1; animation: pulse 1.1s ease-out 3; }
+#coach.off, .pill.off { transition: none; }
+@keyframes pulse { 0% { transform: scale(0.7); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { #coach.on { animation: none; } }
+
+/* start and end: caption boxes and a play card over the first frame */
+#start { position: absolute; inset: 0; z-index: 6; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 0 var(--pad, 20px) calc(var(--sh, 400px) * 0.02); box-sizing: border-box; cursor: pointer; transition: opacity 0.4s; }
+@media (max-height: 520px) and (orientation: landscape) { #go { transform: scale(0.65); transform-origin: 50% 100%; } }
+#start.gone { opacity: 0; pointer-events: none; }
+#go { appearance: none; display: flex; align-items: center; gap: 14px; width: auto; max-width: 92%; margin: 0; padding: 14px 22px 14px 14px; border: 0; cursor: pointer; background: #FFFFFF; color: #120E18; text-align: left; border-radius: 0; box-shadow: 5px 5px 0 #120E18; }
+#go:focus-visible { outline: 3px solid var(--k-accent); outline-offset: 3px; }
+#go .box { position: relative; width: 52px; height: 52px; flex: none; background: #FFFFFF; box-shadow: inset 0 0 0 3px #120E18; }
+#go .box svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+#go .tick { opacity: 0; transition: opacity 0.15s; } #go.done .tri { opacity: 0; } #go.done .tick { opacity: 1; } #go .tri { transition: opacity 0.15s; }
+#go b { display: block; font: 600 21px/1.1 var(--k-font-body); letter-spacing: -0.02em; white-space: nowrap; }
+#songtitle { margin: 0 0 calc(var(--sh, 400px) * 0.035); padding: 0.16em 0.3em 0.12em; background: #120E18; color: #FFFFFF; font: 400 clamp(24px, calc(var(--sh, 400px) * 0.062), 52px)/1 var(--k-font-display); letter-spacing: -0.035em; white-space: nowrap; pointer-events: none; }
+#songtitle b { font-weight: 400; background: var(--k-accent); color: var(--k-on-accent); padding: 0 0.12em; margin-left: 0.04em; }
+@media (max-height: 520px) and (orientation: landscape) { #songtitle { font-size: 22px; margin-bottom: 6px; } }
+#go small { display: block; margin-top: 5px; font: 400 13px/1.2 var(--k-font-mono); color: #120E18; }
+
+/* ---------- controls ---------- */
+#bar { display: flex; align-items: center; gap: 6px; width: max(var(--sw), min(300px, 100vw - 28px)); flex: none; }
+#bar button { appearance: none; background: none; border: 0; margin: 0; padding: 0; cursor: pointer; }
+#pp { width: 34px; height: 34px; display: grid; place-items: center; color: var(--k-ink); flex: none; }
+#pp svg { width: 16px; height: 16px; } #pp .i-play, #pp .i-replay { display: none; } #pp.paused .i-play { display: block; } #pp.paused .i-pause { display: none; } #pp.ended .i-play, #pp.ended .i-pause { display: none; } #pp.ended .i-replay { display: block; }
+#track { position: relative; flex: 1; height: 30px; cursor: pointer; touch-action: none; }
+#track::before { content: ""; position: absolute; left: 0; right: 0; top: 14px; height: 2px; background: var(--k-muted); opacity: 0.35; }
+#fill { position: absolute; left: 0; right: 0; top: 14px; height: 2px; background: var(--k-ink); transform-origin: 0 50%; transform: scaleX(0); }
+#knob { position: absolute; top: 9px; left: 0; width: 12px; height: 12px; margin-left: -6px; background: var(--k-accent); box-shadow: 0 0 0 2px var(--k-ink); border-radius: 9999px; }
+#time { font: 400 12px/1 var(--k-font-mono); letter-spacing: 0.02em; color: var(--k-ink); font-variant-numeric: tabular-nums; min-width: 34px; text-align: right; }
+#bar button:focus-visible, .chip:focus-visible { outline: 2px solid var(--k-ink); outline-offset: 2px; }
+#chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 2px; width: 100%; max-width: max(var(--sw), 620px); flex: none; overflow: visible; }
+html.chips-compact .chip { min-width: 44px; justify-content: center; padding: 0; }
+html.chips-compact .chip span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+html.chips-compact .chip svg { width: 22px; height: 22px; }
+html.chips-compact .chip[aria-pressed="true"] svg { box-shadow: 0 0 0 2px var(--k-ink), 0 0 0 6px var(--k-accent); }
+.chip { appearance: none; background: none; border: 0; margin: 0; flex: none; min-height: 44px; padding: 0 5px; cursor: pointer; display: flex; align-items: center; gap: 6px; color: var(--k-ink); font: 400 12.5px/1 var(--k-font-mono); letter-spacing: 0.01em; -webkit-tap-highlight-color: transparent; }
+.chip svg { width: 16px; height: 16px; display: block; flex: none; box-shadow: 0 0 0 1.5px var(--k-ink); }
+.chip span { padding: 3px 4px 2px; }
+.chip[aria-pressed="true"] span { background: var(--k-accent); color: var(--k-on-accent); }
+@media (hover: hover) { .chip:hover span { text-decoration: underline; text-underline-offset: 3px; } }
+html.chips-off #chips { display: none; }
+#about { max-width: min(92vw, 520px); margin: 4px 0 0; text-align: center; font: 400 13px/1.55 var(--k-font-body); color: var(--k-muted); }
+#about a { color: var(--k-accent-t); }
+#about .k-mark { width: 13px; height: 13px; vertical-align: -2px; margin-right: 4px; }
+html.short #start p { display: none; }
+
+/* short, wide screens (a phone on its side): the film fills the height; link, styles and footer stand in a column beside it */
+html[data-layout="side"] #app { display: grid; grid-template-columns: auto auto; grid-template-rows: auto 1fr auto auto; justify-content: center; align-content: center; column-gap: 16px; row-gap: 4px; }
+html[data-layout="side"] #frame { grid-column: 1; grid-row: 1 / 4; }
+html[data-layout="side"] #bar { grid-column: 1; grid-row: 4; }
+html[data-layout="side"] .chrome-bottom { grid-column: 2; grid-row: 4; align-self: end; }
+html[data-layout="side"] #about { grid-column: 2; grid-row: 4; display: none; }
+html[data-layout="side"] #chips { grid-column: 2; grid-row: 2 / 3; align-self: center; flex-direction: column; flex-wrap: nowrap; justify-content: center; align-items: flex-start; width: auto; max-width: none; margin: 0; gap: 2px; overflow: visible; }
+html[data-layout="side"] .chip { margin-left: 0; margin-right: 0; }
+html[data-layout="side"].chips-compact #chips { display: grid; grid-template-columns: repeat(2, 44px); gap: 0 6px; align-content: center; }
+@media (prefers-reduced-motion: reduce) { #start, .pill { transition: none; } html, body { transition: none; } }

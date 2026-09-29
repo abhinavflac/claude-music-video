@@ -1,0 +1,69 @@
+<scene look="litmus-1e968b">
+<!-- c2_2 "I'm not 320, I'm not smooth": the quality dropdown from chorus 1, now an assay. Each option gets a litmus strip:
+     320 kbps dips red on "320", smooth (AI enhance) dips red on "smooth", both struck NOT ME; lossless dips blue on the
+     downbeat, PASS. The counter underneath: compression attempts 2, passed: none of them. -->
+<style>
+    #s40-lyric { position: absolute; font: 700 1em/0.9 var(--k-font-display); letter-spacing: -0.035em; text-transform: uppercase; color: var(--k-ink); }
+    #s40-panel { position: absolute; background: var(--k-surface); color: var(--k-on-surface); box-shadow: var(--k-shadow); }
+    .s40-h { display: flex; justify-content: space-between; padding: 0.7em 0.9em; border-bottom: 3px solid var(--k-on-surface); font: 600 0.75em/1 var(--k-font-mono); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+    .s40-row { position: relative; display: grid; grid-template-columns: 1.1em 1fr auto; align-items: center; column-gap: 0.8em; padding: 0.7em 0.9em; border-bottom: 2px solid var(--k-muted); white-space: nowrap; }
+    .s40-strip { position: relative; width: 1.1em; height: 2.4em; background: var(--k-muted); overflow: hidden; }
+    .s40-strip i { position: absolute; inset: 0; transform: scaleY(0); transform-origin: 50% 100%; }
+    .s40-strip i.red { background: var(--k-accent); }
+    .s40-strip i.blue { background: var(--k-accent-2); }
+    .s40-name { position: relative; font: 600 1.05em/1 var(--k-font-body); }
+    .s40-name .k-strike { background: var(--k-accent); height: 0.14em; }
+    .s40-res { font: 700 0.75em/1 var(--k-font-mono); letter-spacing: 0.06em; text-transform: uppercase; opacity: 0; }
+    .s40-res.fail { color: var(--k-accent-t); }
+    .s40-res.pass { color: var(--k-accent-2-t); }
+    .s40-foot { padding: 0.8em 0.9em; font: 500 0.75em/1.4 var(--k-font-mono); white-space: nowrap; }
+    .s40-foot b { font-weight: 700; }
+    #s40-rack { position: absolute; display: none; }
+    .s40-big { display: flex; flex-direction: column; align-items: center; gap: 18px; font: 600 30px/1 var(--k-font-mono); color: var(--k-ink); text-transform: uppercase; letter-spacing: 0.06em; }
+    .s40-big .s40-strip { width: 150px; height: 300px; border: 4px solid var(--k-surface); }
+</style>
+<style frame="wide">
+    #s40-lyric { left: 80px; top: 170px; width: 900px; font-size: 176px; }
+    #s40-panel { left: 1000px; top: 170px; width: 840px; font-size: 38px; }
+</style>
+<style frame="vert">
+    #s40-panel { left: 48px; top: 270px; width: 984px; font-size: 42px; }
+    .s40-h, .s40-row, .s40-foot { padding-right: 100px; }
+    #s40-lyric { left: 48px; top: 1352px; width: 912px; font-size: 150px; }
+    #s40-rack { display: flex; left: 48px; top: 900px; width: 912px; justify-content: space-around; }
+</style>
+<body>
+    <div id="s40-lyric"></div>
+    <div id="s40-panel">
+      <div class="s40-h"><span>quality assay · abhinav.flac</span><span>attempt 2</span></div>
+      <div class="s40-row"><span class="s40-strip"><i class="red"></i></span><span class="s40-name" id="s40-n0">320 kbps</span><span class="s40-res fail" id="s40-r0">fail · not me</span></div>
+      <div class="s40-row"><span class="s40-strip"><i class="red"></i></span><span class="s40-name" id="s40-n1">smooth (AI enhance)</span><span class="s40-res fail" id="s40-r1">fail · not me</span></div>
+      <div class="s40-row"><span class="s40-strip"><i class="blue"></i></span><span class="s40-name">lossless</span><span class="s40-res pass" id="s40-r2">pass</span></div>
+      <div class="s40-foot" id="s40-foot">compression attempts: <b>2</b><br>passed: <b>none of them</b></div>
+    </div>
+    <div id="s40-rack"><div class="s40-big"><span class="s40-strip"><i class="red"></i></span>320</div><div class="s40-big"><span class="s40-strip"><i class="red"></i></span>smooth</div><div class="s40-big"><span class="s40-strip"><i class="blue"></i></span>lossless</div></div>
+</body>
+<script>
+    (() => {
+      const id = 's40', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const t320 = at(/^320/), tSmooth = at(/^smooth/), d = S.downbeats[0] ?? tSmooth + 0.1;
+
+      // the dips: a strip colours from the bottom up, then the verdict; the two fails get struck through
+      const strips = [...root.querySelectorAll('#s40-panel .s40-strip i')], big = [...root.querySelectorAll('#s40-rack .s40-strip i')];
+      [[0, t320], [1, tSmooth], [2, d]].forEach(([i, t]) => {
+        tl.to([strips[i], big[i]], { scaleY: 1, duration: 0.22, ease: 'power2.out' }, t);
+        tl.fromTo($('#s40-r' + i), { opacity: 0, x: 12 }, { opacity: 1, x: 0, duration: 0.14, ease: 'power2.out' }, t + 0.12);
+        if (i < 2) { const s = K.strike($('#s40-n' + i)); K.strikeAt(tl, s, t + 0.1, 0.16); }
+      });
+      tl.fromTo($('#s40-foot'), { opacity: 0 }, { opacity: 1, duration: 0.2 }, d + 0.3);
+      K.shake(tl, $('#s40-panel'), d, 6, 3);
+
+      // the line, 320 in the red block, a word per line
+      const { spans } = K.words($('#s40-lyric'), L, { key: L.words.findIndex(x => /^320/.test(x.w)), breakBefore: vert ? [3] : [2, 3, 5] });
+      K.reveal(tl, spans, L, 'slam');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

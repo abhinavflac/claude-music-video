@@ -1,0 +1,98 @@
+<scene look="reticle-aff621">
+<!-- c1_6 "You can cut me down to fit": a crop tool on a light table, crop marks at the corners. The frame closes on his
+     face in three snaps, one per word: 16:9 on "cut", 4:3 on "down", and 1:1 on "fit", where the output locks to a
+     thumbnail-sized 128 x 128. In the Plainclothes panel he glares sideways at the handles; a vein pops on "fit". -->
+<style>
+    #s24-win { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); }
+    #s24-table { position: absolute; overflow: hidden; background: var(--k-paper); outline: 1px solid var(--k-line); }
+    #s24-side { position: absolute; display: flex; font: 400 1em/1.2 var(--k-font-body); color: var(--k-on-surface); }
+    .s24-h { font: italic 500 1.6em/1 var(--k-font-display); }
+    .s24-lab { font: 500 0.75em/1 var(--k-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--k-muted); }
+    .s24-chips { display: flex; gap: 0.4em; }
+    .s24-chip { padding: 0.35em 0.6em; border: 1px solid var(--k-muted); border-radius: 999px; font: 500 0.85em/1 var(--k-font-mono); white-space: nowrap; }
+    .s24-chip.on { background: var(--k-accent); border-color: var(--k-accent); color: var(--k-on-accent); }
+    .s24-dims { display: grid; grid-template-columns: auto 1fr; gap: 0.35em 0.8em; font: 500 1em/1.1 var(--k-font-mono); font-variant-numeric: tabular-nums; }
+    .s24-dims em { font-style: normal; color: var(--k-muted); }
+    #s24-out { padding: 0.45em 0.7em; border: 1px dashed var(--k-muted); border-radius: 10px; font: 600 1.1em/1 var(--k-font-mono); white-space: nowrap; }
+    #s24-out.on { background: var(--k-accent-2); border: 1px solid var(--k-accent-2); color: oklch(from var(--k-accent-2) clamp(0, (0.62 - l) * 1000, 1) 0 0); }
+    #s24-lyric { position: absolute; font: 600 1em/1 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s24-win { left: 40px; top: 96px; width: 1840px; height: 916px; }
+    #s24-table { left: 30px; top: 30px; width: 1260px; height: 704px; }
+    #s24-side { left: 1330px; top: 34px; width: 470px; flex-direction: column; gap: 30px; font-size: 30px; }
+    #s24-lyric { left: 30px; top: 772px; width: 1780px; font-size: 108px; }
+</style>
+<style frame="vert">
+    #s24-win { left: 48px; top: 250px; width: 984px; height: 1452px; }
+    #s24-table { left: 24px; top: 24px; width: 936px; height: 870px; }
+    #s24-side { left: 24px; top: 924px; width: 840px; flex-wrap: wrap; column-gap: 34px; row-gap: 22px; align-items: center; font-size: 30px; }
+    #s24-side .s24-h, #s24-side .s24-dims { display: none; }
+    #s24-lyric { left: 24px; top: 1102px; width: 860px; font-size: 118px; }
+</style>
+<body>
+    <div id="s24-win">
+      <div id="s24-table"></div>
+      <div id="s24-side">
+        <div class="s24-h">crop</div>
+        <div><div class="s24-lab">aspect</div><div class="s24-chips" style="margin-top:12px"><span class="s24-chip on">free</span><span class="s24-chip">16:9</span><span class="s24-chip">4:3</span><span class="s24-chip">1:1</span></div></div>
+        <div class="s24-dims"><em>w</em><span id="s24-w">3000 px</span><em>h</em><span id="s24-h">1674 px</span></div>
+        <div><div class="s24-lab">output</div><div id="s24-out" style="margin-top:12px">3000 × 1674</div></div>
+      </div>
+      <div id="s24-lyric"></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's24', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const snaps = [0, at(/^cut/), at(/^down/), at(/^fit/)];
+
+      // the plate on the light table, and an overlay in its pixels for the crop
+      const vb = vert ? '760 0 1800 1674' : '0 0 3000 1674';
+      const shot = K.shot($('#s24-table'), 's24-glare', { viewBox: vb, style: { left: '0px', top: '0px', width: '100%', height: '100%' } });
+      const ov = K.overlay(shot, vb), [vx, vy, vw, vh] = vb.split(' ').map(Number), u = vw / $('#s24-table').clientWidth;
+      const R = [[vx, vy, vw, vh], vert ? [850, 80, 1700, 956] : [700, 37, 2000, 1125], [1090, 110, 1200, 900], [1290, 150, 800, 800]];
+      const mask = K.svg('path', { 'fill-rule': 'evenodd', fill: 'var(--k-paper)', opacity: 0.78 }, ov);
+      const frame = K.svg('rect', { fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 2 * u }, ov);
+      const thirds = K.svg('path', { fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 1.2 * u, opacity: 0.55 }, ov);
+      const handles = K.svg('path', { fill: 'none', stroke: 'var(--k-accent)', 'stroke-width': 7 * u, 'stroke-linecap': 'square' }, ov);
+      const marks = K.svg('path', { fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 1.6 * u }, ov);
+      const ease = x => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2), D = 0.14;
+      const rectAt = t => {
+        let k = 0; for (let i = 1; i < 4; i++) if (t >= snaps[i]) k = i;
+        const a = R[Math.max(0, k - 1)], b = R[k], p = k ? ease(Math.min(1, (t - snaps[k]) / D)) : 1;
+        return a.map((v, i) => v + (b[i] - v) * p);
+      };
+      const chips = [...root.querySelectorAll('.s24-chip')], outBox = $('#s24-out');
+      K.drive(tl, 0, S.dur, t => {
+        const [x, y, w, h] = rectAt(t), c = Math.min(w, h) * 0.12, g = 14 * u, m = 36 * u;
+        mask.setAttribute('d', `M${vx - 4000} ${vy - 4000} H${vx + vw + 4000} V${vy + vh + 4000} H${vx - 4000} Z M${x} ${y} H${x + w} V${y + h} H${x} Z`);
+        frame.setAttribute('x', x); frame.setAttribute('y', y); frame.setAttribute('width', w); frame.setAttribute('height', h);
+        thirds.setAttribute('d', `M${x + w / 3} ${y} V${y + h} M${x + 2 * w / 3} ${y} V${y + h} M${x} ${y + h / 3} H${x + w} M${x} ${y + 2 * h / 3} H${x + w}`);
+        handles.setAttribute('d', `M${x} ${y + c} V${y} H${x + c} M${x + w - c} ${y} H${x + w} V${y + c} M${x + w} ${y + h - c} V${y + h} H${x + w - c} M${x + c} ${y + h} H${x} V${y + h - c}`);
+        marks.setAttribute('d', `M${x - g - m} ${y} H${x - g} M${x} ${y - g - m} V${y - g} M${x + w + g} ${y} H${x + w + g + m} M${x + w} ${y - g - m} V${y - g} M${x - g - m} ${y + h} H${x - g} M${x} ${y + h + g} V${y + h + g + m} M${x + w + g} ${y + h} H${x + w + g + m} M${x + w} ${y + h + g} V${y + h + g + m}`);
+        const fitted = t >= snaps[3] + D, k = snaps.filter(s => t >= s).length - 1;
+        $('#s24-w').textContent = `${fitted ? 128 : Math.round(w)} px`; $('#s24-h').textContent = `${fitted ? 128 : Math.round(h)} px`;
+        outBox.textContent = fitted ? '128 × 128' : `${Math.round(w)} × ${Math.round(h)}`;
+        chips.forEach((c, i) => c.classList.toggle('on', i === k)); outBox.classList.toggle('on', fitted);
+      }, 0, S.dur);
+
+      // the output box pops as it locks to 128 x 128 (the chips and numbers follow the snaps in the drive above)
+      tl.fromTo(outBox, { scale: 1.15 }, { scale: 1, duration: 0.25, ease: 'back.out(3)', immediateRender: false }, snaps[3] + D);
+
+      // the vein on "fit"
+      const vein = K.svg('g', { transform: 'translate(2010 250) scale(2.2)' }, ov);
+      ['M-30 -8 Q-8 -8 -8 -30', 'M8 -30 Q8 -8 30 -8', 'M30 8 Q8 8 8 30', 'M-8 30 Q-8 8 -30 8'].forEach(d => K.svg('path', { d, fill: 'none', stroke: 'var(--k-accent-3)', 'stroke-width': 7, 'stroke-linecap': 'round' }, vein));
+      gsap.set(vein, { opacity: 0 });
+      tl.fromTo(vein, { opacity: 0, scale: 0.5, svgOrigin: '2010 250' }, { opacity: 1, scale: 1, svgOrigin: '2010 250', duration: 0.18, ease: 'back.out(4)' }, snaps[3] + 0.05);
+      K.shake(tl, $('#s24-table'), snaps[3], 6, 3);
+
+      // the line, CUT in the blue block
+      const { spans } = K.words($('#s24-lyric'), L, { key: L.words.findIndex(x => /^cut/.test(x.w)), breakBefore: vert ? [3] : [] });
+      K.reveal(tl, spans, L, 'slam');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

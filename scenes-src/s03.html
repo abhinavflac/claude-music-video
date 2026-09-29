@@ -1,0 +1,115 @@
+<scene look="dither-bdfb94">
+<!-- i2 "what they threw away.": a CGA desktop's Bin, "deleted by: codec", listing what the s01 log discarded. The last
+     row lands on "away.": you (partial).bin, in red. Fine print: according to a model of your ears. -->
+<tokens>--k-accent-3: #FF5A5A; --k-radius: 0px;</tokens>
+<style>
+    #s03-cam { position: absolute; inset: 0; }
+    #s03-grid { position: absolute; inset: -40px; opacity: 0.5; background: repeating-linear-gradient(90deg, transparent 0 7px, var(--k-line) 7px 8px), repeating-linear-gradient(0deg, transparent 0 7px, var(--k-line) 7px 8px); }
+    #s03-win { position: absolute; background: var(--k-surface); border: 4px solid var(--k-accent); box-shadow: var(--k-shadow); }
+    #s03-bar { display: flex; align-items: center; justify-content: space-between; background: var(--k-accent); color: var(--k-on-accent); font-family: var(--k-font-display); text-transform: uppercase; }
+    #s03-lyric { font: 400 1em/0.9 var(--k-font-body); color: var(--k-on-surface); white-space: nowrap; }
+    .s03-row { display: grid; align-items: center; font-family: var(--k-font-body); color: var(--k-on-surface); white-space: nowrap; }
+    .s03-row.head { color: var(--k-muted); border-bottom: 2px dashed var(--k-line); }
+    .s03-row .n { overflow: hidden; text-overflow: ellipsis; }
+    .s03-row.you { color: var(--k-accent-3-t); }
+    #s03-sel { position: absolute; left: 0; right: 0; background: var(--k-accent-2); opacity: 0.14; }
+    #s03-list { position: relative; }
+    #s03-foot { display: flex; justify-content: space-between; align-items: center; font-family: var(--k-font-body); color: var(--k-muted); }
+    #s03-restore { padding: 0.25em 0.8em; border: 3px solid var(--k-line); color: var(--k-muted); font-family: var(--k-font-display); text-transform: uppercase; }
+    #s03-scan { position: absolute; inset: 0; pointer-events: none; opacity: 0.22; background: repeating-linear-gradient(to bottom, transparent 0 3px, var(--k-paper) 3px 5px); }
+</style>
+<style frame="wide">
+    #s03-win { left: 190px; top: 128px; width: 1540px; height: 820px; }
+    #s03-bar { height: 64px; padding: 0 24px; font-size: 22px; }
+    #s03-body { padding: 18px 40px 0; }
+    #s03-lyric { font-size: 148px; margin: 4px 0 14px; }
+    .s03-row { grid-template-columns: 1fr 200px 460px; height: 56px; font-size: 44px; }
+    #s03-sel { height: 56px; }
+    #s03-foot { position: absolute; left: 40px; right: 40px; bottom: 24px; font-size: 34px; }
+    #s03-restore { font-size: 18px; }
+</style>
+<style frame="vert">
+    #s03-win { left: 48px; top: 270px; width: 984px; height: 1050px; }
+    #s03-bar { height: 80px; padding: 0 22px; font-size: 22px; }
+    #s03-body { padding: 22px 30px 0; }
+    .s03-row { grid-template-columns: 1fr 170px; height: 104px; font-size: 52px; line-height: 1; }
+    .s03-row .note { display: none; }
+    #s03-sel { height: 104px; }
+    #s03-foot { position: absolute; left: 30px; right: 30px; bottom: 26px; font-size: 38px; flex-direction: column; align-items: flex-start; gap: 16px; }
+    #s03-restore { font-size: 20px; }
+    #s03-lyric { position: absolute; left: 48px; top: 1352px; width: 984px; font-size: 176px; color: var(--k-ink); }
+    #s03-why { position: absolute; left: 48px; top: 1716px; font: 400 44px/1 var(--k-font-body); color: var(--k-accent-3-t); }
+</style>
+<body frame="wide">
+    <div id="s03-grid" data-bleed data-layout-ignore></div>
+    <div id="s03-cam" data-layout-allow-overflow>
+      <div id="s03-win">
+        <div id="s03-bar"><span>Bin · deleted by: codec</span><span>[x]</span></div>
+        <div id="s03-body">
+          <div id="s03-lyric"></div>
+          <div id="s03-list">
+            <div id="s03-sel"></div>
+            <div class="s03-row head"><span class="n">name</span><span>size</span><span class="note">note</span></div>
+            <div class="s03-row"><span class="n">harmonics_16k-22k.raw</span><span>2.1 MB</span><span class="note">inaudible*</span></div>
+            <div class="s03-row"><span class="n">room_tone.wav</span><span>840 KB</span><span class="note"></span></div>
+            <div class="s03-row"><span class="n">breath_03.aif</span><span>112 KB</span><span class="note"></span></div>
+            <div class="s03-row"><span class="n">string_decay.flac</span><span>1.4 MB</span><span class="note">too long</span></div>
+            <div class="s03-row"><span class="n">the_tremble.tmp</span><span>64 KB</span><span class="note"></span></div>
+            <div class="s03-row you"><span class="n">you (partial).bin</span><span>??</span><span class="note">you won't notice</span></div>
+          </div>
+        </div>
+        <div id="s03-foot"><span>* according to a model of your ears</span><span id="s03-restore">restore: n/a at 128k</span></div>
+        <div id="s03-scan"></div>
+      </div>
+    </div>
+</body>
+<body frame="vert">
+    <div id="s03-grid" data-bleed data-layout-ignore></div>
+    <div id="s03-cam" data-layout-allow-overflow>
+      <div id="s03-win">
+        <div id="s03-bar"><span>Bin · by: codec</span><span>[x]</span></div>
+        <div id="s03-body">
+          <div id="s03-list">
+            <div id="s03-sel"></div>
+            <div class="s03-row head"><span class="n">name</span><span>size</span></div>
+            <div class="s03-row"><span class="n">harmonics_16k+.raw</span><span>2.1 MB</span></div>
+            <div class="s03-row"><span class="n">room_tone.wav</span><span>840 KB</span></div>
+            <div class="s03-row"><span class="n">breath_03.aif</span><span>112 KB</span></div>
+            <div class="s03-row"><span class="n">string_decay.flac</span><span>1.4 MB</span></div>
+            <div class="s03-row"><span class="n">the_tremble.tmp</span><span>64 KB</span></div>
+            <div class="s03-row you"><span class="n">you (partial).bin</span><span>??</span></div>
+          </div>
+        </div>
+        <div id="s03-foot"><span>* according to a model of your ears</span><span id="s03-restore">restore: n/a at 128k</span></div>
+        <div id="s03-scan"></div>
+      </div>
+      <div id="s03-lyric"></div>
+      <div id="s03-why">you won't notice</div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's03', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0];
+      K.push(tl, $('#s03-cam'), S.dur, 1, 1.05);
+      tl.fromTo($('#s03-grid'), { y: 0 }, { y: 32, duration: S.dur, ease: 'none' }, 0);
+
+      const key = L.words.length - 1;
+      const { box: lyricLine, spans } = K.words($('#s03-lyric'), L, { key, breakBefore: vert ? [2] : [] });
+      K.fit(tl, S.dur, $('#s03-lyric'), lyricLine, vert ? 912 : 1460);
+      K.reveal(tl, spans, L, 'cut');
+
+      // the list fills in fast, one file per step, the last one on "away."
+      const rows = [...root.querySelectorAll('.s03-row:not(.head)')], last = L.words[key].t, rowH = vert ? 104 : 56, head = rowH;
+      rows.forEach((row, i) => {
+        const t = i < rows.length - 1 ? 0.02 + i * (last - 0.1) / (rows.length - 1) : last;
+        tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: K.F, ease: 'none' }, t);
+        tl.set($('#s03-sel'), { y: head + i * rowH }, t);
+      });
+      const you = rows[rows.length - 1];
+      for (let i = 1; i <= 6; i++) tl.set(you, { opacity: i % 2 ? 0.25 : 1 }, last + 0.1 + i * 0.12);
+      if (vert) tl.fromTo($('#s03-why'), { opacity: 0 }, { opacity: 1, duration: K.F }, last + 0.2);
+
+      window.__timelines[id] = tl;
+    })();
+</script>

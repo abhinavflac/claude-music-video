@@ -1,0 +1,75 @@
+<scene look="shinya-dde723">
+<!-- pc2_2 "Two a.m., the ceiling, who checks on the strong one anymore?": late night in a lavender-cyan haze. Top down, he
+     lies in bed staring at the ceiling, IEMs still in, the frame turning very slowly. The phone on the blanket reads 2:00,
+     no new messages; on "checks" it refreshes, spins, and still says no new messages. The Oracle on the nightstand dims
+     and flickers on "strong". The line sits in a quiet sleep-log card. -->
+<style>
+    #s38-cam { position: absolute; inset: 0; }
+    .s38-koma { position: absolute; overflow: hidden; background: var(--k-paper); }
+    .s38-lock { font-family: var(--k-font-display); fill: var(--k-paper); }
+    .s38-glow { fill: var(--k-accent); filter: blur(28px); }
+    #s38-card { position: absolute; background: var(--k-surface); border: 1px solid var(--k-accent-2); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s38-h { display: flex; justify-content: space-between; margin-bottom: 0.5em; font: 400 0.34em/1 var(--k-font-mono); letter-spacing: 0.06em; color: var(--k-muted); white-space: nowrap; }
+    #s38-lyric { font: 500 1em/1.04 var(--k-font-display); letter-spacing: -0.02em; color: var(--k-ink); }
+    #s38-lyric { --k-key-bg: var(--k-accent-2); }
+</style>
+<style frame="wide">
+    #s38-a { inset: 0; }
+    #s38-card { left: 56px; top: 700px; width: 960px; padding: 24px 30px 28px; font-size: 70px; }
+</style>
+<style frame="vert">
+    #s38-a { left: 0; top: 190px; width: 1080px; height: 700px; }
+    #s38-b { left: 0; top: 906px; width: 1080px; height: 410px; }
+    #s38-card { left: 48px; top: 1334px; width: 984px; padding: 22px 100px 26px 30px; font-size: 70px; }
+</style>
+<body>
+    <div id="s38-cam" data-layout-allow-overflow data-bleed>
+      <div class="s38-koma" id="s38-a"></div>
+      <div class="s38-koma" id="s38-b"></div>
+    </div>
+    <div id="s38-card"><div class="s38-h"><span>sleep log</span><span id="s38-awake">awake · 2:00</span></div><div id="s38-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's38', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tChecks = at(/^checks/), tStrong = at(/^strong/), inks = [K.tok(root, 'ink'), K.tok(root, 'paper')];
+
+      // wide: the whole bed, turning slowly; vertical: his face above, the phone below
+      const panels = vert ? [[$('#s38-a'), '530 150 1000 648'], [$('#s38-b'), '1380 1010 1000 380']] : [[$('#s38-a'), '0 0 3000 1655']];
+      if (!vert) $('#s38-b').remove();
+      const shots = panels.map(([el, vb]) => ({ el, vb, shot: K.shot(el, 's38-ceiling', { viewBox: vb, inks }) }));
+      const phoneIn = shots[shots.length - 1];
+      gsap.set($('#s38-cam'), { transformOrigin: '50% 45%' });
+      if (!vert) tl.fromTo($('#s38-cam'), { rotation: -1.2, scale: 1.02 }, { rotation: 2.2, scale: 1.09, duration: S.dur, ease: 'none' }, 0);
+      else shots.forEach(p => tl.fromTo(p.shot, { scale: 1 }, { scale: 1.06, duration: S.dur, ease: 'none' }, 0));
+
+      // the phone's lock screen, mapped onto its glass (corners traced from the plate; its top is to the right)
+      const ov = K.overlay(phoneIn.shot, phoneIn.vb), scr = K.svg('g', { transform: 'matrix(1 -0.201 0.213 0.979 1668 1160)' }, ov);
+      const clock = K.svg('text', { x: 26, y: 96, class: 's38-lock', style: 'font-size: 78px; font-weight: 500' }, scr); clock.textContent = '2:00';
+      const msg = K.svg('text', { x: 28, y: 146, class: 's38-lock', style: 'font-size: 27px' }, scr); msg.textContent = 'no new messages';
+      const spin = K.svg('path', { d: 'M320 56 a22 22 0 1 1 -22 -22', fill: 'none', stroke: 'var(--k-paper)', 'stroke-width': 6, 'stroke-linecap': 'round' }, scr);
+      K.drive(tl, 0, S.dur, t => {
+        const busy = t >= tChecks && t < tChecks + 0.7;
+        spin.style.opacity = busy ? 1 : 0;
+        spin.setAttribute('transform', `rotate(${((t * 540) % 360).toFixed(1)} 298 56)`);
+        msg.textContent = busy ? 'checking…' : t >= tChecks ? 'no new messages · just now' : 'no new messages';
+        $('#s38-awake').textContent = `awake · 2:${String(Math.min(59, Math.floor(t * 3))).padStart(2, '0')}`;
+      }, 0, S.dur);
+
+      // the Oracle's light, dimming through the scene, flickering on "strong" (only the wide frame shows the nightstand)
+      if (!vert) {
+        const glow = K.svg('circle', { cx: 2540, cy: 360, r: 260, class: 's38-glow' }, K.overlay(shots[0].shot, shots[0].vb));
+        tl.fromTo(glow, { opacity: 0.55 }, { opacity: 0.12, duration: S.dur, ease: 'power1.in' }, 0);
+        [0, 2, 3, 6].forEach((k, i) => tl.set(glow, { opacity: i % 2 ? 0.3 : 0.04 }, tStrong + k * K.F));
+        tl.set(glow, { opacity: 0.1 }, tStrong + 8 * K.F);
+      }
+
+      // the line, STRONG in the lavender block
+      const { spans } = K.words($('#s38-lyric'), L, { key: L.words.findIndex(x => /^strong/.test(x.w)), breakBefore: [4, 7] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.3 });
+      window.__timelines[id] = tl;
+    })();
+</script>

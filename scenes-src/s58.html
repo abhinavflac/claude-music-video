@@ -1,0 +1,77 @@
+<scene look="meridian-88cb34">
+<!-- fc_4 "Keep the parts that sound like truth": the spectrum one last time, as a neon-on-white almanac chart at 100%.
+     The curve draws itself from 20 Hz across the whole range as the line is sung and reaches 22 kHz exactly on "truth",
+     where the annotation reads kept, and KEEP ticks green. -->
+<style>
+    #s58-chart { position: absolute; background: var(--k-surface); border: 2px solid var(--k-ink); border-radius: var(--k-radius); }
+    #s58-chart svg { position: absolute; overflow: visible; }
+    .s58-h { position: absolute; left: 1em; right: 1em; top: 0.8em; display: flex; justify-content: space-between; font: 500 0.75em/1 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s58-h b { color: var(--k-ink); font-weight: 600; }
+    .s58-grid { stroke: var(--k-line); stroke-width: 2; }
+    .s58-ax { font: 500 22px/1 var(--k-font-mono); fill: var(--k-muted); }
+    .s58-note { font: 600 26px/1 var(--k-font-mono); fill: var(--k-ink); }
+    #s58-keep { position: absolute; display: flex; align-items: center; gap: 0.5em; padding: 0.45em 1em; border: 3px solid var(--k-ink); border-radius: 999px; font: 700 0.9em/1 var(--k-font-display); letter-spacing: 0.06em; color: var(--k-ink); }
+    #s58-keep.on { background: var(--k-accent); color: oklch(from var(--k-accent) clamp(0, (0.62 - l) * 1000, 1) 0 0); }
+    #s58-lyric { position: absolute; font: 700 1em/0.95 var(--k-font-display); letter-spacing: -0.035em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s58-lyric { left: 80px; top: 100px; width: 1760px; font-size: 120px; }
+    #s58-chart { left: 80px; top: 380px; width: 1760px; height: 610px; font-size: 32px; }
+    #s58-keep { right: 80px; top: 104px; font-size: 32px; }
+</style>
+<style frame="vert">
+    #s58-chart { left: 48px; top: 250px; width: 984px; height: 1062px; font-size: 32px; }
+    .s58-h { right: 100px; }
+    #s58-keep { left: 96px; top: 110px; font-size: 36px; }
+    #s58-lyric { left: 48px; top: 1352px; width: 912px; font-size: 104px; }
+</style>
+<body>
+    <div id="s58-chart"><div class="s58-h"><b>spectral almanac · abhinav.flac</b><span>20 Hz – 22 kHz · complete</span></div><svg id="s58-svg" data-layout-ignore></svg><div id="s58-keep">KEEP</div></div>
+    <div id="s58-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's58', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tKeep = L.words[0].t, tTruth = at(/^truth/);
+      const ch = $('#s58-chart'), CW = ch.clientWidth, CH = ch.clientHeight, sv = $('#s58-svg');
+      const pl = 80, pr = vert ? 110 : 60, pt = 100, pb = vert ? 150 : 110, PW = CW - pl - pr, PH = CH - pt - pb;
+      Object.assign(sv.style, { left: pl + 'px', top: pt + 'px', width: PW + 'px', height: PH + 'px' });
+      sv.setAttribute('viewBox', `0 0 ${PW} ${PH}`);
+
+      // an almanac grid: decades across, 10 dB steps down
+      const lx = f => (Math.log10(f) - Math.log10(20)) / (Math.log10(22000) - Math.log10(20)) * PW;
+      [20, 100, 1000, 10000, 16000, 22000].forEach((f, i) => {
+        K.svg('line', { x1: lx(f), x2: lx(f), y1: 0, y2: PH, class: 's58-grid' }, sv);
+        const t = K.svg('text', { x: lx(f), y: PH + 34, 'text-anchor': i === 0 ? 'start' : i === 5 ? 'end' : 'middle', class: 's58-ax' }, sv); t.textContent = ['20', '100', '1k', '10k', '16k', '22k'][i];
+      });
+      for (let j = 1; j < 6; j++) K.svg('line', { x1: 0, x2: PW, y1: PH * j / 6, y2: PH * j / 6, class: 's58-grid' }, sv);
+
+      // the curve: a whole spectrum, drawn left to right with the line, arriving at 22 kHz on "truth"
+      const N = 240, pts = [...Array(N + 1)].map((_, i) => { const u = i / N, y = 0.2 + 0.18 * u + 0.1 * Math.sin(u * 17) * Math.sin(u * 5.3) + 0.05 * Math.sin(u * 61); return [u * PW, Math.min(0.92, y) * PH]; });
+      const line = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+      const area = K.svg('path', { d: `${line} L${PW} ${PH} L0 ${PH} Z`, fill: 'var(--k-accent)', opacity: 0.18 }, sv);
+      const curve = K.svg('path', { d: line, fill: 'none', stroke: 'var(--k-accent)', 'stroke-width': 6, 'stroke-linejoin': 'round', pathLength: 1 }, sv);
+      const clip = K.svg('clipPath', { id: 's58-clip' }, K.svg('defs', {}, sv)), cr = K.svg('rect', { x: 0, y: -20, width: 0, height: PH + 40 }, clip);
+      area.setAttribute('clip-path', 'url(#s58-clip)');
+      curve.style.strokeDasharray = '1'; curve.style.strokeDashoffset = '1';
+      const dot = K.svg('circle', { r: 11, fill: 'var(--k-ink)' }, sv);
+      K.drive(tl, 0, S.dur, t => {
+        const p = Math.max(0, Math.min(1, (t - tKeep) / (tTruth - tKeep))), k = Math.round(p * N);
+        curve.style.strokeDashoffset = (1 - p).toFixed(4); cr.setAttribute('width', (p * PW).toFixed(1));
+        dot.setAttribute('cx', pts[k][0].toFixed(1)); dot.setAttribute('cy', pts[k][1].toFixed(1));
+        $('#s58-keep').classList.toggle('on', t >= tTruth);
+      }, 0, S.dur);
+      const note = K.svg('text', { x: PW - 10, y: pts[N][1] - 36, 'text-anchor': 'end', class: 's58-note' }, sv); note.textContent = '22 kHz · truth · kept';
+      gsap.set(note, { opacity: 0 }); tl.to(note, { opacity: 1, duration: 0.15 }, tTruth);
+      const tick = K.check($('#s58-keep'), false); $('#s58-keep').prepend(tick.el); K.tick(tl, tick, tTruth);
+      tl.fromTo($('#s58-keep'), { scale: 1.2 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tTruth);
+
+      // the line, TRUTH in the green block
+      const { spans } = K.words($('#s58-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [3, 5] : [4] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

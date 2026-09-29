@@ -1,0 +1,94 @@
+<scene look="vernier-fa82f2">
+<!-- v2_4 "It doesn't read intentions, only patterns on a map": dark analytics with amber thresholds, the risk engine that
+     judged him. A week of his transfers as a heatmap, one night burning amber. The rule log evaluates him line by line:
+     on "intentions" intent: field not supported, beside a small heart; on "patterns" pattern MASS_TRANSFER: MATCH, the
+     hot cluster boxed in amber; then velocity HIGH: MATCH, and on "map" a pin drops on the night he moved his files. -->
+<style>
+    #s32-dash { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s32-h { display: flex; justify-content: space-between; padding: 0.7em 0.9em; border-bottom: 1px solid var(--k-line); font: 500 0.75em/1 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s32-h b { color: var(--k-ink); font-weight: 600; }
+    #s32-map { position: absolute; }
+    #s32-map svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .s32-ax { font: 500 18px/1 var(--k-font-mono); fill: var(--k-muted); }
+    #s32-log { position: absolute; display: grid; align-content: start; gap: 0.55em; font: 400 0.8em/1.25 var(--k-font-mono); }
+    .s32-rule { display: flex; justify-content: space-between; gap: 1em; padding-bottom: 0.55em; border-bottom: 1px solid var(--k-line); white-space: nowrap; opacity: 0; }
+    .s32-rule em { font-style: normal; color: var(--k-muted); }
+    .s32-rule b { font-weight: 600; }
+    .s32-rule .hit { color: var(--k-accent-2-t); }
+    .s32-rule .dim { display: inline-flex; align-items: center; gap: 0.4em; color: var(--k-muted); }
+    .s32-rule svg { width: 0.9em; height: 0.9em; }
+    #s32-lyric { position: absolute; font: 600 1em/0.98 var(--k-font-display); letter-spacing: -0.015em; color: var(--k-ink); }
+    #s32-lyric { --k-key-bg: var(--k-accent-2); }
+</style>
+<style frame="wide">
+    #s32-dash { left: 80px; top: 104px; width: 1760px; height: 560px; font-size: 30px; }
+    #s32-map { left: 70px; top: 104px; width: 1000px; height: 400px; }
+    #s32-log { left: 1130px; top: 90px; width: 590px; }
+    #s32-lyric { left: 80px; top: 716px; width: 1760px; font-size: 118px; }
+</style>
+<style frame="vert">
+    #s32-dash { left: 48px; top: 250px; width: 984px; height: 1062px; font-size: 32px; }
+    .s32-h { padding-right: 100px; }
+    #s32-map { left: 70px; top: 110px; width: 794px; height: 420px; }
+    #s32-log { left: 32px; top: 610px; width: 852px; }
+    #s32-lyric { left: 48px; top: 1352px; width: 912px; font-size: 100px; }
+</style>
+<body>
+    <div id="s32-dash">
+      <div class="s32-h"><b>risk engine · account abhinav</b><span>transfers, last 7 days</span></div>
+      <div id="s32-map"><svg id="s32-svg" data-layout-ignore></svg></div>
+      <div id="s32-log">
+        <div class="s32-rule" id="s32-r0"><em>intent</em><span class="dim">field not supported <svg viewBox="0 0 16 16"><path d="M8 14 C3 10 1 7.5 1 5.2 A3.4 3.4 0 0 1 8 4 A3.4 3.4 0 0 1 15 5.2 C15 7.5 13 10 8 14 Z" fill="var(--k-muted)"/></svg></span></div>
+        <div class="s32-rule" id="s32-r1"><em>pattern</em><span><b>MASS_TRANSFER</b> <b class="hit">MATCH</b></span></div>
+        <div class="s32-rule" id="s32-r2"><em>velocity</em><span><b>HIGH</b> <b class="hit">MATCH</b></span></div>
+        <div class="s32-rule" id="s32-r3"><em>risk</em><span><b class="hit">0.97</b> → disable</span></div>
+      </div>
+    </div>
+    <div id="s32-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's32', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tInt = at(/^intentions/), tPat = at(/^patterns/), tOn = at(/^on$/), tMap = at(/^map/);
+
+      // the heatmap: 7 days x 24 hours of transfers, quiet, except one night that burns
+      const map = $('#s32-map'), MW = map.clientWidth, MH = map.clientHeight, sv = $('#s32-svg');
+      sv.setAttribute('viewBox', `0 0 ${MW} ${MH}`);
+      const C = 24, R = 7, cw = MW / C, ch = MH / R, r = K.rng(32), hot = [5, 1, 5, 3.2];   // day 5, from 1 a.m., 5 hours wide
+      const cells = [];
+      for (let d = 0; d < R; d++) for (let h = 0; h < C; h++) {
+        const quiet = 0.05 + 0.18 * r() * (h > 8 && h < 23 ? 1 : 0.4);
+        const burn = d === hot[0] ? Math.exp(-(((h - hot[3]) / 1.6) ** 2)) : 0;
+        const c = K.svg('rect', { x: (h * cw + 2).toFixed(1), y: (d * ch + 2).toFixed(1), width: (cw - 4).toFixed(1), height: (ch - 4).toFixed(1), rx: 3, fill: 'var(--k-accent-2)' }, sv);
+        cells.push({ c, v: Math.min(1, quiet + burn), h });
+      }
+      ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].forEach((n, d) => { const t = K.svg('text', { x: -12, y: d * ch + ch * 0.62, 'text-anchor': 'end', class: 's32-ax' }, sv); t.textContent = n; });
+      [0, 6, 12, 18].forEach(h => { const t = K.svg('text', { x: h * cw + 2, y: MH + 26, class: 's32-ax' }, sv); t.textContent = `${String(h).padStart(2, '0')}:00`; });
+      // a scan line reveals the map; the hot night gets its amber box on "patterns"
+      K.drive(tl, 0, S.dur, t => {
+        const x = Math.min(1, t / 0.6) * C;
+        cells.forEach(({ c, v, h }) => { c.style.opacity = h < x ? (0.08 + 0.92 * v).toFixed(3) : 0.04; });
+      }, 0, S.dur);
+      const box = K.svg('rect', { x: (hot[1] - 0.3) * cw, y: hot[0] * ch - 6, width: (hot[2] + 0.6) * cw, height: ch + 12, rx: 8, fill: 'none', stroke: 'var(--k-accent-2)', 'stroke-width': 4 }, sv);
+      gsap.set(box, { opacity: 0 });
+      tl.fromTo(box, { opacity: 0, scale: 1.4, svgOrigin: `${(hot[1] + hot[2] / 2) * cw} ${hot[0] * ch + ch / 2}` }, { opacity: 1, scale: 1, svgOrigin: `${(hot[1] + hot[2] / 2) * cw} ${hot[0] * ch + ch / 2}`, duration: 0.2, ease: 'power3.out' }, tPat);
+      // the pin on "map"
+      const pin = K.svg('g', {}, sv), px = (hot[1] + hot[2] / 2) * cw, py = hot[0] * ch + ch / 2;
+      K.svg('path', { d: `M${px} ${py} c-16 -26 -30 -38 -30 -58 a30 30 0 0 1 60 0 c0 20 -14 32 -30 58 Z`, fill: 'var(--k-accent)', stroke: 'var(--k-paper)', 'stroke-width': 4 }, pin);
+      K.svg('circle', { cx: px, cy: py - 58, r: 10, fill: 'var(--k-paper)' }, pin);
+      gsap.set(pin, { opacity: 0 });
+      tl.set(pin, { opacity: 1 }, tMap);
+      tl.fromTo(pin, { y: -160 }, { y: 0, duration: 0.22, ease: 'bounce.out', immediateRender: false }, tMap);
+
+      // the rule log, a line per word
+      [[0, tInt], [1, tPat], [2, tOn], [3, tMap]].forEach(([i, t]) => tl.fromTo($('#s32-r' + i), { opacity: 0, x: -16 }, { opacity: 1, x: 0, duration: 0.16, ease: 'power2.out' }, t));
+
+      // the line, PATTERNS in the amber block
+      const { spans } = K.words($('#s32-lyric'), L, { key: L.words.findIndex(x => /^patterns/.test(x.w)), breakBefore: vert ? [3, 5] : [4] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,78 @@
+<scene look="spool-c7c8d5">
+<!-- lc_1 "You can shrink me for the server": the last shrink request, on a reverse-video listing tape. The tape prints the
+     request on "shrink" and DENIED on "me"; on "server" the storage dashboard above it gives up entirely and bursts into
+     confetti, and the tape prints its epitaph. -->
+<style>
+    #s60-dash { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s60-h { display: flex; justify-content: space-between; padding: 0.6em 0.9em; border-bottom: 1px solid var(--k-line); font: 500 0.7em/1 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s60-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7em; padding: 0.8em 0.9em; }
+    .s60-card { padding: 0.6em 0.7em; border: 1px solid var(--k-line); border-radius: var(--k-radius); font: 500 0.7em/1.3 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s60-card b { display: block; font: 700 2em/1.1 var(--k-font-display); color: var(--k-ink); }
+    #s60-tape { position: absolute; overflow: hidden; background: var(--k-ink); color: var(--k-paper); border-radius: var(--k-radius); background-image: repeating-linear-gradient(var(--k-ink) 0 44px, var(--k-muted) 44px 46px); }
+    #s60-log { padding: 0.6em 0.9em; font: 500 0.8em/1.4 var(--k-font-mono); white-space: pre; }
+    #s60-log .no { font-weight: 700; }
+    #s60-fx { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    #s60-lyric { position: absolute; font: 700 1em/0.98 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s60-dash { left: 80px; top: 110px; width: 1060px; height: 400px; font-size: 32px; }
+    #s60-tape { left: 80px; top: 540px; width: 1060px; height: 450px; font-size: 30px; }
+    #s60-lyric { left: 1200px; top: 150px; width: 660px; font-size: 104px; }
+</style>
+<style frame="vert">
+    #s60-dash { left: 48px; top: 250px; width: 984px; height: 470px; font-size: 32px; }
+    .s60-h, .s60-cards { padding-right: 100px; }
+    .s60-cards { grid-template-columns: repeat(2, 1fr); }
+    #s60-tape { left: 48px; top: 750px; width: 984px; height: 560px; font-size: 30px; }
+    #s60-log { padding-right: 100px; }
+    #s60-lyric { left: 48px; top: 1352px; width: 912px; font-size: 112px; }
+</style>
+<body>
+    <div id="s60-dash">
+      <div class="s60-h"><span>storage-01 · dashboard</span><span>attempt 3</span></div>
+      <div class="s60-cards">
+        <div class="s60-card"><b>99%</b>disk used</div>
+        <div class="s60-card"><b>42.1</b>MB, one file</div>
+        <div class="s60-card"><b>3</b>shrink requests</div>
+      </div>
+    </div>
+    <div id="s60-tape"><div id="s60-log"></div></div>
+    <svg id="s60-fx" data-layout-ignore></svg>
+    <div id="s60-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's60', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tShrink = at(/^shrink/), tMe = at(/^me$/), tServer = at(/^server/);
+
+      // the tape prints
+      const log = $('#s60-log'), lines = [
+        [0.06, '', 'LIST STORAGE-01'], [0.2, '', '  abhinav.wav    42.1 MB   every bit'], [tShrink, '', vert ? '> SHRINK abhinav.wav' : '> SHRINK abhinav.wav --for server'],
+        [tMe, 'no', '  DENIED. (third time.)'], [tServer, '', '> dashboard: gave up'], [tServer + 0.3, 'no', '  END OF LISTING. KEEP.'],
+      ];
+      lines.forEach(([t, cls, txt]) => { const l = K.el('div', cls, log, txt); tl.fromTo(l, { opacity: 0 }, { opacity: 1, duration: K.F }, t); });
+
+      // on "server" the dashboard bursts into confetti
+      const dash = $('#s60-dash'), dp = K.pos(dash, root), cx = dp.x + dp.w / 2, cy = dp.y + dp.h / 2, fx = $('#s60-fx');
+      fx.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      const r = K.rng(60), tones = ['accent', 'ink', 'muted', 'accent'];
+      for (let i = 0; i < 110; i++) {
+        const x = dp.x + r() * dp.w, y = dp.y + r() * dp.h, p = K.svg('rect', { x: x - 8, y: y - 5, width: 16, height: 10, fill: `var(--k-${tones[i % 4]})` }, fx);
+        const vx = (x - cx) * (1.2 + r() * 1.6) + (r() - 0.5) * 300, vy = (y - cy) * 1.5 - 300 - r() * 300;
+        gsap.set(p, { opacity: 0 });
+        const t0 = tServer + r() * 0.04;
+        tl.set(p, { opacity: 1 }, t0);
+        tl.fromTo(p, { x: 0, y: 0, rotation: 0, svgOrigin: `${x} ${y}` }, { x: vx, y: vy + 900, rotation: (r() - 0.5) * 1000, svgOrigin: `${x} ${y}`, duration: 1.1 + r() * 0.5, ease: 'power1.in', immediateRender: false }, t0);
+      }
+      tl.to(dash, { scale: 1.08, opacity: 0, duration: 0.1, ease: 'power2.out' }, tServer);
+      K.shake(tl, $('#s60-tape'), tServer, 8, 3);
+
+      // the line, SERVER in the violet block
+      const { spans } = K.words($('#s60-lyric'), L, { key: L.words.length - 1, breakBefore: [2, 4] });
+      K.reveal(tl, spans, L, 'cut');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

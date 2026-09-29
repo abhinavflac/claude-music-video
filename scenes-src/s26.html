@@ -1,0 +1,104 @@
+<scene look="sector-bureau-fa4e44">
+<!-- c1_8 "I'm keeping every bit": the file-properties window of abhinav.flac, on its Checksums tab. 24-bit, 96 kHz, 42.1 MB
+     (all of it); the checksum band verifies across the line and ticks on "bit"; BITS LOST reads 0 and EVERY BIT: KEPT
+     stamps down on the downbeat. Behind it, columns of 0s and 1s drift down, none of them missing. -->
+<style>
+    #s26-rain { position: absolute; inset: -10% 0; display: flex; justify-content: space-between; overflow: hidden; font: 400 26px/1.25 var(--k-font-mono); color: var(--k-muted); opacity: 0.35; }
+    #s26-rain div { white-space: pre; }
+    #s26-win { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); overflow: hidden; }
+    .s26-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.7em 0.9em; background: var(--k-accent-2); color: oklch(from var(--k-accent-2) clamp(0, (0.62 - l) * 1000, 1) 0 0); border-bottom: 2px solid var(--k-line); font: 600 1em/1 var(--k-font-display); letter-spacing: 0.02em; white-space: nowrap; }
+    .s26-bar svg { width: 0.9em; height: 0.9em; }
+    .s26-tabs { display: flex; gap: 0.3em; padding: 0.7em 0.9em 0; border-bottom: 2px solid var(--k-line); font: 500 0.8em/1 var(--k-font-mono); }
+    .s26-tabs span { padding: 0.5em 0.8em; border: 2px solid transparent; border-bottom: 0; border-radius: 10px 10px 0 0; color: var(--k-muted); }
+    .s26-tabs .on { border-color: var(--k-line); background: var(--k-surface); color: var(--k-ink); margin-bottom: -2px; }
+    .s26-body { padding: 0.9em 0.9em 0; display: grid; gap: 0.55em; }
+    .s26-file { display: flex; align-items: center; gap: 0.8em; margin-bottom: 0.3em; }
+    .s26-file svg { width: 2.4em; height: 2.9em; flex: none; }
+    .s26-file b { display: block; font: 700 1.3em/1.1 var(--k-font-display); }
+    .s26-file span { font: 400 0.85em/1.2 var(--k-font-body); color: var(--k-muted); }
+    .s26-row { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 0.45em; border-bottom: 1px solid var(--k-accent-2); font: 400 0.9em/1.1 var(--k-font-mono); white-space: nowrap; }
+    .s26-row em { font-style: normal; color: var(--k-muted); }
+    #s26-lost { font: 700 1.8em/1 var(--k-font-display); color: var(--k-accent-t); }
+    #s26-band { position: relative; height: 1.3em; overflow: hidden; border: 2px solid var(--k-line); border-radius: 8px; }
+    #s26-band svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s26-sum { display: flex; justify-content: space-between; align-items: center; font: 400 0.8em/1 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s26-sum b { display: flex; align-items: center; gap: 0.4em; font-weight: 500; color: var(--k-ink); }
+    #s26-stamp { font-size: 1.5em; }
+    #s26-lyric { position: absolute; font: 700 1em/0.88 var(--k-font-display); letter-spacing: -0.02em; text-transform: uppercase; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s26-win { left: 980px; top: 110px; width: 860px; height: 880px; font-size: 30px; }
+    #s26-lyric { left: 80px; top: 250px; width: 860px; font-size: 176px; }
+    #s26-stamp { right: 50px; bottom: 48px; }
+</style>
+<style frame="vert">
+    #s26-rain { font-size: 30px; }
+    #s26-win { left: 48px; top: 250px; width: 984px; height: 1062px; font-size: 34px; }
+    .s26-bar, .s26-body { padding-right: 100px; }
+    #s26-lyric { left: 48px; top: 1352px; width: 912px; font-size: 168px; }
+    #s26-stamp { left: 40px; bottom: 44px; }
+</style>
+<body>
+    <div id="s26-rain" data-layout-ignore data-bleed></div>
+    <div id="s26-win">
+      <div class="s26-bar"><span>abhinav.flac · properties</span><svg viewBox="0 0 10 10"><path d="M1 1 L9 9 M9 1 L1 9" stroke="var(--k-ink)" stroke-width="1.8"/></svg></div>
+      <div class="s26-tabs"><span>general</span><span>details</span><span class="on">checksums</span></div>
+      <div class="s26-body">
+        <div class="s26-file"><svg viewBox="0 0 48 58"><path d="M3 2 H33 L45 14 V56 H3 Z" fill="var(--k-paper)" stroke="var(--k-ink)" stroke-width="3" stroke-linejoin="round"/><path d="M11 36 V28 M16 40 V22 M21 38 V26 M26 42 V20 M31 36 V28 M36 34 V30" stroke="var(--k-accent)" stroke-width="3" stroke-linecap="round"/></svg><div><b>abhinav.flac</b><span>FLAC audio · lossless</span></div></div>
+        <div class="s26-row"><em>bit depth</em><span>24-bit</span></div>
+        <div class="s26-row"><em>sample rate</em><span>96 kHz</span></div>
+        <div class="s26-row"><em>channels</em><span>2 · stereo</span></div>
+        <div class="s26-row"><em>duration</em><span id="s26-dur">4:08</span></div>
+        <div class="s26-row"><em>size</em><span>42.1 MB (all of it)</span></div>
+        <div class="s26-row"><em>bits lost</em><span id="s26-lost">0</span></div>
+        <div id="s26-band"><svg id="s26-band-svg" preserveAspectRatio="none" data-layout-ignore></svg></div>
+        <div class="s26-sum"><span id="s26-md5">md5 9f1c 04ae … e07a</span><b id="s26-ver"><span id="s26-vt">verifying 0%</span></b></div>
+      </div>
+    </div>
+    <div id="s26-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's26', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tKeeping = at(/^keeping/), tBit = at(/^bit/), d = S.downbeats[0] ?? tBit + 0.08, T = window.FILM.duration;
+      $('#s26-dur').textContent = `${Math.floor(T / 60)}:${String(Math.floor(T % 60)).padStart(2, '0')}`;
+
+      // binary rain: columns of 0/1 drifting down at their own speeds, the text doubled so each column wraps seamlessly
+      const r = K.rng(26), cols = Math.round(W / (vert ? 40 : 44)), rows = Math.ceil(H * 1.2 / (vert ? 37 : 32.5)) + 2, rain = $('#s26-rain');
+      const drops = Array.from({ length: cols }, () => {
+        const txt = Array.from({ length: rows }, () => (r() < 0.5 ? '0' : '1')).join('\n');
+        const c = K.el('div', '', rain, txt + '\n' + txt); return [c, 40 + r() * 90, r()];
+      });
+      const hs = drops.map(([c]) => c.offsetHeight / 2);
+      K.drive(tl, 0, S.dur, t => drops.forEach(([c, v, o], i) => { const h = hs[i]; c.style.transform = `translateY(${(-h + ((o * h + v * t) % h)).toFixed(1)}px)`; }), 0, S.dur);
+
+      // the checksum band: seeded stripes, verified left to right across the line, ticked on "bit"
+      const band = $('#s26-band-svg'), bw = 600;
+      band.setAttribute('viewBox', `0 0 ${bw} 10`);
+      const cover = K.svg('rect', { x: 0, y: 0, height: 10, width: bw, fill: 'var(--k-surface)' }, band);
+      for (let x = 0; x < bw; ) { const w = 1 + Math.floor(r() * 6); if (r() < 0.55) K.svg('rect', { x, y: 0, width: w, height: 10, fill: r() < 0.3 ? 'var(--k-accent)' : 'var(--k-ink)' }, band); x += w + 1; }
+      band.appendChild(cover);
+      const tick = K.check($('#s26-ver'), false);
+      $('#s26-ver').prepend(tick.el);
+      tick.el.style.fontSize = '0.9em';
+      K.drive(tl, 0, S.dur, t => {
+        const p = Math.max(0, Math.min(1, (t - tKeeping) / (tBit - tKeeping)));
+        cover.setAttribute('x', (p * bw).toFixed(1)); cover.setAttribute('width', ((1 - p) * bw).toFixed(1));
+        $('#s26-vt').textContent = p < 1 ? `verifying ${Math.round(p * 100)}%` : 'verified';
+      }, 0, S.dur);
+      K.tick(tl, tick, tBit);
+
+      // BITS LOST: 0 pulses on "bit"; the stamp lands on the downbeat
+      tl.fromTo($('#s26-lost'), { scale: 1.6 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tBit);
+      const stamp = K.stamp($('#s26-win'), 'every bit: kept', 'solid'); stamp.id = 's26-stamp';
+      K.slam(tl, stamp, d, -3);
+
+      // the line, EVERY in the blue block
+      const { spans } = K.words($('#s26-lyric'), L, { key: L.words.findIndex(x => /^every/.test(x.w)), breakBefore: [2] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

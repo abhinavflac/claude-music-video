@@ -1,0 +1,93 @@
+<scene look="kymograph-134557">
+<!-- c1_3 "Keep the static, keep the tremble": a wave editor on abhinav.wav, one continuous trace on a smoked grid. It opens
+     "cleaned": no specks, no tremble, an AI-smooth sine. On "static" Noise reduction flips off and the specks come back;
+     on the second "keep" Smooth voice (AI) flips off and the trace turns back into a voice; on "tremble" De-tremble flips
+     off and the line shakes. The trace is shaped by the sung words themselves, and the playhead sweeps with the song. -->
+<style>
+    #s21-win { position: absolute; background: var(--k-surface); border: 3px solid var(--k-ink); }
+    .s21-title { display: flex; align-items: center; gap: 0.8em; padding: 0 0.8em; height: 2.1em; border-bottom: 3px solid var(--k-ink); font: 700 1em/1 var(--k-font-display); white-space: nowrap; }
+    .s21-title span { font: 400 0.8em/1 var(--k-font-mono); color: var(--k-muted); }
+    .s21-title b { margin-left: auto; font: 500 0.9em/1 var(--k-font-mono); font-variant-numeric: tabular-nums; }
+    #s21-lane { position: absolute; left: 0; right: 0; background-color: var(--k-paper); background-image: linear-gradient(var(--k-line) 1px, transparent 1px), linear-gradient(90deg, var(--k-line) 1px, transparent 1px); background-size: 48px 48px; border-bottom: 3px solid var(--k-ink); overflow: hidden; }
+    #s21-lane svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s21-trace { fill: none; stroke-linejoin: round; }
+    #s21-lyric { position: absolute; font: 700 1em/0.92 var(--k-font-display); letter-spacing: -0.02em; text-transform: uppercase; color: var(--k-ink); }
+    .s21-fx { position: absolute; display: flex; font: 500 1em/1 var(--k-font-mono); color: var(--k-ink); }
+    .s21-fx > div { display: flex; align-items: center; gap: 0.6em; white-space: nowrap; }
+    .s21-fx .k-toggle { font-size: 1.15em; }
+    .s21-fx em { font-style: normal; color: var(--k-muted); }
+</style>
+<style frame="wide">
+    #s21-win { left: 60px; top: 96px; width: 1800px; height: 900px; font-size: 30px; }
+    #s21-lane { top: 63px; height: 380px; }
+    #s21-lyric { left: 48px; top: 486px; width: 1700px; font-size: 128px; font-stretch: 88%; }
+    .s21-fx { left: 48px; right: 48px; top: 790px; justify-content: space-between; font-size: 30px; }
+</style>
+<style frame="vert">
+    #s21-win { left: 48px; top: 250px; width: 984px; height: 1454px; font-size: 32px; }
+    .s21-title { padding-right: 100px; }
+    #s21-lane { top: 67px; height: 670px; }
+    .s21-fx { left: 40px; top: 790px; flex-direction: column; gap: 30px; font-size: 40px; }
+    #s21-lyric { left: 40px; top: 1090px; width: 872px; font-size: 118px; font-stretch: 78%; }
+</style>
+<body>
+    <div id="s21-win">
+      <div class="s21-title">abhinav.wav <span>edit · 24-bit · 1 track</span><b id="s21-clock">1:02.50</b></div>
+      <div id="s21-lane"><svg id="s21-svg" data-layout-ignore></svg></div>
+      <div id="s21-lyric"></div>
+      <div class="s21-fx">
+        <div id="s21-nr"><em>fx</em> noise reduction</div>
+        <div id="s21-ai"><em>fx</em> smooth voice (AI)</div>
+        <div id="s21-dt"><em>fx</em> de-tremble</div>
+      </div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's21', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], words = L.words;
+      const tStatic = words.find(x => /^static/.test(x.w)).t, tKeep2 = words.filter(x => /^keep/i.test(x.w))[1].t, tTremble = words.find(x => /^tremble/.test(x.w)).t;
+
+      // the three clean-up effects, on until their words switch them off
+      const fx = [['#s21-nr', tStatic], ['#s21-ai', tKeep2], ['#s21-dt', tTremble]].map(([sel, t]) => {
+        const tg = K.toggle($(sel), true); $(sel).prepend(tg.el); K.flip(tl, tg, t, false);
+        tl.fromTo($(sel), { scale: 1.12 }, { scale: 1, duration: 0.25, ease: 'back.out(3)', immediateRender: false }, t);
+        return t;
+      });
+
+      // the lane: one trace across the scene's own time, its loudness the sung words; played part in ink, the rest muted
+      const lane = $('#s21-lane'), LW = lane.clientWidth, LH = lane.clientHeight, mid = LH / 2, sv = $('#s21-svg');
+      sv.setAttribute('viewBox', `0 0 ${LW} ${LH}`);
+      const clip = K.svg('clipPath', { id: 's21-played' }, K.svg('defs', {}, sv)), cr = K.svg('rect', { x: 0, y: 0, width: 0, height: LH }, clip);
+      const specks = K.svg('g', {}, sv), rest = K.svg('path', { class: 's21-trace', stroke: 'var(--k-muted)', 'stroke-width': 2.5 }, sv);
+      const played = K.svg('path', { class: 's21-trace', stroke: 'var(--k-ink)', 'stroke-width': 3.5, 'clip-path': 'url(#s21-played)' }, sv);
+      const head = K.svg('line', { y1: 0, y2: LH, stroke: 'var(--k-accent)', 'stroke-width': 4 }, sv);
+      const r = K.rng(21), dots = Array.from({ length: 150 }, () => { const c = K.svg('circle', { cx: (r() * LW).toFixed(1), cy: (mid + (r() - 0.5) * LH * 0.9).toFixed(1), r: (1.5 + r() * 3.5).toFixed(1), fill: 'var(--k-ink)' }, specks); return [c, r()]; });
+      const env = t => { let a = 0.06; for (const w of words) { const c = (w.t + Math.min(w.end, w.t + 0.3)) / 2; a += Math.exp(-((t - c) ** 2) / 0.018); } return Math.min(1, a); };
+      const N = 520, hash = (i, f) => { const x = Math.sin(i * 12.9898 + f * 78.233) * 43758.5453; return x - Math.floor(x); };
+      K.drive(tl, 0, S.dur, t => {
+        const ai = t < fx[1], quiet = t < fx[0], still = t < fx[2], f = Math.floor(t * 30);
+        let d = '';
+        for (let i = 0; i <= N; i++) {
+          const u = i / N, ts = u * S.dur, a = u * 330, e = env(ts) * (ai ? 0.7 : 1);
+          let c = ai ? Math.sin(a) : Math.sin(a) * 0.62 + Math.sin(a * 2.7 + 1.3) * 0.26 + Math.sin(a * 6.1 + 0.4) * 0.12 + (hash(i, 3) - 0.5) * 0.3;
+          let y = mid + e * LH * 0.42 * c;
+          if (!still) y += (hash(i, f) - 0.5) * 18 * (0.4 + e);
+          d += `${i ? 'L' : 'M'}${(u * LW).toFixed(1)} ${y.toFixed(1)} `;
+        }
+        rest.setAttribute('d', d); played.setAttribute('d', d);
+        const x = (t / S.dur) * LW;
+        cr.setAttribute('width', x.toFixed(1)); head.setAttribute('x1', x.toFixed(1)); head.setAttribute('x2', x.toFixed(1));
+        dots.forEach(([c, k]) => { c.style.opacity = quiet ? 0.12 : (hash(k * 997, f) > 0.3 ? 0.9 : 0.25); });
+        const s = S.start + t; $('#s21-clock').textContent = `${Math.floor(s / 60)}:${(s % 60).toFixed(2).padStart(5, '0')}`;
+      }, 0, S.dur);
+
+      // the line, TREMBLE in the red block
+      const { spans } = K.words($('#s21-lyric'), L, { key: words.length - 1, breakBefore: [3] });
+      K.reveal(tl, spans, L, 'slam');
+      K.shake(tl, $('#s21-lyric'), tTremble, 8, 6, 5);
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,82 @@
+<scene look="komawari-65f5b0">
+<!-- lc_5 "I'm keeping every bit": a comic page with registration offset. Panel by panel: him winding up, grinning; on
+     "every" the Oracle leaning in; on "bit" the big panel, the high-five, with a CLAP! and the impact ringing out. Then the
+     page holds while the music plays: steam off the mug, the print registration jolting on each downbeat. -->
+<style>
+    #s64-page { position: absolute; inset: 0; background: var(--k-paper); }
+    .s64-koma { position: absolute; overflow: hidden; border: 7px solid var(--k-line); background: var(--k-surface); box-shadow: var(--k-shadow); }
+    #s64-cap { position: absolute; padding: 0.3em 0.6em 0.35em; background: var(--k-surface); border: 4px solid var(--k-line); font: 700 1em/1 var(--k-font-display); letter-spacing: -0.01em; color: var(--k-ink); box-shadow: var(--k-shadow); }
+    #s64-sfx { position: absolute; font: 900 1em/1 var(--k-font-display); font-style: italic; color: var(--k-accent); -webkit-text-stroke: 6px var(--k-line); paint-order: stroke fill; opacity: 0; }
+    .s64-ring { fill: none; stroke: var(--k-accent-2); }
+    .s64-steam { fill: none; stroke: var(--k-line); stroke-width: 7; stroke-linecap: round; }
+</style>
+<style frame="wide">
+    #s64-a { left: 50px; top: 100px; width: 560px; height: 420px; }
+    #s64-b { left: 50px; top: 546px; width: 560px; height: 420px; }
+    #s64-c { left: 640px; top: 100px; width: 1230px; height: 866px; }
+    #s64-cap { left: 680px; top: 800px; font-size: 90px; }
+    #s64-sfx { left: 1060px; top: 150px; font-size: 150px; }
+</style>
+<style frame="vert">
+    #s64-a { left: 30px; top: 190px; width: 500px; height: 400px; }
+    #s64-b { left: 550px; top: 190px; width: 500px; height: 400px; }
+    #s64-c { left: 30px; top: 614px; width: 1020px; height: 700px; }
+    #s64-cap { left: 48px; top: 1352px; font-size: 104px; }
+    #s64-sfx { left: 340px; top: 620px; font-size: 140px; }
+</style>
+<body>
+    <div id="s64-page">
+      <div class="s64-koma" id="s64-a"></div>
+      <div class="s64-koma" id="s64-b"></div>
+      <div class="s64-koma" id="s64-c"></div>
+      <div id="s64-sfx" data-layout-ignore>CLAP!</div>
+      <div id="s64-cap"><div id="s64-lyric"></div></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's64', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tEvery = at(/^every/), tBit = at(/^bit/), inks = [K.tok(root, 'surface'), K.tok(root, 'ink')];
+
+      // three panels of the one plate: him, the Oracle, then the whole high-five
+      const A = K.shot($('#s64-a'), 's64-high-five', { viewBox: '1950 150 900 675', inks });
+      const B = K.shot($('#s64-b'), 's64-high-five', { viewBox: '680 180 900 675', inks });
+      const vbC = vert ? '280 0 2455 1674' : '300 0 2389 1674';
+      const C = K.shot($('#s64-c'), 's64-high-five', { viewBox: vbC, inks });
+      const pop = (el, t) => { gsap.set(el, { opacity: 0 }); tl.set(el, { opacity: 1 }, t); tl.fromTo(el, { scale: 1.12, rotation: -1.5 }, { scale: 1, rotation: 0, duration: 0.22, ease: 'back.out(2.5)', immediateRender: false }, t); };
+      pop($('#s64-a'), 0.02); pop($('#s64-b'), tEvery); pop($('#s64-c'), tBit - 0.04);
+      K.push(tl, A, tEvery, 1, 1.06);
+
+      // the impact: CLAP!, rings out of the palms, the page jolts
+      const ov = K.overlay(C, vbC), HX = 1320, HY = 380;
+      [0, 0.12, 0.24].forEach((k, i) => {
+        const c = K.svg('circle', { cx: HX, cy: HY, r: 40, class: 's64-ring' }, ov);
+        gsap.set(c, { opacity: 0 });
+        tl.fromTo(c, { opacity: 1, attr: { r: 60, 'stroke-width': 24 } }, { opacity: 0, attr: { r: 900, 'stroke-width': 3 }, duration: 0.8, ease: 'power2.out', immediateRender: false }, tBit + k);
+      });
+      [[0, 1.5], [2, 1.1], [4, 1]].forEach(([k, s]) => tl.set($('#s64-sfx'), { opacity: 1, scale: s, rotation: -8 }, tBit + k * F));
+      tl.to($('#s64-sfx'), { opacity: 0, duration: 0.3 }, tBit + 1.6);
+      K.shake(tl, $('#s64-page'), tBit, 14, 4);
+
+      // steam off the mug, all scene long
+      const steam = [0, 1, 2].map(i => K.svg('path', { class: 's64-steam', opacity: 0.8 }, ov));
+      K.drive(tl, 0, S.dur, t => steam.forEach((p, i) => {
+        const x0 = 2480 + i * 60; let d = '';
+        for (let k = 0; k <= 12; k++) { const y = 1300 - k * 26, x = x0 + Math.sin(k * 0.7 + t * 3 + i * 2) * 16; d += `${k ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)} `; }
+        p.setAttribute('d', d); p.style.opacity = (0.35 + 0.35 * Math.sin(t * 2 + i)).toFixed(3);
+      }), 0, S.dur);
+
+      // the print registration jolts on each downbeat after the clap (two-frame offsets)
+      S.downbeats.filter(d => d > tBit + 0.3).forEach(d => [$('#s64-a'), $('#s64-b'), $('#s64-c')].forEach((k, i) => {
+        tl.set(k, { x: (i - 1) * 6, y: 4 }, d); tl.set(k, { x: 0, y: 0 }, d + 2 * F);
+      }));
+
+      // the caption, BIT in the magenta block
+      const { spans } = K.words($('#s64-lyric'), L, { key: L.words.length - 1 });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

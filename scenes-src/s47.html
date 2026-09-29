@@ -1,0 +1,47 @@
+<scene look="florette-787633">
+<!-- post_3 + post_4 "I'm keeping every bit, every bit / every bit, every bit, every bit": the superflat sticker press. A
+     labelled sticker slaps on for every sung "bit" and a flower for every other beat, piling up faster than the board can
+     hold, right up to the song's hard stop (the last one is still mid-slap when s48 freezes this frame). The pile is
+     K.pile47, shared with s48. -->
+<style>
+    #s47-board { position: absolute; inset: 0; }
+    #s47-strip { position: absolute; background: var(--k-surface); border: 5px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); }
+    .s47-line { position: absolute; left: 0.5em; right: 0.5em; font: 800 1em/1.02 var(--k-font-display); letter-spacing: -0.01em; color: var(--k-on-surface); }
+    #s47-tag { position: absolute; font: 700 0.34em/1 var(--k-font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--k-on-surface); }
+</style>
+<style frame="wide">
+    #s47-strip { left: 60px; top: 840px; width: 1800px; height: 160px; font-size: 78px; }
+    .s47-line { top: 0.4em; }
+    #s47-tag { right: 0.6em; top: 0.35em; }
+</style>
+<style frame="vert">
+    #s47-strip { left: 48px; top: 1330px; width: 984px; height: 372px; font-size: 92px; }
+    .s47-line { top: 0.36em; right: 1.2em; }
+    #s47-tag { right: 1.2em; bottom: 0.4em; }
+</style>
+<body>
+    <div id="s47-board"></div>
+    <div id="s47-strip"><div class="s47-line" id="s47-l0"></div><div class="s47-line" id="s47-l1"></div><div id="s47-tag">stickers: <span id="s47-n">0</span></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's47', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), [L0, L1] = S.lines;
+
+      // the pile (shared with s48), plus one last sticker two frames before the hard stop, caught mid-slap
+      const list = K.pile47(S, W, H, vert);
+      K.stickers($('#s47-board'), tl, list);
+      K.drive(tl, 0, S.dur, t => { $('#s47-n').textContent = String(list.filter(s => s.t <= t).length); }, 0, S.dur);
+
+      // the chant, line by line, the first "bit" of each in the cyan block
+      [[L0, '#s47-l0'], [L1, '#s47-l1']].forEach(([L, sel], k) => {
+        const every = L.words.map((w, i) => (i && /^every/i.test(w.w) ? i : -1)).filter(i => i > 0);
+        const { spans } = K.words($(sel), L, { key: L.words.findIndex(w => /^bit/.test(w.w)), breakBefore: vert ? every : [] });
+        K.reveal(tl, spans, L, 'pop');
+        if (!k) tl.set($(sel), { opacity: 0 }, L1.t);
+      });
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

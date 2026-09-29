@@ -1,0 +1,93 @@
+<scene look="pomelo-soft-white-melon-azure-eb326b">
+<!-- v2_2 "Mail and Drive and every login, I wasn't me anymore": a soft consumer launcher greys out under him. Mail on
+     "Mail", drive on "Drive", then everything else in a cascade, login last on "login", each with a red x. On "wasn't" his
+     avatar (the Plainclothes deadpan) turns into a blank silhouette; on "me" he is "Unknown user", please sign in. -->
+<style>
+    #s30-card { position: absolute; background: var(--k-surface); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s30-head { display: flex; align-items: center; gap: 0.7em; }
+    .s30-av { position: relative; flex: none; overflow: hidden; border-radius: 50%; background: var(--k-line); }
+    .s30-av > div { position: absolute; inset: 0; }
+    .s30-who b { display: block; font: 600 1.35em/1.1 var(--k-font-display); letter-spacing: -0.01em; }
+    .s30-who span { display: block; font: 400 0.8em/1.4 var(--k-font-body); opacity: 0.7; }
+    .s30-sign { margin-left: auto; padding: 0.55em 1.1em; border-radius: 999px; background: var(--k-accent); color: var(--k-on-accent); font: 600 0.8em/1 var(--k-font-body); opacity: 0; white-space: nowrap; }
+    .s30-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .s30-tile { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5em; border: 2px solid var(--k-line); border-radius: calc(var(--k-radius) * 0.8); font: 500 0.85em/1 var(--k-font-body); }
+    .s30-ic { display: grid; place-items: center; width: 2.6em; height: 2.6em; border-radius: 0.8em; background: var(--k-line); }
+    .s30-ic svg { width: 1.5em; height: 1.5em; fill: none; stroke: var(--k-ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .s30-x { position: absolute; top: -0.45em; right: -0.45em; display: grid; place-items: center; width: 1.5em; height: 1.5em; border-radius: 50%; background: var(--k-accent); border: 3px solid var(--k-surface); opacity: 0; }
+    .s30-x svg { width: 0.7em; height: 0.7em; stroke: var(--k-on-accent); stroke-width: 3; stroke-linecap: round; }
+    #s30-lyric { position: absolute; font: 600 1em/1.02 var(--k-font-display); letter-spacing: -0.025em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s30-card { left: 80px; top: 110px; width: 1000px; height: 880px; padding: 40px; font-size: 32px; }
+    .s30-av { width: 112px; height: 112px; }
+    .s30-grid { margin-top: 36px; height: 620px; gap: 22px; }
+    #s30-lyric { left: 1130px; top: 200px; width: 730px; font-size: 90px; }
+</style>
+<style frame="vert">
+    #s30-card { left: 48px; top: 250px; width: 984px; height: 1062px; padding: 32px 100px 32px 32px; font-size: 32px; }
+    .s30-av { width: 104px; height: 104px; }
+    .s30-grid { margin-top: 30px; height: 820px; gap: 18px; }
+    #s30-lyric { left: 48px; top: 1352px; width: 912px; font-size: 84px; }
+</style>
+<body>
+    <div id="s30-card">
+      <div class="s30-head">
+        <div class="s30-av"><div id="s30-me"></div><div id="s30-nobody"></div></div>
+        <div class="s30-who"><b id="s30-name">Good evening, abhinav</b><span id="s30-sub">9 apps · all synced</span></div>
+        <div class="s30-sign" id="s30-sign">Sign in</div>
+      </div>
+      <div class="s30-grid" id="s30-grid"></div>
+    </div>
+    <div id="s30-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's30', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tMail = at(/^Mail/), tDrive = at(/^Drive/), tEvery = at(/^every/), tLogin = at(/^login/), tWasnt = at(/^wasn/), tMe = at(/^me$/);
+
+      // nine generic apps, line icons drawn here; each greys out with a red x on its moment
+      const APPS = [
+        ['mail', 'M3 6 h18 v12 h-18 Z M3 7 l9 7 l9 -7', tMail],
+        ['drive', 'M7 18 h11 a4 4 0 0 0 0 -8 a6 6 0 0 0 -11.5 -1.5 A4.5 4.5 0 0 0 7 18 Z', tDrive],
+        ['login', 'M14 10 a4 4 0 1 1 0.01 0 M11.2 12.8 L4 20 M6 18 l2 2 M8 16 l2 2', tLogin],
+        ['calendar', 'M4 6 h16 v14 h-16 Z M4 10 h16 M8 3 v5 M16 3 v5', tEvery + 0.06],
+        ['photos', 'M3 5 h18 v14 h-18 Z M3 16 l5 -5 l4 4 l3 -3 l6 6 M16 9 a1.5 1.5 0 1 0 0.01 0', tEvery + 0.14],
+        ['certificates', 'M12 3 a5 5 0 1 1 -0.01 0 M9 12 l-2 9 l5 -3 l5 3 l-2 -9', tEvery + 0.22],
+        ['coursework', 'M3 5 q5 -2 9 1 q4 -3 9 -1 v14 q-5 -2 -9 1 q-4 -3 -9 -1 Z M12 6 v14', tEvery + 0.3],
+        ['dev tools', 'M8 7 l-5 5 l5 5 M16 7 l5 5 l-5 5 M13.5 4 l-3 16', tEvery + 0.38],
+        ['backups', 'M4 4 h16 v5 h-16 Z M5 9 v11 h14 v-11 M10 13 h4', tLogin + 0.12],
+      ];
+      const grid = $('#s30-grid');
+      APPS.forEach(([name, d, t]) => {
+        const tile = K.el('div', 's30-tile', grid), ic = K.el('div', 's30-ic', tile);
+        K.svg('path', { d }, K.svg('svg', { viewBox: '0 0 24 24' }, ic));
+        const label = K.el('span', '', tile, name), x = K.el('div', 's30-x', tile);
+        K.svg('path', { d: 'M3 3 L13 13 M13 3 L3 13' }, K.svg('svg', { viewBox: '0 0 16 16' }, x));
+        tl.to([ic, label], { opacity: 0.3, duration: 0.12 }, t);
+        tl.fromTo(x, { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.2, ease: 'back.out(3)' }, t);
+        tl.fromTo(tile, { x: 0 }, { x: 6, duration: 0.04, yoyo: true, repeat: 3, ease: 'none', immediateRender: false }, t);
+      });
+
+      // his avatar: the deadpan from his sheet, then nobody
+      K.shot($('#s30-me'), 'char-me', { viewBox: '110 1260 620 620', inks: [K.tok(root, 'surface'), K.tok(root, 'ink')] });
+      const nb = K.svg('svg', { viewBox: '0 0 100 100', width: '100%', height: '100%' }, $('#s30-nobody'));
+      K.svg('circle', { cx: 50, cy: 40, r: 17, fill: 'var(--k-surface)' }, nb); K.svg('path', { d: 'M18 96 a32 30 0 0 1 64 0 Z', fill: 'var(--k-surface)' }, nb);
+      gsap.set($('#s30-nobody'), { opacity: 0 });
+      tl.set($('#s30-nobody'), { opacity: 1 }, tWasnt); tl.set($('#s30-me'), { opacity: 0 }, tWasnt);
+      tl.fromTo($('.s30-av'), { scale: 1.12 }, { scale: 1, duration: 0.25, ease: 'back.out(3)', immediateRender: false }, tWasnt);
+      K.drive(tl, 0, S.dur, t => {
+        $('#s30-name').textContent = t < tMe ? 'Good evening, abhinav' : 'Unknown user';
+        $('#s30-sub').textContent = t < tWasnt ? (t < tLogin ? '9 apps · all synced' : '0 apps available') : 'sign in to continue';
+      }, 0, S.dur);
+      tl.fromTo($('#s30-sign'), { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.22, ease: 'power3.out' }, tMe);
+
+      // the line, ME in the coral block
+      const { spans } = K.words($('#s30-lyric'), L, { key: L.words.findIndex(x => /^me$/.test(x.w)), breakBefore: vert ? [] : [3, 6, 9] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

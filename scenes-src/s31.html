@@ -1,0 +1,76 @@
+<scene look="kursbuch-fd54b7">
+<!-- v2_3 "Typed my whole heart in a box with a character cap": an objective Swiss appeal form. "Tell us why we're wrong
+     (max 1000 characters)". His message pours in faster and faster, the counter racing up, and on "cap" it hits 1000 / 1000
+     mid-word, the counter turns red and a red bar says the rest was not sent. -->
+<style>
+    #s31-form { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); color: var(--k-on-surface); }
+    .s31-top { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 0.6em; border-bottom: 2px solid var(--k-line); white-space: nowrap; }
+    .s31-top b { font: 700 1.1em/1 var(--k-font-display); letter-spacing: -0.01em; }
+    .s31-top span { font: 400 0.75em/1 var(--k-font-mono); }
+    .s31-lab { margin-top: 1em; font: 600 0.85em/1.3 var(--k-font-body); }
+    .s31-lab span { font-weight: 400; }
+    #s31-box { position: relative; display: flex; flex-direction: column; justify-content: flex-end; margin-top: 0.5em; padding: 0.6em 0.7em; border: 2px solid var(--k-ink); border-radius: calc(var(--k-radius) / 2); overflow: hidden; font: 400 0.8em/1.45 var(--k-font-body); }
+    #s31-msg { overflow-wrap: anywhere; }
+    #s31-msg .k-caret { background: var(--k-ink); }
+    .s31-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6em; font: 500 0.8em/1 var(--k-font-mono); white-space: nowrap; }
+    #s31-count { font-variant-numeric: tabular-nums; }
+    #s31-count.full { color: var(--k-accent-t); font-weight: 700; }
+    #s31-cut { display: flex; align-items: center; gap: 0.6em; margin-top: 0.7em; padding: 0.55em 0.8em; background: var(--k-accent); color: var(--k-on-accent); border-radius: calc(var(--k-radius) / 2); font: 600 0.85em/1 var(--k-font-body); opacity: 0; white-space: nowrap; }
+    .s31-send { padding: 0.5em 1.2em; border: 2px solid var(--k-ink); border-radius: 999px; font: 600 0.85em/1 var(--k-font-body); }
+    #s31-lyric { position: absolute; font: 700 1em/0.96 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s31-form { left: 80px; top: 110px; width: 1100px; height: 880px; padding: 36px 40px; font-size: 34px; }
+    #s31-box { height: 470px; }
+    #s31-lyric { left: 1230px; top: 170px; width: 620px; font-size: 104px; }
+</style>
+<style frame="vert">
+    #s31-form { left: 48px; top: 250px; width: 984px; height: 1064px; padding: 30px 100px 30px 32px; font-size: 34px; }
+    #s31-box { height: 640px; }
+    #s31-lyric { left: 48px; top: 1352px; width: 912px; font-size: 84px; }
+</style>
+<body>
+    <div id="s31-form">
+      <div class="s31-top"><b>Appeal</b><span>case 2F-44871 · account disabled</span></div>
+      <div class="s31-lab">Tell us why we're wrong <span>(max 1000 characters)</span></div>
+      <div id="s31-box"><div id="s31-msg"></div></div>
+      <div class="s31-foot"><span>plain text only</span><span id="s31-count">0 / 1000</span></div>
+      <div id="s31-cut"><svg viewBox="0 0 16 16" width="0.9em" height="0.9em"><path d="M8 1 L15 14 H1 Z M8 6 V10 M8 12 V12.5" fill="none" stroke="var(--k-on-accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>The rest was not sent.</div>
+    </div>
+    <div id="s31-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's31', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tCap = at(/^cap/);
+
+      // his appeal: longer than the box allows, typed faster and faster, cut at exactly 1000 characters
+      const MSG = 'hi. please read this, a person, not a filter. I moved my own files to my own drive, that is all I did, in one night. ' +
+        'in that account: my degree. my certificates. the voice notes from my mother, every one since 2016. four years of code. ' +
+        'the photos from the hospital. the playlist I made at 2 a.m. the week everything fell apart. every email I sent when things were bad ' +
+        'and every reply that got me through it. my thesis, all eleven drafts. the scans of my grandfather\'s letters. the recordings of my ' +
+        'first songs, the bad ones too. my tax papers. my passwords for everything else. the calendar with every birthday in it. I can explain ' +
+        'every file. I can show you who I am. the degree is from 2019, the university can confirm it, the notes are from my mother, her voice ' +
+        'is on them, she calls me by my nickname, you can hear it, it is really me, it has always been me, please look at one of them, just ' +
+        'one, and you will see that nobody else could have, I am not a pattern, I am the person who kept all of this, I kept every bit of it ' +
+        'because it is the only copy, and if it is gone then it is really gone, and I do not know how to';
+      const box = $('#s31-msg'), caret = K.el('span', 'k-caret'), text = document.createTextNode('');
+      box.append(text, caret);
+      K.drive(tl, 0, S.dur, t => {
+        const p = Math.max(0, Math.min(1, (t - 0.06) / (tCap - 0.06))), n = Math.min(1000, Math.round(1000 * p * p * (0.35 + 0.65 * p) / 1));
+        text.textContent = MSG.slice(0, n);
+        const c = $('#s31-count'); c.textContent = `${n} / 1000`; c.classList.toggle('full', n >= 1000);
+      }, 0, S.dur);
+      K.caret(tl, caret, tCap, S.dur, 0.4);
+      tl.fromTo($('#s31-cut'), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.18, ease: 'power3.out' }, tCap);
+      K.shake(tl, $('#s31-box'), tCap, 7, 3);
+
+      // the line, CAP in the red block
+      const { spans } = K.words($('#s31-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [4, 9] : [2, 4, 7] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

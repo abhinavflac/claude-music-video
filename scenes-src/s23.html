@@ -1,0 +1,120 @@
+<scene look="caret-ledger-72e041">
+<!-- c1_5 "You can shrink me for the server": a command-first ops console for a full server. Storage sits at 99% and the
+     server says make room. On "shrink" the cursor hits SHRINK and the WAV file (him) shrinks to a dot, 42.1 MB to 0.4;
+     on "server" the disk drops to 71%, server happy. Then the cursor hits KEEP and the file snaps back, every bit. -->
+<style>
+    .s23-card { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); }
+    .s23-head { display: flex; justify-content: space-between; align-items: center; padding: 0.75em 1em; border-bottom: 1px solid var(--k-line); font: 500 0.8em/1 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s23-head b { color: var(--k-ink); font-weight: 600; }
+    .s23-disk { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 0.3em 1em; padding: 0.9em 1em 0; }
+    .s23-disk span { font: 500 0.8em/1 var(--k-font-mono); color: var(--k-muted); }
+    .s23-disk b { font: 700 1.9em/1 var(--k-font-display); font-variant-numeric: tabular-nums; color: var(--k-accent-t); }
+    .s23-disk .k-bar { grid-column: 1 / 3; height: 0.5em; }
+    .s23-alert { display: flex; align-items: center; gap: 0.6em; margin: 0.9em 1em 0; padding: 0.55em 0.8em; border: 1px solid var(--k-accent); border-radius: var(--k-radius); font: 500 0.8em/1 var(--k-font-mono); color: var(--k-ink); white-space: nowrap; }
+    .s23-alert svg { width: 1.2em; height: 1.2em; flex: none; }
+    #s23-file { position: absolute; }
+    #s23-icon { position: absolute; overflow: visible; }
+    .s23-name { position: absolute; font: 600 1em/1.2 var(--k-font-display); color: var(--k-ink); white-space: nowrap; }
+    .s23-name span { display: block; font: 500 0.8em/1.3 var(--k-font-mono); color: var(--k-muted); font-variant-numeric: tabular-nums; }
+    .s23-btns { position: absolute; display: flex; gap: 0.6em; }
+    .s23-btn { width: 5.6em; text-align: center; padding: 0.55em 0; border-radius: var(--k-radius); font: 600 0.9em/1 var(--k-font-mono); letter-spacing: 0.08em; white-space: nowrap; }
+    #s23-shrink { border: 2px solid var(--k-muted); color: var(--k-ink); }
+    #s23-keep { background: var(--k-accent); color: var(--k-on-accent); border: 2px solid var(--k-accent); }
+    #s23-log { padding: 0.9em 1em; font: 400 0.8em/1.45 var(--k-font-mono); color: var(--k-ink); white-space: pre; }
+    #s23-log .dim { color: var(--k-muted); }
+    #s23-log .acc { color: var(--k-accent-t); }
+    #s23-lyric { position: absolute; font: 700 1em/0.98 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-ink); }
+    #s23-lyric .k-caret { background: var(--k-accent); }
+</style>
+<style frame="wide">
+    #s23-left { left: 60px; top: 110px; width: 780px; height: 880px; font-size: 32px; }
+    #s23-icon { left: 250px; top: 300px; width: 280px; height: 340px; }
+    .s23-name { left: 40px; top: 690px; }
+    .s23-btns { right: 40px; top: 700px; }
+    #s23-term { left: 880px; top: 110px; width: 980px; height: 880px; font-size: 32px; }
+    #s23-lyric { left: 40px; right: 40px; top: 520px; font-size: 104px; }
+</style>
+<style frame="vert">
+    #s23-left { left: 48px; top: 250px; width: 984px; height: 620px; font-size: 34px; }
+    .s23-head { padding-right: 100px; }
+    .s23-disk { padding-right: 100px; }
+    .s23-alert { margin-right: 100px; }
+    #s23-icon { left: 40px; top: 300px; width: 210px; height: 256px; }
+    .s23-name { left: 290px; top: 330px; }
+    .s23-btns { left: 290px; top: 470px; }
+    #s23-term { left: 48px; top: 896px; width: 984px; height: 808px; font-size: 34px; }
+    #s23-lyric { left: 40px; width: 832px; top: 440px; font-size: 96px; }
+</style>
+<body>
+    <div class="s23-card" id="s23-left">
+      <div class="s23-head"><b>storage · /srv</b><span>ops@storage-01</span></div>
+      <div class="s23-disk"><span>used</span><b id="s23-pct">99%</b><div class="k-bar" id="s23-bar"></div></div>
+      <div class="s23-alert"><svg viewBox="0 0 24 24"><path d="M12 3 L22 20 L2 20 Z" fill="none" stroke="var(--k-accent)" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 9 V14 M12 16.6 V17" stroke="var(--k-accent)" stroke-width="2.4" stroke-linecap="round"/></svg>server says: make room</div>
+      <svg id="s23-icon" viewBox="0 0 280 340"></svg>
+      <div class="s23-name">abhinav.wav<span id="s23-size">42.1 MB · 24-bit</span></div>
+      <div class="s23-btns"><div class="s23-btn" id="s23-shrink">SHRINK</div><div class="s23-btn" id="s23-keep">KEEP</div></div>
+    </div>
+    <div class="s23-card" id="s23-term">
+      <div class="s23-head"><b>ssh ops@storage-01</b><span>zsh · 80×24</span></div>
+      <div id="s23-log"></div>
+      <div id="s23-lyric"></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's23', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tShrink = at(/^shrink/), tMe = at(/^me$/), tServer = at(/^server/), tKeep = Math.min(S.dur - 0.42, tServer + 0.33);
+
+      // the file: a page with a folded corner and a waveform on it
+      const ic = $('#s23-icon');
+      K.svg('path', { d: 'M20 10 H196 L260 74 V330 H20 Z', fill: 'var(--k-paper)', stroke: 'var(--k-ink)', 'stroke-width': 6, 'stroke-linejoin': 'round' }, ic);
+      K.svg('path', { d: 'M196 10 V74 H260', fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 6, 'stroke-linejoin': 'round' }, ic);
+      let d = ''; for (let i = 0; i <= 40; i++) { const x = 50 + i * 4.5, a = Math.sin(i * 0.9) * Math.sin(i * 0.23) * 60; d += `M${x} ${190 - Math.abs(a)} V${190 + Math.abs(a)} `; }
+      K.svg('path', { d, stroke: 'var(--k-accent)', 'stroke-width': 3, 'stroke-linecap': 'round' }, ic);
+      const tag = K.svg('text', { x: 140, y: 300, 'text-anchor': 'middle', fill: 'var(--k-ink)', style: 'font: 700 38px var(--k-font-mono)' }, ic); tag.textContent = 'WAV';
+      gsap.set(ic, { transformOrigin: '50% 55%' });
+      tl.fromTo(ic, { scale: 1 }, { scale: 0.05, duration: tMe - tShrink + 0.08, ease: 'power3.in' }, tShrink);
+      tl.to(ic, { scale: 1, duration: 0.34, ease: 'elastic.out(1, 0.5)' }, tKeep);
+
+      // the file size and the disk, one piecewise function of time (so any seek order draws the same frame): the file
+      // shrinks on "shrink", the disk frees up on "server", and both come back once he keeps the file
+      const fill = K.el('div', 'k-bar-fill', $('#s23-bar'));
+      const cl = x => Math.max(0, Math.min(1, x)), inn = x => x * x * x, out = x => 1 - (1 - x) ** 3, lerp = (a, b, k) => a + (b - a) * k;
+      K.drive(tl, 0, S.dur, t => {
+        const mb = t < tKeep ? lerp(42.1, 0.4, inn(cl((t - tShrink) / (tMe + 0.08 - tShrink)))) : lerp(0.4, 42.1, out(cl((t - tKeep) / 0.2)));
+        const pct = t < tKeep + 0.12 ? lerp(99, 71, out(cl((t - tServer) / 0.2))) : lerp(71, 99, out(cl((t - tKeep - 0.12) / 0.18)));
+        $('#s23-size').textContent = `${mb.toFixed(1)} MB · ${mb > 30 ? '24-bit' : mb > 5 ? '16-bit' : '8 kbps'}`;
+        $('#s23-pct').textContent = Math.round(pct) + '%';
+        fill.style.transform = `scaleX(${(pct / 100).toFixed(4)})`;
+      }, 0, S.dur);
+
+      // the console, a line per beat of the story
+      const log = $('#s23-log'), lines = vert ? [
+        [0.08, '', '$ df -h /srv'], [0.2, 'dim', '/srv  99%  0.4 GB free'], [tShrink, '', '$ shrink abhinav.wav'],
+        [tMe, 'dim', '42.1 MB → 0.4 MB  (−99%)'], [tServer, 'acc', '/srv  71%  server happy'], [tKeep, '', '$ keep abhinav.wav'],
+      ] : [
+        [0.08, '', '$ df -h /srv'], [0.2, 'dim', '/srv   99%   0.4 GB free   make room'], [tShrink, '', '$ shrink abhinav.wav --for server'],
+        [tMe, 'dim', 'abhinav.wav  42.1 MB → 0.4 MB  (−99%)'], [tServer, 'acc', '/srv   71%   server happy'], [tKeep, '', '$ keep abhinav.wav'],
+        [tKeep + 0.14, 'acc', 'restored 42.1 MB. every bit.'],
+      ];
+      lines.forEach(([t, cls, txt]) => { const l = K.el('div', cls, log, txt); tl.fromTo(l, { opacity: 0 }, { opacity: 1, duration: K.F }, t); });
+
+      // the cursor: SHRINK on "shrink", KEEP after "server"
+      const bs = K.pos($('#s23-shrink'), root), bk = K.pos($('#s23-keep'), root), cur = K.cursor(root), ring = K.el('div', 'k-ring', root);
+      const sx = bs.x + bs.w * 0.5, sy = bs.y + bs.h * 0.6, kx = bk.x + bk.w * 0.5, ky = bk.y + bk.h * 0.6;
+      K.glide(tl, cur, [[0, sx + 260, sy + 240], [tShrink - 0.04, sx, sy], [tServer, sx + 40, sy + 30], [tKeep - 0.04, kx, ky]]);
+      K.click(tl, cur, ring, tShrink, sx, sy);
+      K.click(tl, cur, ring, tKeep, kx, ky);
+      tl.fromTo($('#s23-shrink'), { scale: 0.92 }, { scale: 1, duration: 0.2, ease: 'power2.out', immediateRender: false }, tShrink);
+      tl.fromTo($('#s23-keep'), { scale: 0.92 }, { scale: 1, duration: 0.2, ease: 'power2.out', immediateRender: false }, tKeep);
+
+      // the line, SHRINK in the lavender block, a caret riding after it
+      const { box, spans } = K.words($('#s23-lyric'), L, { key: L.words.findIndex(x => /^shrink/.test(x.w)), breakBefore: [2, 4] });
+      K.reveal(tl, spans, L, 'cut');
+      const caret = K.el('span', 'k-caret', box); K.caret(tl, caret, 0, S.dur);
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

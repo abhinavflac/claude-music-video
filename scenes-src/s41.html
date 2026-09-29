@@ -1,0 +1,95 @@
+<scene look="beamline-7a04da">
+<!-- c2_3 "Keep the static, keep the tremble": the wave editor again, now a petrol-ground oscilloscope. A phosphor trace
+     with persistence sweeps the graticule, starting clean and AI-smooth; three hardware switches flip down on the sung
+     words (noise reduction on "static", AI smooth on the second "keep", de-tremble on "tremble") and the trace comes back
+     rough, speckled and shaking, the way it was sung. -->
+<style>
+    #s41-scope { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); overflow: hidden; }
+    #s41-scope svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s41-grid { stroke: var(--k-line); stroke-width: 2; }
+    .s41-trace { fill: none; stroke: var(--k-accent); stroke-linejoin: round; }
+    .s41-lab { font: 500 20px/1 var(--k-font-mono); fill: var(--k-muted); letter-spacing: 1px; }
+    #s41-panel { position: absolute; display: flex; }
+    .s41-sw { display: flex; flex-direction: column; align-items: center; gap: 0.5em; font: 600 0.62em/1.1 var(--k-font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--k-muted); text-align: center; }
+    .s41-sw svg { width: 2.2em; height: 3.2em; overflow: visible; }
+    .s41-plate { fill: var(--k-surface); stroke: var(--k-line); stroke-width: 3; }
+    .s41-lever { fill: var(--k-muted); stroke: var(--k-ink); stroke-width: 2; }
+    .s41-led { fill: var(--k-line); }
+    .s41-led.on { fill: var(--k-accent); }
+    #s41-lyric { position: absolute; font: 700 1em/0.95 var(--k-font-display); letter-spacing: 0.01em; text-transform: uppercase; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s41-scope { left: 80px; top: 110px; width: 1300px; height: 660px; }
+    #s41-panel { left: 1430px; top: 130px; width: 410px; flex-direction: column; gap: 34px; font-size: 44px; }
+    #s41-lyric { left: 80px; top: 810px; width: 1760px; font-size: 100px; }
+</style>
+<style frame="vert">
+    #s41-scope { left: 48px; top: 250px; width: 984px; height: 720px; }
+    #s41-panel { left: 48px; top: 1010px; width: 912px; justify-content: space-between; font-size: 46px; }
+    #s41-lyric { left: 48px; top: 1352px; width: 912px; font-size: 104px; }
+</style>
+<body>
+    <div id="s41-scope"><svg id="s41-svg" data-layout-ignore></svg></div>
+    <div id="s41-panel"></div>
+    <div id="s41-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's41', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], words = L.words;
+      const tStatic = words.find(x => /^static/.test(x.w)).t, tKeep2 = words.filter(x => /^keep/i.test(x.w))[1].t, tTremble = words.find(x => /^tremble/.test(x.w)).t;
+
+      // three hardware switches: lever up (on) flips down on its word, the LED goes dark
+      const sw = [['noise red.', tStatic], ['ai smooth', tKeep2], ['de-tremble', tTremble]].map(([name, t]) => {
+        const box = K.el('div', 's41-sw', $('#s41-panel')), svg = K.svg('svg', { viewBox: '0 0 44 64' }, box);
+        K.svg('rect', { x: 2, y: 2, width: 40, height: 60, rx: 8, class: 's41-plate' }, svg);
+        const lever = K.svg('rect', { x: 16, y: 8, width: 12, height: 26, rx: 5, class: 's41-lever' }, svg);
+        const led = K.svg('circle', { cx: 22, cy: 52, r: 5, class: 's41-led on' }, svg);
+        K.el('span', '', box, name);
+        tl.set(lever, { attr: { y: 30 } }, t);
+        K.drive(tl, 0, S.dur, v => led.setAttribute('class', 's41-led' + (v < t ? ' on' : '')), 0, S.dur);
+        tl.fromTo(box, { scale: 1.15 }, { scale: 1, duration: 0.25, ease: 'back.out(3)', immediateRender: false }, t);
+        return t;
+      });
+
+      // the scope: a 10 x 8 graticule, and a phosphor trace (three past frames fading behind the current one)
+      const sc = $('#s41-scope'), SW = sc.clientWidth, SH = sc.clientHeight, sv = $('#s41-svg'), mid = SH / 2;
+      sv.setAttribute('viewBox', `0 0 ${SW} ${SH}`);
+      for (let i = 1; i < 10; i++) K.svg('line', { x1: SW * i / 10, x2: SW * i / 10, y1: 0, y2: SH, class: 's41-grid' }, sv);
+      for (let j = 1; j < 8; j++) K.svg('line', { x1: 0, x2: SW, y1: SH * j / 8, y2: SH * j / 8, class: 's41-grid' }, sv);
+      const lab = K.svg('text', { x: 18, y: 32, class: 's41-lab' }, sv); lab.textContent = 'CH1 · abhinav.wav · 20 ms/div';
+      const glow = K.svg('filter', { id: 's41-glow', x: '-5%', y: '-20%', width: '110%', height: '140%' }, K.svg('defs', {}, sv));
+      K.svg('feGaussianBlur', { stdDeviation: 5, result: 'b' }, glow);
+      const mg = K.svg('feMerge', {}, glow); K.svg('feMergeNode', { in: 'b' }, mg); K.svg('feMergeNode', { in: 'SourceGraphic' }, mg);
+      const specks = K.svg('g', {}, sv), r = K.rng(41);
+      const dots = Array.from({ length: 120 }, () => [K.svg('circle', { cx: (r() * SW).toFixed(1), cy: (mid + (r() - 0.5) * SH * 0.9).toFixed(1), r: (1.5 + r() * 3).toFixed(1), fill: 'var(--k-accent-2)' }, specks), r()]);
+      const traces = [0.12, 0.25, 0.5, 1].map((o, i) => K.svg('path', { class: 's41-trace', 'stroke-width': i === 3 ? 4 : 3, opacity: o, filter: i === 3 ? 'url(#s41-glow)' : 'none' }, sv));
+      const env = t => { let a = 0.1; for (const w of words) { const c = (w.t + Math.min(w.end, w.t + 0.3)) / 2; a += Math.exp(-((t - c) ** 2) / 0.02); } return Math.min(1, a); };
+      const hash = (i, f) => { const x = Math.sin(i * 12.9898 + f * 78.233) * 43758.5453; return x - Math.floor(x); };
+      const wave = t => {
+        const ai = t < sw[1], still = t < sw[2], f = Math.floor(t * 30), e = env(t) * (ai ? 0.65 : 1), N = 360;
+        let d = '';
+        for (let i = 0; i <= N; i++) {
+          const u = i / N, a = u * 38 + t * 22;
+          let c = ai ? Math.sin(a) : Math.sin(a) * 0.6 + Math.sin(a * 2.3 + 1.1) * 0.28 + Math.sin(a * 5.7) * 0.12 + (hash(i, 7) - 0.5) * 0.25;
+          let y = mid + SH * 0.36 * e * c;
+          if (!still) y += (hash(i, f) - 0.5) * 22 * (0.5 + e);
+          d += `${i ? 'L' : 'M'}${(u * SW).toFixed(1)} ${y.toFixed(1)} `;
+        }
+        return d;
+      };
+      K.drive(tl, 0, S.dur, t => {
+        traces.forEach((p, i) => p.setAttribute('d', wave(Math.max(0, t - (3 - i) * F))));
+        const f = Math.floor(t * 30);
+        dots.forEach(([c, k]) => { c.style.opacity = t < sw[0] ? 0 : (hash(k * 991, f) > 0.35 ? 0.85 : 0.2); });
+      }, 0, S.dur);
+
+      // the line, TREMBLE in the phosphor block, shaking on its word
+      const { spans } = K.words($('#s41-lyric'), L, { key: words.length - 1, breakBefore: [3] });
+      K.reveal(tl, spans, L, 'slam');
+      K.shake(tl, $('#s41-lyric'), tTremble, 9, 6, 11);
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

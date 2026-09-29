@@ -1,0 +1,63 @@
+<scene look="carbon-ba159b">
+<!-- v2_6 "Got it all back with no reason, not a sorry, not a trace": a case file on manila, typed. "Your account has been
+     restored." Every field that would explain it is a dash: Reason on "reason", Apology on "sorry", What happened and
+     Details on "trace". NO REASON GIVEN is stencilled across it in red; no further action is required. -->
+<style>
+    #s34-file { position: absolute; background: var(--k-surface); border: 2px solid var(--k-ink); color: var(--k-on-surface); }
+    #s34-tab { position: absolute; top: -2.2em; left: -2px; height: 2.2em; padding: 0.45em 1.1em 0; background: var(--k-surface); border: 2px solid var(--k-ink); border-bottom: 0; font: 400 0.8em/1 var(--k-font-display); letter-spacing: 0.06em; white-space: nowrap; }
+    .s34-top { display: flex; justify-content: space-between; padding-bottom: 0.6em; border-bottom: 2px dashed var(--k-ink); font: 400 0.7em/1 var(--k-font-mono); letter-spacing: 0.05em; white-space: nowrap; }
+    #s34-head { margin: 0.8em 0 0.9em; font: 400 1.25em/1.2 var(--k-font-body); }
+    .s34-f { display: grid; grid-template-columns: 7.2em 1fr; align-items: baseline; padding: 0.45em 0; border-bottom: 1px solid var(--k-line); font: 400 0.9em/1.2 var(--k-font-body); }
+    .s34-f em { font-style: normal; font: 400 0.7em/1 var(--k-font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+    .s34-f span { font-size: 1.4em; line-height: 1; }
+    #s34-foot { margin-top: 0.9em; font: 400 0.8em/1.3 var(--k-font-body); opacity: 0; }
+    #s34-stamp { position: absolute; padding: 0.15em 0.4em 0.1em; border: 0.12em solid var(--k-accent); color: var(--k-accent-t); font: 400 1em/1 var(--k-font-display); letter-spacing: 0.04em; white-space: nowrap; opacity: 0; }
+    #s34-lyric { position: absolute; font: 400 1em/1 var(--k-font-display); letter-spacing: 0.01em; text-transform: uppercase; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s34-file { left: 80px; top: 200px; width: 900px; height: 740px; padding: 38px 44px; font-size: 40px; }
+    #s34-stamp { left: 300px; top: 430px; font-size: 76px; }
+    #s34-lyric { left: 1040px; top: 190px; width: 800px; font-size: 84px; }
+</style>
+<style frame="vert">
+    #s34-file { left: 48px; top: 330px; width: 984px; height: 960px; padding: 36px 100px 36px 36px; font-size: 44px; }
+    #s34-stamp { left: 120px; top: 540px; font-size: 70px; }
+    #s34-lyric { left: 48px; top: 1352px; width: 912px; font-size: 80px; }
+</style>
+<body>
+    <div id="s34-file">
+      <div id="s34-tab" data-layout-allow-overflow>case 2F-44871</div>
+      <div class="s34-top"><span>account services</span><span>ref. RS-0917</span></div>
+      <div id="s34-head">Your account has been restored.</div>
+      <div class="s34-f"><em>reason</em><span id="s34-f0"></span></div>
+      <div class="s34-f"><em>what happened</em><span id="s34-f1"></span></div>
+      <div class="s34-f"><em>apology</em><span id="s34-f2"></span></div>
+      <div class="s34-f"><em>details</em><span id="s34-f3"></span></div>
+      <div id="s34-foot">No further action is required.</div>
+      <div id="s34-stamp" data-layout-allow-overlap>NO REASON GIVEN</div>
+    </div>
+    <div id="s34-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's34', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tBack = at(/^back/), tReason = at(/^reason/), tSorry = at(/^sorry/), tTrace = at(/^trace/);
+
+      // the file slides onto the desk as he gets it all back; the head line types itself
+      tl.fromTo($('#s34-file'), { y: 60, rotation: -2 }, { y: 0, rotation: 0, duration: 0.35, ease: 'power3.out' }, 0);
+      K.type(tl, $('#s34-head'), 'Your account has been restored.', 0.1, tBack + 0.1);
+      // each explaining field is typed as a single dash on its word
+      [[0, tReason], [2, tSorry], [1, tTrace], [3, tTrace + 0.12]].forEach(([i, t]) => K.type(tl, $('#s34-f' + i), '-', t, t + K.F));
+      K.slam(tl, $('#s34-stamp'), tReason + 0.08, -9, 2.2);
+      K.shake(tl, $('#s34-file'), tReason + 0.2, 8, 3);
+      tl.to($('#s34-foot'), { opacity: 1, duration: 0.2 }, tTrace + 0.2);
+
+      // the line, SORRY in the red block
+      const { spans } = K.words($('#s34-lyric'), L, { key: L.words.findIndex(x => /^sorry/.test(x.w)), breakBefore: [4, 7, 10] });
+      K.reveal(tl, spans, L, 'slam');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

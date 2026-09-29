@@ -1,0 +1,95 @@
+<scene look="reticle-ledger-c38c42">
+<!-- v1_5 "I trained a little oracle to answer 'I don't know'": the oracle-mini model card. The training loss draws itself
+     down to LOSS_FN 0.4933; the eval checklist ends on the one metric that matters: says "I don't know" when unsure. -->
+<tokens>--k-accent-3: #2F7D66;</tokens>
+<style>
+    #s11-cam { position: absolute; inset: 0; }
+    #s11-lyric { position: absolute; font: 800 1em/1.05 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-ink); }
+    #s11-card { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    #s11-head { display: flex; align-items: center; gap: 16px; border-bottom: 2px solid var(--k-line); font-family: var(--k-font-mono); }
+    #s11-head b { font-family: var(--k-font-display); font-weight: 800; letter-spacing: -0.02em; }
+    .s11-chip { padding: 0.35em 0.7em; border-radius: 99px; border: 2px solid var(--k-line); font-size: 0.8em; }
+    #s11-chart { position: absolute; }
+    #s11-chart svg { width: 100%; height: 100%; overflow: visible; }
+    .s11-ax { font: 500 18px/1 var(--k-font-mono); fill: var(--k-on-surface); }
+    #s11-loss { position: absolute; font-family: var(--k-font-mono); }
+    #s11-loss b { display: block; font: 800 2.6em/1 var(--k-font-display); letter-spacing: -0.03em; color: var(--k-on-surface); font-variant-numeric: tabular-nums; }
+    #s11-evals { position: absolute; display: grid; }
+    .s11-ev { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 20px; row-gap: 10px; padding-bottom: 18px; border-bottom: 2px solid var(--k-line); }
+    .s11-ev .v { font-family: var(--k-font-mono); font-weight: 600; }
+    .s11-ev .k-bar { grid-column: span 2; height: 12px; }
+    .s11-ev.hero { border: 3px solid var(--k-accent); border-radius: calc(var(--k-radius) * 0.75); padding: 18px 20px; }
+    .s11-ev.hero .v { background: var(--k-accent); color: var(--k-on-accent); padding: 4px 10px; border-radius: 8px; }
+</style>
+<style frame="wide">
+    #s11-lyric { left: 80px; top: 118px; width: 1760px; font-size: 98px; }
+    #s11-card { left: 80px; top: 372px; width: 1760px; height: 620px; font-size: 26px; }
+    #s11-head { height: 78px; padding: 0 30px; }
+    #s11-chart { left: 60px; top: 150px; width: 900px; height: 360px; }
+    #s11-loss { left: 700px; top: 98px; text-align: right; width: 260px; font-size: 22px; }
+    #s11-evals { left: 1080px; top: 120px; width: 620px; gap: 22px; font-size: 28px; }
+</style>
+<style frame="vert">
+    #s11-card { left: 48px; top: 270px; width: 984px; height: 1030px; font-size: 30px; }
+    #s11-head { height: 86px; padding: 0 26px; font-size: 26px; }
+    #s11-chart { left: 60px; top: 190px; width: 860px; height: 300px; }
+    #s11-loss { left: 620px; top: 100px; text-align: right; width: 300px; font-size: 24px; }
+    #s11-evals { left: 40px; top: 560px; width: 904px; gap: 34px; font-size: 40px; }
+    #s11-lyric { left: 48px; top: 1336px; width: 984px; font-size: 104px; }
+</style>
+<body>
+    <div id="s11-cam" data-layout-allow-overflow>
+      <div id="s11-lyric"></div>
+      <div id="s11-card">
+        <div id="s11-head"><b>oracle-mini</b><span class="s11-chip">RAG</span><span class="s11-chip">v0.3</span><span class="s11-chip" style="margin-left:auto">model card</span></div>
+        <div id="s11-loss">training loss<b id="s11-lv">2.3100</b></div>
+        <div id="s11-chart"><svg id="s11-svg" viewBox="0 0 900 360" preserveAspectRatio="none"></svg></div>
+        <div id="s11-evals">
+          <div class="s11-ev"><span>hallucinations</span><span class="v" id="s11-hal">12</span></div>
+          <div class="s11-ev"><span>pretends it's fine</span><span class="v" id="s11-fine">often</span></div>
+          <div class="s11-ev hero" id="s11-hero"><span>says "I don't know" when unsure</span><span class="v" id="s11-idk">0%</span><div id="s11-idk-bar"></div></div>
+        </div>
+      </div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's11', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], w = re => L.words.find(x => re.test(x.w));
+      K.push(tl, $('#s11-cam'), S.dur, 1, 1.04);
+
+      // the loss curve draws down to 0.4933 across the line
+      const svg = $('#s11-svg'), CW = 900, CH = 360, r = K.rng(4933), N = 90, target = 0.4933, top = 2.31;
+      const yOf = v => CH - 20 - (v - 0.3) / (top - 0.3) * (CH - 40);
+      for (let v = 0.5; v <= 2.3; v += 0.5) K.svg('line', { x1: 0, x2: CW, y1: yOf(v), y2: yOf(v), stroke: 'var(--k-line)', 'stroke-width': 2 }, svg);
+      K.svg('line', { x1: 0, x2: CW, y1: yOf(target), y2: yOf(target), stroke: 'var(--k-accent)', 'stroke-width': 3, 'stroke-dasharray': '10 8' }, svg);
+      const lab = K.svg('text', { x: 6, y: yOf(target) - 12, class: 's11-ax' }, svg); lab.textContent = 'LOSS_FN 0.4933';
+      const pts = [];
+      for (let i = 0; i <= N; i++) { const p = i / N, v = target + (top - target) * Math.exp(-4.2 * p) + (r() - 0.5) * 0.12 * (1 - p); pts.push([p * CW, yOf(v), v]); }
+      const d = 'M' + pts.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join(' L');
+      const line = K.svg('path', { d, fill: 'none', stroke: 'var(--k-on-surface)', 'stroke-width': 5, 'stroke-linejoin': 'round', pathLength: 1 }, svg);
+      const dot = K.svg('circle', { r: 9, fill: 'var(--k-accent)' }, svg);
+      const t0 = 0.05, t1 = w(/^answer/).t;
+      K.drive(tl, t0, t1, p => {
+        line.style.strokeDasharray = '1'; line.style.strokeDashoffset = String(1 - p);
+        const i = Math.min(N, Math.round(p * N)), [x, y, v] = pts[i];
+        dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+        $('#s11-lv').textContent = (p >= 1 ? target : v).toFixed(4);
+      }, 0, 1, 'power1.inOut');
+
+      // the evals: the numbers that should be zero go to zero; the one that matters fills on "I don't know"
+      K.count(tl, $('#s11-hal'), 12, 0, 0.4, t1, v => String(Math.round(v)));
+      const fine = w(/^oracle/).t;
+      K.drive(tl, fine, fine + K.F, p => { $('#s11-fine').textContent = p > 0 ? 'never' : 'often'; });
+      const bar = K.bar($('#s11-idk-bar')), q = w(/^"I/).t;
+      K.fill(tl, bar.fill, 0, 1, q, w(/know/).end, 'power2.out');
+      K.count(tl, $('#s11-idk'), 0, 100, q, w(/know/).end, v => `${Math.round(v)}%`);
+      tl.fromTo($('#s11-hero'), { scale: 1 }, { scale: 1.03, duration: 0.2, ease: 'power2.out', yoyo: true, repeat: 1 }, q);
+
+      const key = L.words.findIndex(x => /^oracle/.test(x.w));
+      const { spans } = K.words($('#s11-lyric'), L, { key, breakBefore: vert ? [3, 5] : [5] });
+      K.reveal(tl, spans, L, 'rise');
+
+      window.__timelines[id] = tl;
+    })();
+</script>

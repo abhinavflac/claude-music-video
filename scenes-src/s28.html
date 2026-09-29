@@ -1,0 +1,101 @@
+<scene look="tessera-332749">
+<!-- (instrumental) an arcade LCD: NOW PLAYING scrolls in pixels, a 16-band analyzer and a stereo VU bounce to the song
+     itself (levels measured from song.wav, frame by frame, tools/levels.py), with falling peak caps. Arcade jokes in the
+     side panel: 1UP ABHINAV, HI-SCORE 1411 KBPS. On the downbeat: LOSSLESS COMBO! -->
+<style>
+    #s28-cab { position: absolute; background: var(--k-surface); border: 6px solid var(--k-ink); box-shadow: 10px 10px 0 var(--k-ink); color: var(--k-on-surface); }
+    #s28-marq { position: absolute; left: 0; right: 0; top: 0; overflow: hidden; background: var(--k-ink); border-bottom: 6px solid var(--k-ink); }
+    #s28-marq div { display: inline-block; padding: 0.45em 0; font: 400 1em/1 var(--k-font-display); color: var(--k-accent); white-space: pre; }
+    /* the marquee sits on the ink strip: black or white from the strip, so it reads in every look */
+    #s28-marq div { color: oklch(from var(--k-ink) clamp(0, (0.62 - l) * 1000, 1) 0 0); }
+    #s28-lcd { position: absolute; }
+    #s28-lcd svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s28-off { fill: var(--k-muted); opacity: 0.14; }
+    .s28-on { fill: var(--k-ink); }
+    .s28-hot { fill: var(--k-accent); stroke: var(--k-ink); stroke-width: 2; }
+    .s28-cap { fill: var(--k-accent); stroke: var(--k-ink); stroke-width: 2; }
+    .s28-lab { font: 400 22px/1 var(--k-font-display); fill: var(--k-ink); }
+    .s28-side { position: absolute; display: grid; align-content: start; gap: 0.9em; font: 400 0.62em/1.35 var(--k-font-display); color: var(--k-ink); }
+    .s28-side b { display: block; font-weight: 400; color: var(--k-muted); }
+    #s28-press { position: absolute; font: 400 0.8em/1 var(--k-font-display); color: var(--k-ink); white-space: nowrap; }
+    #s28-combo { position: absolute; font: 400 1em/1 var(--k-font-display); color: var(--k-accent-t); --ol: oklch(from var(--k-accent) clamp(0, (0.62 - l) * 1000, 1) 0 0); text-shadow: 5px 5px 0 var(--ol), -2px -2px 0 var(--ol), 2px -2px 0 var(--ol), -2px 2px 0 var(--ol); white-space: nowrap; opacity: 0; }
+</style>
+<style frame="wide">
+    #s28-cab { left: 100px; top: 110px; width: 1720px; height: 860px; font-size: 40px; }
+    #s28-lcd { left: 40px; top: 120px; width: 1180px; height: 640px; }
+    .s28-side { left: 1270px; top: 130px; width: 400px; }
+    #s28-press { left: 1270px; bottom: 44px; }
+    #s28-combo { left: 190px; top: 390px; font-size: 72px; }
+</style>
+<style frame="vert">
+    #s28-cab { left: 48px; top: 250px; width: 984px; height: 1450px; font-size: 40px; }
+    #s28-lcd { left: 30px; top: 110px; width: 912px; height: 900px; }
+    .s28-side { left: 36px; top: 1050px; width: 840px; grid-template-columns: 1fr 1fr; font-size: 0.72em; }
+    #s28-press { left: 36px; bottom: 40px; }
+    #s28-combo { left: 64px; top: 520px; font-size: 52px; }
+</style>
+<body>
+    <div id="s28-cab">
+      <div id="s28-marq"><div id="s28-mt"></div></div>
+      <div id="s28-lcd"><svg id="s28-svg" data-layout-ignore></svg></div>
+      <div class="s28-side">
+        <div><b>1UP</b>ABHINAV</div>
+        <div><b>HI-SCORE</b>1411 KBPS</div>
+        <div><b>TIME</b><span id="s28-time">1:24</span></div>
+        <div><b>BITS LOST</b>000000</div>
+      </div>
+      <div id="s28-press">PRESS START</div>
+      <div id="s28-combo" data-layout-allow-overlap>LOSSLESS COMBO!</div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's28', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), LV = S.levels, NB = LV.bands[0].length, d = S.downbeats[0] ?? 2.6;
+
+      // the marquee, doubled so it wraps seamlessly
+      const unit = 'NOW PLAYING: LOSSLESS.FLAC  *  24-BIT / 96 KHZ  *  ', mt = $('#s28-mt');
+      mt.textContent = unit.repeat(4);
+      const uw = unit.length * parseFloat(getComputedStyle(mt).fontSize);   // Press Start 2P advances exactly 1em a glyph
+      K.drive(tl, 0, S.dur, t => { mt.style.transform = `translateX(${(-(t * 260) % uw).toFixed(1)}px)`; }, 0, S.dur);
+
+      // the analyzer: 16 bands of pixel segments above a stereo VU, from the song's own levels with falling peak caps
+      const lcd = $('#s28-lcd'), LW = lcd.clientWidth, LH = lcd.clientHeight, sv = $('#s28-svg');
+      sv.setAttribute('viewBox', `0 0 ${LW} ${LH}`);
+      const SEG = vert ? 18 : 14, vuH = vert ? 150 : 120, anaH = LH - vuH - 40, gap = 6, bw = (LW - gap * (NB - 1)) / NB, sh = (anaH - gap * (SEG - 1)) / SEG;
+      const shape = v => Math.pow(Math.max(0, Math.min(1, (v - 0.3) / 0.7)), 1.25);
+      const cells = [], caps = [];
+      for (let b = 0; b < NB; b++) {
+        const col = [];
+        for (let s = 0; s < SEG; s++) col.push(K.svg('rect', { x: (b * (bw + gap)).toFixed(1), y: (anaH - (s + 1) * sh - s * gap).toFixed(1), width: bw.toFixed(1), height: sh.toFixed(1), class: 's28-off' }, sv));
+        cells.push(col);
+        caps.push(K.svg('rect', { x: (b * (bw + gap)).toFixed(1), width: bw.toFixed(1), height: (sh * 0.45).toFixed(1), class: 's28-cap' }, sv));
+      }
+      const VSEG = 32, vw = (LW - 60 - gap * (VSEG - 1)) / VSEG, vh = (vuH - 16) / 2, vus = [0, 1].map(ch => {
+        const y = anaH + 40 + ch * (vh + 16), lab = K.svg('text', { x: 0, y: y + vh * 0.78, class: 's28-lab' }, sv); lab.textContent = ch ? 'R' : 'L';
+        return Array.from({ length: VSEG }, (_, s) => K.svg('rect', { x: (60 + s * (vw + gap)).toFixed(1), y: y.toFixed(1), width: vw.toFixed(1), height: vh.toFixed(1), class: 's28-off' }, sv));
+      });
+      // peak caps: hold the highest level, then fall 2% of the scale per frame (worked out once, frame by frame)
+      const peaks = []; let prev = new Array(NB).fill(0);
+      LV.bands.forEach(fr => { prev = fr.map((v, b) => Math.max(shape(v), prev[b] - 0.02)); peaks.push(prev); });
+      K.drive(tl, 0, S.dur, t => {
+        const f = Math.max(0, Math.min(LV.bands.length - 1, Math.round(t * 30))), fr = LV.bands[f];
+        fr.forEach((v, b) => {
+          const n = Math.round(shape(v) * SEG);
+          cells[b].forEach((c, s) => c.setAttribute('class', s < n ? (s >= SEG - 3 ? 's28-hot' : 's28-on') : 's28-off'));
+          caps[b].setAttribute('y', (anaH - Math.max(1, Math.round(peaks[f][b] * SEG)) * (sh + gap) - sh * 0.45 - 2).toFixed(1));
+        });
+        [LV.L[f], LV.R[f]].forEach((v, ch) => { const n = Math.round(shape(v) * VSEG); vus[ch].forEach((c, s) => c.setAttribute('class', s < n ? (s >= VSEG - 5 ? 's28-hot' : 's28-on') : 's28-off')); });
+        const T = S.start + t; $('#s28-time').textContent = `${Math.floor(T / 60)}:${String(Math.floor(T % 60)).padStart(2, '0')}`;
+      }, 0, S.dur);
+
+      // PRESS START blinks on the beat; the combo pops on the downbeat, on twos
+      K.onBeats(S, (b, i) => tl.set($('#s28-press'), { opacity: i % 2 ? 1 : 0.15 }, b));
+      [[0, 1.5], [2, 1.1], [4, 1]].forEach(([k, s]) => tl.set($('#s28-combo'), { opacity: 1, scale: s }, d + k * F));
+      tl.set($('#s28-combo'), { opacity: 0 }, d + 0.9);
+      K.shake(tl, $('#s28-cab'), d, 8, 4);
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

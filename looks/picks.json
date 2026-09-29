@@ -1,0 +1,672 @@
+[
+ {
+  "scene": "s01",
+  "mode": "ui",
+  "slug": "regler",
+  "id": "en-019ef8e6-6b2f-72b1-8d00-bfeedc4d9806",
+  "name": "Regler",
+  "url": "https://katagami.ai/language/en-019ef8e6-6b2f-72b1-8d00-bfeedc4d9806",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bb-e84d-7011-ad4c-d56ae29a3135",
+  "why": "Hi-fi functional modernism for the export dialog: knurled controls, burnt-orange signal"
+ },
+ {
+  "scene": "s02",
+  "mode": "terminal",
+  "slug": "aurora",
+  "id": "en-019ef865-d349-7fa3-9cfd-7f4b2d4beb82",
+  "name": "Aurora",
+  "url": "https://katagami.ai/language/en-019ef865-d349-7fa3-9cfd-7f4b2d4beb82",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b9-8e03-73a0-b2cc-655228da9498",
+  "why": "Oscilloscope graticule and waveform trace for the shaved peaks"
+ },
+ {
+  "scene": "s03",
+  "mode": "ui",
+  "slug": "dither",
+  "id": "en-019f3dc1-daa0-7132-b782-52468ebdfb94",
+  "name": "Dither",
+  "url": "https://katagami.ai/language/en-019f3dc1-daa0-7132-b782-52468ebdfb94",
+  "thumb": "https://katagami.ai/api/file/fl-019f8fbb-d7a7-7803-97fd-e6dfe32a1304",
+  "why": "CGA retro desktop for the Bin window"
+ },
+ {
+  "scene": "s04",
+  "mode": "pop",
+  "slug": "klaxon",
+  "id": "en-019ef93f-7b30-7381-acab-cf32e59a58cb",
+  "name": "Klaxon",
+  "url": "https://katagami.ai/language/en-019ef93f-7b30-7381-acab-cf32e59a58cb",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9be-9d50-7dc1-bb9e-f515f1afbaff",
+  "why": "Screen-printed poster type with an acid slab for LESS"
+ },
+ {
+  "scene": "s05",
+  "mode": "manga",
+  "slug": "nightwatch",
+  "id": "en-019ef881-5b88-7ae0-ad26-c5fb1ce27a7c",
+  "name": "Nightwatch",
+  "url": "https://katagami.ai/language/en-019ef881-5b88-7ae0-ad26-c5fb1ce27a7c",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9ba-6a23-76c3-8692-0ef55e3cc368",
+  "why": "Surveillance-dossier halftone: the eye that noticed"
+ },
+ {
+  "scene": "s06",
+  "mode": "manga",
+  "slug": "dialtone",
+  "id": "en-019ef84f-8012-7ae3-8e21-6232efafac1b",
+  "name": "Dialtone",
+  "url": "https://katagami.ai/language/en-019ef84f-8012-7ae3-8e21-6232efafac1b",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b9-a210-7012-8111-5da205723fa7",
+  "why": "Bedroom console at 2 a.m.: powder grey, manga-ink wiring, one active window"
+ },
+ {
+  "scene": "s07",
+  "mode": "terminal",
+  "slug": "cathode",
+  "id": "en-019ef93a-e850-7bd2-8af0-2ce6caf5f775",
+  "name": "Cathode",
+  "url": "https://katagami.ai/language/en-019ef93a-e850-7bd2-8af0-2ce6caf5f775",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bf-022d-77e3-b7bd-4a7d7a0edf80",
+  "why": "Dark phosphor terminal for the broken Arch update"
+ },
+ {
+  "scene": "s08",
+  "mode": "ui",
+  "slug": "phosphene",
+  "id": "en-019efd24-4a9f-7d52-a054-c0c8695f5cfe",
+  "name": "Phosphene",
+  "url": "https://katagami.ai/language/en-019efd24-4a9f-7d52-a054-c0c8695f5cfe",
+  "thumb": "https://katagami.ai/api/file/fl-019efd25-3fa9-7b91-b465-c2aed57dc105",
+  "why": "Cell meters and quantized readouts for the three widgets"
+ },
+ {
+  "scene": "s09",
+  "mode": "ui",
+  "slug": "nighthawk",
+  "id": "en-019f2e6e-d19d-72b2-8500-d710161f6627",
+  "name": "Nighthawk",
+  "url": "https://katagami.ai/language/en-019f2e6e-d19d-72b2-8500-d710161f6627",
+  "thumb": "https://katagami.ai/api/file/fl-019f3dba-16af-74a1-8a80-262696ec65e6",
+  "why": "After-hours warm black and cue marks for the hi-fi player"
+ },
+ {
+  "scene": "s10",
+  "mode": "ui",
+  "slug": "mimeo",
+  "id": "en-019ef9d7-744d-7b40-921b-81704c676771",
+  "name": "Mimeo",
+  "url": "https://katagami.ai/language/en-019ef9d7-744d-7b40-921b-81704c676771",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9f0-87d0-7452-9a88-fcccbf87b7a9",
+  "why": "Photocopy of a photocopy: the repost feed degrading"
+ },
+ {
+  "scene": "s11",
+  "mode": "ui",
+  "slug": "reticle-ledger",
+  "id": "en-019ef96c-004b-7773-858a-d6b992c38c42",
+  "name": "Reticle Ledger",
+  "url": "https://katagami.ai/language/en-019ef96c-004b-7773-858a-d6b992c38c42",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bf-c1a6-71b0-91f0-412a44851c9d",
+  "why": "White analytics with tabular numerals for the model card"
+ },
+ {
+  "scene": "s12",
+  "mode": "ui",
+  "slug": "plush",
+  "id": "en-019efdb6-988d-72e3-a3ea-cca7394d452c",
+  "name": "Plush",
+  "url": "https://katagami.ai/language/en-019efdb6-988d-72e3-a3ea-cca7394d452c",
+  "thumb": "https://katagami.ai/api/file/fl-019efdb7-bf24-7ae0-8c72-815b55a5ca81",
+  "why": "Self-lit companion OS: the Oracle as a nightlight chat"
+ },
+ {
+  "scene": "s13",
+  "mode": "manga",
+  "slug": "kissaten",
+  "id": "en-01a03f5b-7673-7c82-b8e8-a08787b9a655",
+  "name": "Kissaten",
+  "url": "https://katagami.ai/language/en-01a03f5b-7673-7c82-b8e8-a08787b9a655",
+  "thumb": "https://katagami.ai/api/file/fl-01a05fdb-3fda-7de1-abbb-5bc9b0e8a363",
+  "why": "Slice-of-life manga interior with soft terminal panes"
+ },
+ {
+  "scene": "s14",
+  "mode": "ui",
+  "slug": "glaze",
+  "id": "en-019efa7c-4189-7f22-a1dc-0195b90418f6",
+  "name": "Glaze",
+  "url": "https://katagami.ai/language/en-019efa7c-4189-7f22-a1dc-0195b90418f6",
+  "thumb": "https://katagami.ai/api/file/fl-019efa93-5eeb-7ce2-8f5b-a5854bbbf8ed",
+  "why": "Porcelain phone UI for the two status cards"
+ },
+ {
+  "scene": "s15",
+  "mode": "ui",
+  "slug": "gamut",
+  "id": "en-019ffc42-96c7-7e00-999e-2c6475924f74",
+  "name": "Gamut",
+  "url": "https://katagami.ai/language/en-019ffc42-96c7-7e00-999e-2c6475924f74",
+  "thumb": "https://katagami.ai/api/file/fl-019ffc46-0f63-77b2-b0e6-7ba72ce59a3f",
+  "why": "Product-interface chips and slots for the export queue"
+ },
+ {
+  "scene": "s16",
+  "mode": "ui",
+  "slug": "broadsheet",
+  "id": "en-019f709e-0c14-73a2-8f4d-d9469cb0b173",
+  "name": "Broadsheet",
+  "url": "https://katagami.ai/language/en-019f709e-0c14-73a2-8f4d-d9469cb0b173",
+  "thumb": "https://katagami.ai/api/file/fl-019f7c2a-7c0a-7f30-a8f5-28643e38df99",
+  "why": "Twelve-column red-black digest for summaries of summaries"
+ },
+ {
+  "scene": "s17",
+  "mode": "ui",
+  "slug": "halide",
+  "id": "en-019ef9c1-54ed-71f0-8ac6-10bd54b1649d",
+  "name": "Halide",
+  "url": "https://katagami.ai/language/en-019ef9c1-54ed-71f0-8ac6-10bd54b1649d",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9c7-0672-7973-b854-d73e4d8274bc",
+  "why": "Spectrograph ledger for the low-pass cut"
+ },
+ {
+  "scene": "s18",
+  "mode": "manga",
+  "slug": "tobari",
+  "id": "en-019ef67c-4756-7d41-b3b5-2ee4b0db319e",
+  "name": "Tobari",
+  "url": "https://katagami.ai/language/en-019ef67c-4756-7d41-b3b5-2ee4b0db319e",
+  "thumb": "https://katagami.ai/api/file/fl-019efaef-90d8-7632-bfcc-7504e7133a9b",
+  "why": "Spotlit koma at night for the room and the string decay"
+ },
+ {
+  "scene": "s19",
+  "mode": "pop",
+  "slug": "riveter",
+  "id": "en-019ef897-08b1-7091-a1ba-e0341bc2747e",
+  "name": "Riveter",
+  "url": "https://katagami.ai/language/en-019ef897-08b1-7091-a1ba-e0341bc2747e",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9ba-5221-7812-87a0-7901b5cc22e6",
+  "why": "Constructivist steel plate for the vise"
+ },
+ {
+  "scene": "s20",
+  "mode": "ui",
+  "slug": "errata",
+  "id": "en-019f7097-f7fb-7620-9893-7d412ed147a0",
+  "name": "Errata",
+  "url": "https://katagami.ai/language/en-019f7097-f7fb-7620-9893-7d412ed147a0",
+  "thumb": "https://katagami.ai/api/file/fl-019f7783-cf3c-7033-80c4-eaae7551f5e3",
+  "why": "Redline proof pass: strike 320 and smooth"
+ },
+ {
+  "scene": "s21",
+  "mode": "ui",
+  "slug": "kymograph",
+  "id": "en-01a05fe4-7d0a-72d1-a726-0b7634134557",
+  "name": "Kymograph",
+  "url": "https://katagami.ai/language/en-01a05fe4-7d0a-72d1-a726-0b7634134557",
+  "thumb": "https://katagami.ai/api/file/fl-01a0689e-f5d2-7603-9114-cab0128267d9",
+  "why": "One continuous trace, amplitude as state: keep the tremble"
+ },
+ {
+  "scene": "s22",
+  "mode": "ui",
+  "slug": "prism-works",
+  "id": "en-019ef923-46bf-7273-8076-dce068ec408b",
+  "name": "Prism Works",
+  "url": "https://katagami.ai/language/en-019ef923-46bf-7273-8076-dce068ec408b",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bd-3473-7a90-aa38-7f4f6ef3affb",
+  "why": "Prismatic dispersion: the spectrum grows back"
+ },
+ {
+  "scene": "s23",
+  "mode": "terminal",
+  "slug": "caret-ledger",
+  "id": "en-019ef9ad-bb34-7241-9fb2-8b5ce772e041",
+  "name": "Caret Ledger",
+  "url": "https://katagami.ai/language/en-019ef9ad-bb34-7241-9fb2-8b5ce772e041",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9c7-a917-7443-a86b-14783b3d30cf",
+  "why": "Command-first ops console for the full server"
+ },
+ {
+  "scene": "s24",
+  "mode": "ui",
+  "slug": "reticle",
+  "id": "en-019ef8d2-b25c-7ff3-80e9-9568b8aff621",
+  "name": "Reticle",
+  "url": "https://katagami.ai/language/en-019ef8d2-b25c-7ff3-80e9-9568b8aff621",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9ba-e023-7743-ada5-50aa91495b83",
+  "why": "Crop marks on a light table for the crop tool"
+ },
+ {
+  "scene": "s25",
+  "mode": "manga",
+  "slug": "limelight",
+  "id": "en-019efda2-dca8-7a32-839a-2c9a95ed64a3",
+  "name": "Limelight",
+  "url": "https://katagami.ai/language/en-019efda2-dca8-7a32-839a-2c9a95ed64a3",
+  "thumb": "https://katagami.ai/api/file/fl-019efda4-8de8-7e01-9d82-b14e1301056f",
+  "why": "Cel-anime key light for the first lossless"
+ },
+ {
+  "scene": "s26",
+  "mode": "ui",
+  "slug": "sector-bureau",
+  "id": "en-019ef81c-9c55-7713-8cfc-eef0ecfa4e44",
+  "name": "Sector Bureau",
+  "url": "https://katagami.ai/language/en-019ef81c-9c55-7713-8cfc-eef0ecfa4e44",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b8-8f99-79f3-b507-50f3115e4f34",
+  "why": "Checksum bands and archive recovery for BITS LOST: 0"
+ },
+ {
+  "scene": "s27",
+  "mode": "manga",
+  "slug": "parapara",
+  "id": "en-019f9a42-5b78-75e2-826e-a4bde44ca473",
+  "name": "Parapara",
+  "url": "https://katagami.ai/language/en-019f9a42-5b78-75e2-826e-a4bde44ca473",
+  "thumb": "https://katagami.ai/api/file/fl-019f9ad7-dc8d-79e1-8a54-bbaba5fa14d8",
+  "why": "Hand-inked flipbook on twos for the nod"
+ },
+ {
+  "scene": "s28",
+  "mode": "ui",
+  "slug": "tessera",
+  "id": "en-019efd3c-c7be-7102-8e6d-a4d174332749",
+  "name": "Tessera",
+  "url": "https://katagami.ai/language/en-019efd3c-c7be-7102-8e6d-a4d174332749",
+  "thumb": "https://katagami.ai/api/file/fl-019efd42-5ece-7a60-8667-c5ac5bb55779",
+  "why": "Arcade cell meters for the pixel VU"
+ },
+ {
+  "scene": "s29",
+  "mode": "ui",
+  "slug": "akte",
+  "id": "en-019ef67b-cc07-74f1-874e-5b7167445c95",
+  "name": "Akte",
+  "url": "https://katagami.ai/language/en-019ef67b-cc07-74f1-874e-5b7167445c95",
+  "thumb": "https://katagami.ai/api/file/fl-019efaef-6130-7032-8540-c0ceaf7a2b9b",
+  "why": "Machine judgment and redaction bars for the lockout"
+ },
+ {
+  "scene": "s30",
+  "mode": "ui",
+  "slug": "pomelo-soft-white-melon-azure",
+  "id": "en-019efabb-88ac-7820-8f23-d5f16deb326b",
+  "name": "Pomelo",
+  "url": "https://katagami.ai/language/en-019efabb-88ac-7820-8f23-d5f16deb326b",
+  "thumb": "https://katagami.ai/api/file/fl-019efade-7057-7dd3-b6f9-7cca2b4ba224",
+  "why": "Soft consumer launcher that greys out"
+ },
+ {
+  "scene": "s31",
+  "mode": "ui",
+  "slug": "kursbuch",
+  "id": "en-019f706f-f170-7d73-a198-20cdccfd54b7",
+  "name": "Kursbuch",
+  "url": "https://katagami.ai/language/en-019f706f-f170-7d73-a198-20cdccfd54b7",
+  "thumb": "https://katagami.ai/api/file/fl-019f776d-a0e0-7213-9b42-abcb6ae7c42a",
+  "why": "Objective Swiss form with a strict counter"
+ },
+ {
+  "scene": "s32",
+  "mode": "terminal",
+  "slug": "vernier",
+  "id": "en-019ef99a-18a8-7433-adff-4cbb74fa82f2",
+  "name": "Vernier",
+  "url": "https://katagami.ai/language/en-019ef99a-18a8-7433-adff-4cbb74fa82f2",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9c0-08a5-7a13-b2c4-2fea17a48bdf",
+  "why": "Dark analytics with amber thresholds for the risk engine"
+ },
+ {
+  "scene": "s33",
+  "mode": "manga",
+  "slug": "bulla",
+  "id": "en-019efa10-5a85-7e00-ae76-b90080f04a69",
+  "name": "Bulla",
+  "url": "https://katagami.ai/language/en-019efa10-5a85-7e00-ae76-b90080f04a69",
+  "thumb": "https://katagami.ai/api/file/fl-019efa20-6551-7713-b38b-5d422562aab8",
+  "why": "Tribunal, seals and custody for the faceless judge"
+ },
+ {
+  "scene": "s34",
+  "mode": "ui",
+  "slug": "carbon",
+  "id": "en-019ef891-9252-7d23-b7d4-01d21cba159b",
+  "name": "Carbon",
+  "url": "https://katagami.ai/language/en-019ef891-9252-7d23-b7d4-01d21cba159b",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9ba-8099-7973-871a-469dd85f058f",
+  "why": "Case file, manila and stencil stamps for the no-reason notice"
+ },
+ {
+  "scene": "s35",
+  "mode": "ui",
+  "slug": "bouba",
+  "id": "en-019efd9f-f4db-7db3-acf9-20d906c311f0",
+  "name": "Bouba",
+  "url": "https://katagami.ai/language/en-019efd9f-f4db-7db3-acf9-20d906c311f0",
+  "thumb": "https://katagami.ai/api/file/fl-019efda0-d52d-7831-8167-002caad5088f",
+  "why": "Soft inflatable bodies: literal soft landings"
+ },
+ {
+  "scene": "s36",
+  "mode": "ui",
+  "slug": "servo",
+  "id": "en-019ef9d9-46d0-7293-bcd0-de31640c70be",
+  "name": "Servo",
+  "url": "https://katagami.ai/language/en-019ef9d9-46d0-7293-bcd0-de31640c70be",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9f0-6601-76e3-a1ec-8d7f30f95f40",
+  "why": "Chrome console gauges for the needle-less RPM dial"
+ },
+ {
+  "scene": "s37",
+  "mode": "ui",
+  "slug": "tally",
+  "id": "en-019ef833-0b88-7643-9eee-82a750156e8a",
+  "name": "Tally",
+  "url": "https://katagami.ai/language/en-019ef833-0b88-7643-9eee-82a750156e8a",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b8-f1e0-7862-9579-003a884be26b",
+  "why": "Append-only ledger for keeping score"
+ },
+ {
+  "scene": "s38",
+  "mode": "manga",
+  "slug": "shinya",
+  "id": "en-019ef865-3a2a-71c3-8d0a-b0d490dde723",
+  "name": "Shin'ya",
+  "url": "https://katagami.ai/language/en-019ef865-3a2a-71c3-8d0a-b0d490dde723",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b9-da5b-7441-b37c-3e182ebc72fc",
+  "why": "Shin'ya means late night: lavender-cyan haze for the ceiling"
+ },
+ {
+  "scene": "s39",
+  "mode": "pop",
+  "slug": "wheatpaste",
+  "id": "en-019ef9e8-b2e5-7570-9be2-3ff526efdba8",
+  "name": "Wheatpaste",
+  "url": "https://katagami.ai/language/en-019ef9e8-b2e5-7570-9be2-3ff526efdba8",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9f0-9b24-7190-ae85-baa121819020",
+  "why": "Flyposted wall and sodium highlighter: BROKEN"
+ },
+ {
+  "scene": "s40",
+  "mode": "ui",
+  "slug": "litmus",
+  "id": "en-019ffc43-e769-78a2-8e7e-3d48d41e968b",
+  "name": "Litmus",
+  "url": "https://katagami.ai/language/en-019ffc43-e769-78a2-8e7e-3d48d41e968b",
+  "thumb": "https://katagami.ai/api/file/fl-019ffced-bd4c-7db3-83a8-ee14510bed6e",
+  "why": "Assay product interface for the second dropdown"
+ },
+ {
+  "scene": "s41",
+  "mode": "ui",
+  "slug": "beamline",
+  "id": "en-019efb6c-d15f-7653-9d40-f170a87a04da",
+  "name": "Beamline",
+  "url": "https://katagami.ai/language/en-019efb6c-d15f-7653-9d40-f170a87a04da",
+  "thumb": "https://katagami.ai/api/file/fl-019efb73-0879-7301-876e-19d92345fa99",
+  "why": "Petrol-ground oscilloscope for the dark wave editor"
+ },
+ {
+  "scene": "s42",
+  "mode": "ui",
+  "slug": "caustic",
+  "id": "en-019efd9f-65f4-7b13-a093-13b150e72873",
+  "name": "Caustic",
+  "url": "https://katagami.ai/language/en-019efd9f-65f4-7b13-a093-13b150e72873",
+  "thumb": "https://katagami.ai/api/file/fl-019efda1-32cb-7d80-a5e2-27a04f21ba32",
+  "why": "Spectral accents on dark glass: the spectrum restored"
+ },
+ {
+  "scene": "s43",
+  "mode": "terminal",
+  "slug": "phosphor-deck",
+  "id": "en-019efa17-4006-74c2-87d0-c5c61377025c",
+  "name": "Phosphor Deck",
+  "url": "https://katagami.ai/language/en-019efa17-4006-74c2-87d0-c5c61377025c",
+  "thumb": "https://katagami.ai/api/file/fl-019efa61-e30a-76e3-b564-e1c2872b4695",
+  "why": "Mission console that refuses the shrink"
+ },
+ {
+  "scene": "s44",
+  "mode": "ui",
+  "slug": "quire",
+  "id": "en-019efd6f-2845-7b61-add9-a422b382a87c",
+  "name": "Quire",
+  "url": "https://katagami.ai/language/en-019efd6f-2845-7b61-add9-a422b382a87c",
+  "thumb": "https://katagami.ai/api/file/fl-019efd82-097d-7fa0-b6d9-85fb2e22bd8b",
+  "why": "Proofing desk crop marks for the crop that fails"
+ },
+ {
+  "scene": "s45",
+  "mode": "manga",
+  "slug": "fanfare",
+  "id": "en-019efdb9-0b5b-77b3-8043-22e8b1706610",
+  "name": "Fanfare",
+  "url": "https://katagami.ai/language/en-019efdb9-0b5b-77b3-8043-22e8b1706610",
+  "thumb": "https://katagami.ai/api/file/fl-019efdbd-20a3-7950-a436-305e8a5671a5",
+  "why": "Bright-stage proclamation cut for 99%"
+ },
+ {
+  "scene": "s46",
+  "mode": "pop",
+  "slug": "plakat",
+  "id": "en-019f3dbe-fcec-7783-a8a6-24c3d4a48736",
+  "name": "Plakat",
+  "url": "https://katagami.ai/language/en-019f3dbe-fcec-7783-a8a6-24c3d4a48736",
+  "thumb": "https://katagami.ai/api/file/fl-019f900b-c247-7323-b75b-ea7400abadf8",
+  "why": "Die-cut stickers, bursts and ribbons for every bit"
+ },
+ {
+  "scene": "s47",
+  "mode": "pop",
+  "slug": "florette",
+  "id": "en-019ef8ea-3e59-7b90-9152-523e98787633",
+  "name": "Florette",
+  "url": "https://katagami.ai/language/en-019ef8ea-3e59-7b90-9152-523e98787633",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bb-b713-7d80-973b-9bb449beae40",
+  "why": "Superflat sticker press, piling up to the hard stop"
+ },
+ {
+  "scene": "s48",
+  "mode": "ui",
+  "slug": "slate",
+  "id": "en-019ef93d-fcce-7091-96fd-16b073a28f72",
+  "name": "Slate",
+  "url": "https://katagami.ai/language/en-019ef93d-fcce-7091-96fd-16b073a28f72",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bd-c6df-7413-b515-d12498b0f70d",
+  "why": "Broadcast signal dropout for the buffering freeze"
+ },
+ {
+  "scene": "s49",
+  "mode": "terminal",
+  "slug": "phosphor",
+  "id": "en-019efb51-33e2-7b10-ba3c-320a9c4bc1e3",
+  "name": "Phosphor",
+  "url": "https://katagami.ai/language/en-019efb51-33e2-7b10-ba3c-320a9c4bc1e3",
+  "thumb": "https://katagami.ai/api/file/fl-019efb72-f988-7002-9ad6-5139381a16ee",
+  "why": "True-black green terminal for the -1"
+ },
+ {
+  "scene": "s50",
+  "mode": "manga",
+  "slug": "gekiga",
+  "id": "en-019ef6df-b17c-75d0-bf10-c0f7db3ae0ef",
+  "name": "Gekiga",
+  "url": "https://katagami.ai/language/en-019ef6df-b17c-75d0-bf10-c0f7db3ae0ef",
+  "thumb": "https://katagami.ai/api/file/fl-019efaef-b5d6-7773-9ced-9dad8d8e9c64",
+  "why": "Inked panel frames and halftone emphasis for the burst"
+ },
+ {
+  "scene": "s51",
+  "mode": "ui",
+  "slug": "soma",
+  "id": "en-019ef751-7c41-7df1-b7d7-9315eeb850f6",
+  "name": "Sōma",
+  "url": "https://katagami.ai/language/en-019ef751-7c41-7df1-b7d7-9315eeb850f6",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9c0-e1da-78e3-b93a-7801529d3a35",
+  "why": "Manga schematic linework on e-paper for the DBSCAN plot"
+ },
+ {
+  "scene": "s52",
+  "mode": "ui",
+  "slug": "citron-counter",
+  "id": "en-019ef966-92a9-77f3-b14b-549b1067eac0",
+  "name": "Citron Counter",
+  "url": "https://katagami.ai/language/en-019ef966-92a9-77f3-b14b-549b1067eac0",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bf-3154-7363-ad3e-e1947e7c8cab",
+  "why": "Premium commerce page for the chair left in the cart"
+ },
+ {
+  "scene": "s53",
+  "mode": "manga",
+  "slug": "halation",
+  "id": "en-019efa16-d17d-7320-a992-4f271c14b4c2",
+  "name": "Halation",
+  "url": "https://katagami.ai/language/en-019efa16-d17d-7320-a992-4f271c14b4c2",
+  "thumb": "https://katagami.ai/api/file/fl-019efa61-7807-7182-9498-9d121d2f7ef4",
+  "why": "Luminous bloom: the sound pours out"
+ },
+ {
+  "scene": "s54",
+  "mode": "manga",
+  "slug": "furoku",
+  "id": "en-019ef917-8344-79d0-ab33-f34f9e455243",
+  "name": "Furoku",
+  "url": "https://katagami.ai/language/en-019ef917-8344-79d0-ab33-f34f9e455243",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bd-8da9-71d2-97cf-94df423df759",
+  "why": "Kawaii stationery stickers for the gift chair"
+ },
+ {
+  "scene": "s55",
+  "mode": "pop",
+  "slug": "knockout",
+  "id": "en-019ef950-bebb-7320-9c59-c98ea27217c8",
+  "name": "Knockout",
+  "url": "https://katagami.ai/language/en-019ef950-bebb-7320-9c59-c98ea27217c8",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9be-b4bc-7272-94ae-95b49d45b976",
+  "why": "Knockout type on ink-black stock: the vise shatters"
+ },
+ {
+  "scene": "s56",
+  "mode": "ui",
+  "slug": "vitrine",
+  "id": "en-019ef914-505a-7972-b4f1-23e6f1b9d67a",
+  "name": "Vitrine",
+  "url": "https://katagami.ai/language/en-019ef914-505a-7972-b4f1-23e6f1b9d67a",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bd-19e9-75a3-84be-b3f183b08ed8",
+  "why": "Liquid glass video call with the blur switched off"
+ },
+ {
+  "scene": "s57",
+  "mode": "ui",
+  "slug": "cambium",
+  "id": "en-019ef920-4320-7fd1-9828-eaa02c73ab2e",
+  "name": "Cambium",
+  "url": "https://katagami.ai/language/en-019ef920-4320-7fd1-9828-eaa02c73ab2e",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9bd-70d6-7050-9df7-0c3f5aa28b22",
+  "why": "Concentric growth rings read as record grooves"
+ },
+ {
+  "scene": "s58",
+  "mode": "ui",
+  "slug": "meridian",
+  "id": "en-019efb77-0301-7d12-af3c-b85d7288cb34",
+  "name": "Meridian",
+  "url": "https://katagami.ai/language/en-019efb77-0301-7d12-af3c-b85d7288cb34",
+  "thumb": "https://katagami.ai/api/file/fl-019efb81-cced-7b10-9541-b81da2d4dda9",
+  "why": "Neon-on-white almanac chart for the spectrum at 100%"
+ },
+ {
+  "scene": "s59",
+  "mode": "ui",
+  "slug": "techo",
+  "id": "en-019efa04-f746-7df3-9cc1-56c62d315181",
+  "name": "Techo",
+  "url": "https://katagami.ai/language/en-019efa04-f746-7df3-9cc1-56c62d315181",
+  "thumb": "https://katagami.ai/api/file/fl-019efa20-7765-79e2-a105-1668dab532ac",
+  "why": "Planner, washi tape and stamps for the self-care checkout"
+ },
+ {
+  "scene": "s60",
+  "mode": "terminal",
+  "slug": "spool",
+  "id": "en-019ef9bd-d955-78d2-bd49-1bd396c7c8d5",
+  "name": "Spool",
+  "url": "https://katagami.ai/language/en-019ef9bd-d955-78d2-bd49-1bd396c7c8d5",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9c7-bfbd-7d52-85fb-3fdb6250fadd",
+  "why": "Reverse-video listing tape for the dashboard that blows up"
+ },
+ {
+  "scene": "s61",
+  "mode": "ui",
+  "slug": "decoupage",
+  "id": "en-019efd3b-65eb-75a0-b9b0-9c91a6638e43",
+  "name": "Decoupage",
+  "url": "https://katagami.ai/language/en-019efd3b-65eb-75a0-b9b0-9c91a6638e43",
+  "thumb": "https://katagami.ai/api/file/fl-019efd42-8f47-72d2-ade3-86b27d54d94b",
+  "why": "Paste-up collage: the crop tool comes apart"
+ },
+ {
+  "scene": "s62",
+  "mode": "manga",
+  "slug": "amikake-console",
+  "id": "en-019ef821-6251-7d72-b664-99e23ed79779",
+  "name": "Amikake Console",
+  "url": "https://katagami.ai/language/en-019ef821-6251-7d72-b664-99e23ed79779",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b9-2aa0-7fb0-9486-16ffbc4f6dcd",
+  "why": "Battery chips and screentone rails for 100%"
+ },
+ {
+  "scene": "s63",
+  "mode": "ui",
+  "slug": "kardex",
+  "id": "en-019f2e75-1dec-76e2-9380-2adde9fed568",
+  "name": "Kardex",
+  "url": "https://katagami.ai/language/en-019f2e75-1dec-76e2-9380-2adde9fed568",
+  "thumb": "https://katagami.ai/api/file/fl-019f3db9-fc31-7862-8bdc-d6ceb9d45660",
+  "why": "One-bit seal and archival ledger for BITS LOST: 0"
+ },
+ {
+  "scene": "s64",
+  "mode": "manga",
+  "slug": "komawari",
+  "id": "en-019ef79a-f581-7802-9d0d-3abe0e65f5b0",
+  "name": "Komawari",
+  "url": "https://katagami.ai/language/en-019ef79a-f581-7802-9d0d-3abe0e65f5b0",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9c0-543f-7a30-9cbd-047b50b7ef61",
+  "why": "Comic panels and registration offset for the high-five"
+ },
+ {
+  "scene": "s65",
+  "mode": "manga",
+  "slug": "yoake",
+  "id": "en-019ef851-277e-7f60-bbb7-9eda9e0eb0cc",
+  "name": "Yoake",
+  "url": "https://katagami.ai/language/en-019ef851-277e-7f60-bbb7-9eda9e0eb0cc",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b9-c77b-7892-aadc-15b4ac49bd94",
+  "why": "Yoake means dawn: network-dawn console for bit-perfect"
+ },
+ {
+  "scene": "s66",
+  "mode": "manga",
+  "slug": "moire-manga-tone-console",
+  "id": "en-019f8b67-4602-79d1-82b3-6b645de15769",
+  "name": "Moire",
+  "url": "https://katagami.ai/language/en-019f8b67-4602-79d1-82b3-6b645de15769",
+  "thumb": "https://katagami.ai/api/file/fl-019f8ba2-2cfa-7c23-8665-64f3d576d7ae",
+  "why": "Screentone moire console for the look to camera"
+ },
+ {
+  "scene": "s67",
+  "mode": "ui",
+  "slug": "tachikiri",
+  "id": "en-019ef820-29bb-7941-9720-bb01d0378e82",
+  "name": "Tachikiri",
+  "url": "https://katagami.ai/language/en-019ef820-29bb-7941-9720-bb01d0378e82",
+  "thumb": "https://katagami.ai/api/file/fl-019ef9b8-ddfe-7ca0-930a-9673a63fb4d2",
+  "why": "The film's own look: koma panels and one phosphor signal"
+ }
+]

@@ -1,0 +1,97 @@
+<scene look="parapara-4ca473">
+<!-- (instrumental) he and the Oracle nod along at the desk, eyes shut. Parapara's flipbook on twos: the panel dips on every
+     beat in two-frame steps, nod marks flick beside both heads, and hand-inked notes drift up from his IEM and the lamp.
+     The blank monitor runs a nod counter: the song's tempo, the beat in the bar, and today's nods ticking up. -->
+<style>
+    #s27-cam { position: absolute; inset: 0; }
+    .s27-koma { position: absolute; overflow: hidden; }
+    .s27-screen { position: absolute; display: flex; flex-direction: column; justify-content: space-between; padding: 0.6em 0.7em; background: var(--k-surface); border: 4px solid var(--k-ink); border-radius: calc(var(--k-radius) / 2); color: var(--k-on-surface); }
+    .s27-head { display: flex; justify-content: space-between; font: 700 0.8em/1 var(--k-font-mono); letter-spacing: 0.04em; white-space: nowrap; }
+    .s27-dots { display: flex; justify-content: space-between; }
+    .s27-dot { display: grid; place-items: center; width: 1.9em; height: 1.9em; border: 4px solid var(--k-ink); border-radius: 50%; font: 900 0.9em/1 var(--k-font-display); }
+    .s27-dot.on { background: var(--k-accent); color: var(--k-on-accent); }
+    .s27-count { font: 900 2.5em/1 var(--k-font-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .s27-count span { display: block; font: 700 0.3em/1.2 var(--k-font-mono); letter-spacing: 0.06em; }
+    .s27-note { fill: var(--k-paper); stroke: var(--k-ink); stroke-width: 6; stroke-linejoin: round; }
+    .s27-note.red { fill: var(--k-accent); }
+    .s27-nod { fill: none; stroke: var(--k-paper); stroke-width: 12; stroke-linecap: round; }
+</style>
+<style frame="wide">
+    #s27-a { inset: 0; }
+    .s27-screen { font-size: 30px; }
+</style>
+<style frame="vert">
+    #s27-a { left: 0; top: 0; width: 1080px; height: 1004px; border-bottom: 8px solid var(--k-ink); }
+    #s27-b { left: 0; top: 1004px; width: 1080px; height: 716px; border-bottom: 8px solid var(--k-ink); }
+    .s27-screen { font-size: 34px; }
+</style>
+<body>
+    <div id="s27-cam" data-layout-allow-overflow data-bleed>
+      <div class="s27-koma" id="s27-a"></div>
+      <div class="s27-koma" id="s27-b"></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's27', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), song = window.FILM.song, inks = [K.tok(root, 'paper'), K.tok(root, 'ink')];
+
+      // the panels: wide, the whole desk; vertical, him above, the monitor and the lamp below
+      const panels = vert
+        ? [[$('#s27-a'), '60 60 1480 1376', 1080, 1004], [$('#s27-b'), '1380 330 1380 915', 1080, 716]]
+        : [[$('#s27-a'), '0 0 3000 1767', W, H]];
+      if (!vert) $('#s27-b').remove();
+      const shots = panels.map(([el, vb, pw, ph]) => ({ el, vb, pw, ph, shot: K.shot(el, 's27-nodding', { viewBox: vb, inks }), M: K.map(vb, K.bleed(pw, ph)) }));
+      const ovs = shots.map(p => K.overlay(p.shot, p.vb));
+
+      // the nod counter on the blank monitor (in whichever panel holds it)
+      const mon = shots[shots.length - 1], scr = K.el('div', 's27-screen', mon.el);
+      Object.assign(scr.style, mon.M.rect(1478, 446, 660, 690));
+      const iv = song.beats.slice(1).map((b, i) => b - song.beats[i]).sort((a, b) => a - b), bpm = Math.round(60 / iv[iv.length >> 1]);
+      scr.innerHTML = `<div class="s27-head"><span>nod.exe</span><span>${bpm} bpm</span></div><div class="s27-dots">${[1, 2, 3, 4].map(n => `<span class="s27-dot">${n}</span>`).join('')}</div><div class="s27-count"><b>0</b><span>nods today</span></div>`;
+      const dots = [...scr.querySelectorAll('.s27-dot')], count = scr.querySelector('.s27-count b');
+      const beatNo = B => { const D = song.downbeats.filter(d => d <= B + 0.02).pop() ?? 0; return (song.beats.filter(b => b >= D - 0.02 && b <= B + 0.02).length - 1) % 4; };
+      const beats = S.beats.map(b => ({ t: b, n: beatNo(S.start + b) }));
+      K.drive(tl, 0, S.dur, t => {
+        const past = beats.filter(b => b.t <= t), cur = past[past.length - 1];
+        dots.forEach((d, i) => d.classList.toggle('on', !!cur && cur.n === i && t - cur.t < 0.3));
+        count.textContent = (1204 + past.length).toLocaleString('en-US');
+      }, 0, S.dur);
+
+      // the flipbook dip on every beat, in two-frame steps; a harder one on the downbeats
+      K.onBeats(S, (b, i, down) => {
+        const k = down ? 1.6 : 1;
+        tl.set($('#s27-cam'), { y: 12 * k, rotation: 0.35 * k }, b);
+        tl.set($('#s27-cam'), { y: 5 * k, rotation: 0.15 * k }, b + 2 * F);
+        tl.set($('#s27-cam'), { y: 0, rotation: 0 }, b + 4 * F);
+      });
+
+      // nod marks beside both heads, flicking on twos; notes drifting up from the IEM and the lamp
+      // a note: GSAP moves the outer group, the inner one holds its place and size
+      const note = (ov, x, y, s, red) => {
+        const o = K.svg('g', {}, ov), n = K.svg('g', { transform: `translate(${x} ${y}) scale(${s})` }, o);
+        K.svg('path', { class: 's27-note' + (red ? ' red' : ''), d: 'M-14 30 a16 12 -20 1 0 0.1 0 Z M1 26 V-40 C14 -34 26 -22 22 -6 C18 -18 10 -22 1 -24' }, n);
+        return o;
+      };
+      ovs.forEach((ov, pi) => {
+        const P = shots[pi];
+        [[390, 330, -1], [2540, 360, 1]].forEach(([x, y, dir], j) => {
+          const arcs = K.svg('g', {}, ov);
+          [0, 1].forEach(k => K.svg('path', { class: 's27-nod', d: `M${x + dir * k * 26} ${y + k * 70} q${dir * 40} 40 ${dir * 10} 110` }, arcs));
+          gsap.set(arcs, { opacity: 0 });
+          K.onBeats(S, (b, i) => { tl.set(arcs, { opacity: 1, y: i % 2 ? 14 : 0 }, b); tl.set(arcs, { opacity: 0 }, b + 6 * F); });
+        });
+        const r = K.rng(27 + pi);
+        K.onBeats(S, (b, i) => {
+          [[440, 600], [2330, 640]].forEach(([x, y], j) => {
+            const n = note(ov, x + (r() - 0.5) * 80, y, 2.4 + r() * 1.0, (i + j) % 3 === 0), dx = (j ? 1 : -1) * (60 + r() * 120);
+            gsap.set(n, { opacity: 0 });
+            tl.fromTo(n, { opacity: 1, x: 0, y: 0 }, { opacity: 0, x: dx, y: -(260 + r() * 160), duration: 1.3, ease: 'sine.out', immediateRender: false }, b);
+          });
+        });
+      });
+
+      K.slabIn(root, tl, { dur: 0.26 });
+      window.__timelines[id] = tl;
+    })();
+</script>

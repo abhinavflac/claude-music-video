@@ -1,0 +1,48 @@
+# dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# generated: npm run scenes (every scene except the hand-written s20 and the chrome)
+compositions/*/s*.html
+!compositions/*/s20.html
+
+# generated: npm run fonts
+assets/fonts/
+assets/fonts.css
+
+# build and render output
+out/
+renders/
+site/film/
+site/page-fonts.css
+
+# alignment scratch
+align/
+
+# media not in the repo: the song and stem, the reference images, Katagami's style images
+*.wav
+*.flac
+*.mp3
+*.mp4
+refs/*.png
+refs/*.jpg
+refs/*.webp
+refs/style/
+
+# local
+.claude/
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# next.js app
+.next/
+public/
+next-env.d.ts
+
+.next-test/

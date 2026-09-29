@@ -1,0 +1,91 @@
+<scene look="decoupage-638e43">
+<!-- lc_2 "You can cut me down to fit": the crop tool, a third time, as a paste-up collage, and this time it comes apart.
+     The crop marks close in on "cut"; on "down" the glaring panel tears into strips that slide apart like paper; on "fit"
+     they are pasted back askew under washi tape, and a ransom-note DOESN'T FIT is glued over them, letter by letter. -->
+<tokens>--k-font-display: 'Archivo', sans-serif;</tokens>
+<style>
+    #s61-desk { position: absolute; overflow: hidden; }
+    #s61-desk svg.k-strips { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .s61-mark { fill: none; stroke: var(--k-accent-2); stroke-linecap: square; }
+    .s61-tape { position: absolute; width: 150px; height: 42px; opacity: 0.85; }
+    #s61-note { position: absolute; display: flex; flex-wrap: wrap; gap: 8px; }
+    .s61-l { display: grid; place-items: center; min-width: 0.9em; padding: 0.05em 0.14em; font: 800 1em/1 var(--k-font-display); font-stretch: 125%; text-transform: uppercase; opacity: 0; }
+    #s61-lyric { position: absolute; font: 800 1em/1 var(--k-font-display); font-stretch: 125%; letter-spacing: -0.02em; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s61-desk { left: 60px; top: 100px; width: 1140px; height: 900px; }
+    #s61-note { left: 150px; top: 690px; width: 900px; font-size: 76px; }
+    #s61-lyric { left: 1250px; top: 160px; width: 610px; font-size: 88px; }
+</style>
+<style frame="vert">
+    #s61-desk { left: 30px; top: 240px; width: 1020px; height: 1060px; }
+    #s61-note { left: 80px; top: 860px; width: 800px; font-size: 64px; }
+    #s61-lyric { left: 48px; top: 1352px; width: 912px; font-size: 86px; }
+</style>
+<body>
+    <div id="s61-desk"><div id="s61-art"></div></div>
+    <div id="s61-note"></div>
+    <div id="s61-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's61', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tCut = at(/^cut/), tDown = at(/^down/), tFit = at(/^fit/);
+      const desk = $('#s61-desk'), DW = desk.clientWidth, DH = desk.clientHeight;
+
+      // the panel once, its plates moved into <defs>; the visible panel is five <use> strips of it, each clipped to a band
+      const [vx, vy, vw, vh] = vert ? [1000, 120, 1400, 1455] : [800, 60, 1800, 1421];
+      const vb = `${vx} ${vy} ${vw} ${vh}`, host = $('#s61-art');
+      Object.assign(host.style, { position: 'absolute', inset: '0' });
+      window.placeArt(host, 's24-glare', { viewBox: vb, fit: 'xMidYMid meet', inks: [K.tok(root, 'ink'), K.tok(root, 'paper')], tone: true });
+      const svg = host.querySelector('svg'), defs = K.svg('defs', {}, svg), art = K.svg('g', { id: 's61-src' }, defs);
+      [...svg.querySelectorAll(':scope > g')].forEach(g => art.appendChild(g));
+      svg.classList.add('k-strips');
+      const N = 5, r = K.rng(61), strips = [];
+      for (let i = 0; i < N; i++) {
+        const y0 = vy + vh * i / N, h = vh / N, cp = K.svg('clipPath', { id: `s61-c${i}` }, defs);
+        K.svg('rect', { x: vx - 2, y: y0 - 1, width: vw + 4, height: h + 2 }, cp);
+        const g = K.svg('g', {}, svg);
+        K.svg('rect', { x: vx - 10, y: y0 - 8, width: vw + 20, height: h + 16, fill: 'var(--k-ink)' }, g);
+        K.svg('use', { href: '#s61-src', 'clip-path': `url(#s61-c${i})` }, g);
+        strips.push({ g, cx: vx + vw / 2, cy: y0 + h / 2, dx: (r() - 0.5) * vw * 0.16, dy: (i - (N - 1) / 2) * 34, rot: (r() - 0.5) * 7 });
+      }
+      // crop marks closing in on "cut"
+      const marks = K.svg('path', { class: 's61-mark', 'stroke-width': vw / 110 }, svg);
+      K.drive(tl, 0, S.dur, t => {
+        const k = t < tCut ? 0 : Math.min(1, (t - tCut) / 0.18), ix = vw * 0.18 * k, iy = vh * 0.1 * k, c = vw * 0.08;
+        const x0 = vx + ix, y0 = vy + iy, x1 = vx + vw - ix, y1 = vy + vh - iy;
+        marks.setAttribute('d', `M${x0} ${y0 + c} V${y0} H${x0 + c} M${x1 - c} ${y0} H${x1} V${y0 + c} M${x1} ${y1 - c} V${y1} H${x1 - c} M${x0 + c} ${y1} H${x0} V${y1 - c}`);
+        marks.style.opacity = t < tDown ? 1 : 0;
+      }, 0, S.dur);
+      // torn apart on "down", pasted back askew on "fit"
+      strips.forEach(({ g, cx, cy, dx, dy, rot }, i) => {
+        tl.to(g, { x: dx * 1.4, y: dy * 2.4, rotation: rot * 2, svgOrigin: `${cx} ${cy}`, duration: 0.3, ease: 'power3.out' }, tDown + i * 0.03);
+        tl.to(g, { x: dx, y: dy, rotation: rot, svgOrigin: `${cx} ${cy}`, duration: 0.18, ease: 'back.out(2)' }, tFit);
+      });
+      K.shake(tl, desk, tDown, 10, 3);
+      // washi tape over the seams once pasted
+      [[0.12, 0.2, -12, 'accent'], [0.8, 0.42, 9, 'accent-3'], [0.2, 0.62, 6, 'accent-2'], [0.74, 0.84, -8, 'accent']].forEach(([u, v, a, tone]) => {
+        const tp = K.el('div', 's61-tape', desk); tp.setAttribute('data-layout-ignore', ''); Object.assign(tp.style, { left: `${u * DW}px`, top: `${v * DH}px`, background: `var(--k-${tone})` });
+        gsap.set(tp, { rotation: a, opacity: 0 }); tl.to(tp, { opacity: 0.85, duration: 0.06 }, tFit + 0.08);
+      });
+
+      // DOESN'T FIT, glued on letter by letter in cut-out chips
+      const note = $('#s61-note'), tones = [['accent', 'on-accent'], ['ink', 'paper'], ['accent-3', 'on-accent'], ['accent-2', 'on-accent']];
+      [...'DOESN’T FIT'].forEach((ch, i) => {
+        if (ch === ' ') { K.el('span', '', note).style.width = '0.4em'; return; }
+        const l = K.el('span', 's61-l', note, ch), [bg, fg] = tones[i % 4];
+        Object.assign(l.style, { background: `var(--k-${bg})`, color: `oklch(from var(--k-${bg}) clamp(0, (0.62 - l) * 1000, 1) 0 0)`, transform: `rotate(${(r() - 0.5) * 16}deg)` });
+        tl.set(l, { opacity: 1 }, tFit + 0.05 + i * 0.022);
+        tl.fromTo(l, { scale: 1.8 }, { scale: 1, duration: 0.1, ease: 'power4.in', immediateRender: false }, tFit + 0.05 + i * 0.022);
+      });
+
+      // the line, CUT in the pink block
+      const { spans } = K.words($('#s61-lyric'), L, { key: L.words.findIndex(x => /^cut/.test(x.w)), breakBefore: vert ? [3, 5] : [2, 4, 6] });
+      K.reveal(tl, spans, L, 'slam');
+
+      K.slabIn(root, tl, { dur: 0.2 });
+      window.__timelines[id] = tl;
+    })();
+</script>

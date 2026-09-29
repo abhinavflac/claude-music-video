@@ -1,0 +1,92 @@
+<template>
+  <style>
+    #root { --k-paper: #F4EFE4; --k-surface: #FFFFFF; --k-ink: #171613; --k-on-surface: #171613; --k-muted: #6B655A; --k-line: #171613;
+      --k-accent: #D62B1F; --k-accent-2: #1C1A17; --k-accent-3: #F0D9CE; --k-on-accent: #FBF8F1;
+      --k-font-display: 'Fraunces', serif; --k-font-body: 'Newsreader', serif; --k-font-mono: 'Spline Sans Mono', monospace;
+      --k-radius: 16px; --k-shadow: none;
+      position: absolute; inset: 0; overflow: hidden; background: var(--k-paper); color: var(--k-ink); font-family: var(--k-font-body); }
+    #s20-rules { position: absolute; inset: -40px; opacity: 0.1; background: repeating-linear-gradient(to bottom, transparent 0 57px, var(--k-line) 57px 59px); }
+    #s20-cam { position: absolute; inset: 0; }
+    #s20-sheet { position: absolute; left: 48px; top: 270px; width: 984px; height: 1090px; background: var(--k-surface); border: 3px solid var(--k-line);
+      border-radius: var(--k-radius); box-shadow: var(--k-shadow); }
+    #s20-head { position: absolute; left: 40px; right: 40px; top: 34px; display: flex; justify-content: space-between; font: 500 28px/1 var(--k-font-mono);
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--k-muted); }
+    #s20-panel { position: absolute; left: 40px; right: 40px; top: 120px; }
+    .s20-label { font: 500 30px/1 var(--k-font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--k-muted); margin-bottom: 18px; }
+    #s20-select { position: relative; height: 112px; border: 3px solid var(--k-line); border-radius: var(--k-radius) var(--k-radius) 0 0; }
+    .s20-cur { position: absolute; left: 28px; top: 0; height: 112px; display: flex; align-items: center; font: 600 46px/1 var(--k-font-body); color: var(--k-on-surface); white-space: nowrap; }
+    #s20-caret { position: absolute; right: 32px; top: 46px; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 18px solid var(--k-line); }
+    #s20-list { border: 3px solid var(--k-line); border-top: 0; border-radius: 0 0 var(--k-radius) var(--k-radius); overflow: hidden; }
+    .s20-opt { position: relative; display: flex; align-items: center; gap: 22px; height: 180px; padding: 0 28px; font: 500 56px/1 var(--k-font-body); color: var(--k-on-surface); }
+    .s20-opt + .s20-opt { border-top: 2px solid var(--k-line); }
+    .s20-wash { position: absolute; inset: 0; background: var(--k-accent); opacity: 0; }
+    .s20-txt { position: relative; white-space: nowrap; }
+    .s20-meta { position: relative; margin-left: auto; font: 500 30px/1 var(--k-font-mono); letter-spacing: 0.04em; text-transform: uppercase; color: var(--k-muted); }
+    #s20-dele { position: absolute; left: 420px; top: 45px; width: 140px; height: 90px; overflow: visible; }
+    #s20-lyric { position: absolute; left: 48px; top: 1398px; width: 984px; font: 900 120px/1.02 var(--k-font-display); letter-spacing: -0.035em; color: var(--k-ink); }
+    #s20-foot { position: absolute; left: 48px; right: 48px; top: 1696px; display: flex; justify-content: space-between; align-items: center; font: 500 30px/1 var(--k-font-mono); color: var(--k-ink); }
+    #s20-foot b { font-weight: 600; }
+    #s20-none { background: var(--k-accent); color: oklch(from var(--k-accent) clamp(0, (0.62 - l) * 1000, 1) 0 0); padding: 6px 12px; }
+    #s20-stamp { left: 440px; top: 1000px; font-size: 96px; }
+  </style>
+  <div id="root" data-composition-id="s20" data-width="1080" data-height="1920">
+    <div id="s20-rules" data-bleed data-layout-ignore></div>
+    <div id="s20-cam" data-layout-allow-overflow>
+      <div id="s20-sheet">
+        <div id="s20-head"><span>galley 04 · proof</span><span>pass 1 of 1</span></div>
+        <div id="s20-panel">
+          <div class="s20-label">quality preset</div>
+          <div id="s20-select"><span class="s20-cur" id="s20-cur-a">320 kbps · recommended</span><span class="s20-cur" id="s20-cur-b">lossless · FLAC 24/96</span><span id="s20-caret"></span></div>
+          <div id="s20-list">
+            <div class="s20-opt"><span class="s20-txt">128 kbps</span><span class="s20-meta">small</span></div>
+            <div class="s20-opt" id="s20-o320"><span class="s20-wash"></span><span class="s20-txt">320 kbps<span class="k-strike" id="s20-x320"></span></span><span class="s20-meta">recommended</span></div>
+            <div class="s20-opt" id="s20-osm"><span class="s20-wash"></span><span class="s20-txt">smooth<span class="k-strike" id="s20-xsm"></span></span><span class="s20-meta">AI enhance</span></div>
+            <div class="s20-opt" id="s20-ofl"><span class="s20-wash"></span><span id="s20-chk"></span><span class="s20-txt">lossless</span><span class="s20-meta">FLAC 24/96</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="s20-lyric"></div>
+      <div id="s20-foot"><span>compression attempts: <b id="s20-n">0</b></span><span>passed: <span id="s20-none">none of them</span></span></div>
+    </div>
+    <div class="k-stamp" id="s20-stamp" data-layout-allow-occlusion data-layout-allow-overlap>not me</div>
+  </div>
+  <script>
+    (() => {
+      const id = 's20', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s);
+      const tl = gsap.timeline({ paused: true });
+      const L = S.lines[0], at = re => L.words.findIndex(w => re.test(w.w));
+      const i320 = at(/^320/), ism = at(/^smooth/), w320 = L.words[i320], wsm = L.words[ism], end = L.end;
+
+      gsap.set($('#s20-sheet'), { rotation: -1.1, transformOrigin: '50% 50%' });
+      tl.to($('#s20-sheet'), { rotation: -0.4, duration: S.dur, ease: 'none' }, 0);
+      K.push(tl, $('#s20-cam'), S.dur, 1, 1.035);
+      tl.fromTo($('#s20-rules'), { y: 0 }, { y: -30, duration: S.dur, ease: 'none' }, 0);
+
+      const { spans } = K.words($('#s20-lyric'), L, { key: i320, breakBefore: [i320 + 1] });
+      K.reveal(tl, spans, L, 'rise');
+
+      tl.to($('#s20-o320 .s20-wash'), { opacity: 0.12, duration: 0.08 }, w320.t);
+      K.strikeAt(tl, $('#s20-x320'), w320.t + 0.05);
+      K.count(tl, $('#s20-n'), 0, 1, w320.t, w320.t + 0.2, v => String(Math.round(v)));
+      const dele = K.svg('svg', { id: 's20-dele', viewBox: '0 0 120 76' }, $('#s20-o320'));
+      const mark = K.svg('path', { d: 'M4 60 C 30 58, 60 20, 84 14 C 104 10, 112 30, 96 40 C 82 48, 74 30, 90 22 C 100 18, 110 20, 116 24', fill: 'none',
+        stroke: 'var(--k-accent)', 'stroke-width': 6, 'stroke-linecap': 'round', pathLength: 1 }, dele);
+      gsap.set(mark, { strokeDasharray: 1, strokeDashoffset: 1 });
+      tl.to(mark, { strokeDashoffset: 0, duration: 0.3, ease: 'power2.out' }, w320.t + 0.12);
+
+      tl.to($('#s20-osm .s20-wash'), { opacity: 0.12, duration: 0.08 }, wsm.t);
+      K.strikeAt(tl, $('#s20-xsm'), wsm.t + 0.04);
+      K.slam(tl, $('#s20-stamp'), wsm.t + 0.1, -9);
+      K.shake(tl, $('#s20-cam'), wsm.t + 0.25, 12, 3);
+
+      const chk = K.check($('#s20-chk'));
+      tl.to($('#s20-ofl .s20-wash'), { opacity: 0.12, duration: 0.12 }, end + 0.12);
+      K.tick(tl, chk, end + 0.16);
+      tl.to($('#s20-cur-a'), { opacity: 0, y: -18, duration: 0.14 }, end + 0.3);
+      tl.fromTo($('#s20-cur-b'), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.16, ease: 'power3.out' }, end + 0.34);
+
+      K.slabIn(root, tl);
+      window.__timelines[id] = tl;
+    })();
+  </script>
+</template>

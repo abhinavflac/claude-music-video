@@ -1,0 +1,71 @@
+<scene look="moire-manga-tone-console-e15769">
+<!-- o3 "Really, this time.": he looks straight into the camera and smiles. A slow push to his face; behind him two dot
+     screens turn against each other and the moire blooms on the downbeats, the tone console reading it off (moire: on
+     purpose). The line sits big in the wall beside him, TIME. in the blue block. -->
+<style>
+    #s66-cam { position: absolute; inset: 0; }
+    #s66-art { position: absolute; overflow: hidden; }
+    #s66-moire { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: multiply; }
+    #s66-con { position: absolute; display: grid; gap: 0.3em; padding: 0.6em 0.8em; background: var(--k-surface); border: 2px solid var(--k-ink); box-shadow: var(--k-shadow); font: 400 1em/1.2 var(--k-font-mono); color: var(--k-on-surface); white-space: nowrap; }
+    #s66-con b { font-weight: 400; color: var(--k-accent-t); }
+    #s66-lyric { position: absolute; font: 700 1em/0.9 var(--k-font-display); letter-spacing: -0.005em; text-transform: uppercase; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s66-art { inset: 0; }
+    #s66-con { left: 1480px; top: 110px; font-size: 24px; }
+    #s66-lyric { left: 90px; top: 540px; width: 820px; font-size: 170px; }
+</style>
+<style frame="vert">
+    #s66-art { left: 0; top: 0; width: 1080px; height: 1920px; }
+    #s66-con { left: 48px; top: 250px; font-size: 26px; }
+    #s66-lcard { position: absolute; left: 48px; top: 1330px; width: 984px; height: 360px; background: var(--k-surface); border: 3px solid var(--k-ink); box-shadow: var(--k-shadow); }
+    #s66-lyric { left: 80px; top: 1368px; width: 860px; font-size: 150px; }
+</style>
+<body>
+    <div id="s66-cam" data-layout-allow-overflow data-bleed><div id="s66-art"></div><svg id="s66-moire" data-layout-ignore></svg></div>
+    <div id="s66-lcard"></div>
+    <div id="s66-con"><span>tone console</span><span>screens: 65 lpi · <b id="s66-ang">45° / 45°</b></span><span>moire: on purpose</span></div>
+    <div id="s66-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's66', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0];
+      if (!vert) $('#s66-lcard').remove();
+
+      // the look to camera, pushing in slowly on his face
+      const vb = vert ? '1010 0 942 1674' : '0 0 3000 1674';
+      K.shot($('#s66-art'), 's66-to-camera', { viewBox: vb, inks: [K.tok(root, 'paper'), K.tok(root, 'ink')] });
+      gsap.set($('#s66-cam'), { transformOrigin: vert ? '50% 34%' : '50% 36%' });
+      tl.fromTo($('#s66-cam'), { scale: 1 }, { scale: 1.12, duration: S.dur, ease: 'power1.inOut' }, 0);
+
+      // two dot screens turning against each other: the moire swells on each downbeat, then settles
+      const mv = $('#s66-moire'); mv.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      const defs = K.svg('defs', {}, mv), pats = [0, 1].map(i => {
+        const p = K.svg('pattern', { id: `s66-p${i}`, patternUnits: 'userSpaceOnUse', width: 14, height: 14 }, defs);
+        K.svg('circle', { cx: 7, cy: 7, r: 3.2, fill: `var(--k-${i ? 'accent-2' : 'accent'})` }, p);
+        return p;
+      });
+      // the screens sit behind him: a mask cut to his head and shoulders (in the plate's pixels, mapped to the frame)
+      const M = K.map(vb, K.bleed(W, H)), mask = K.svg('mask', { id: 's66-mask', maskUnits: 'userSpaceOnUse', x: -W, y: -H, width: W * 3, height: H * 3 }, defs);
+      K.svg('rect', { x: -W, y: -H, width: W * 3, height: H * 3, fill: '#fff' }, mask);
+      K.svg('ellipse', { cx: M.x(1480), cy: M.y(520), rx: 420 * M.s, ry: 520 * M.s, fill: '#000' }, mask);
+      K.svg('path', { d: `M${M.x(820)} ${M.y(1700)} L${M.x(1000)} ${M.y(1050)} L${M.x(1480)} ${M.y(880)} L${M.x(1960)} ${M.y(1050)} L${M.x(2240)} ${M.y(1700)} Z`, fill: '#000' }, mask);
+      const layers = [0, 1].map(i => K.svg('rect', { x: -W, y: -H, width: W * 3, height: H * 3, fill: `url(#s66-p${i})`, mask: 'url(#s66-mask)' }, mv));
+      const swell = t => Math.max(0, ...S.downbeats.map(d => (t >= d ? Math.exp(-(t - d) * 1.6) : 0)));
+      K.drive(tl, 0, S.dur, t => {
+        const a = 45 + t * 2.2, b = 45 - t * 2.2 - 3 * swell(t);
+        pats[0].setAttribute('patternTransform', `rotate(${a.toFixed(2)} ${W / 2} ${H / 2})`);
+        pats[1].setAttribute('patternTransform', `rotate(${b.toFixed(2)} ${W / 2} ${H / 2})`);
+        mv.style.opacity = (0.1 + 0.22 * swell(t)).toFixed(3);
+        $('#s66-ang').textContent = `${Math.round(a)}° / ${Math.round(((b % 360) + 360) % 360)}°`;
+      }, 0, S.dur);
+
+      // the line, TIME. in the blue block
+      const { spans } = K.words($('#s66-lyric'), L, { key: L.words.length - 1, breakBefore: [1] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.3 });
+      window.__timelines[id] = tl;
+    })();
+</script>

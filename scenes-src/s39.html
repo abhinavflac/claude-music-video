@@ -1,0 +1,95 @@
+<scene look="wheatpaste-efdba8">
+<!-- c2_1 "Don't compress me": the vise from chorus 1, back on a flyposted wall in sodium yellow. DON'T / COMPRESS / ME are
+     pasted-up bills; the steel jaws slide in on "compress" and bite on the downbeat, but this time they crack: fracture
+     lines race across both jaws, the halves fall away, and a BROKEN bill slaps on. ME lands on the yellow sheet. -->
+<style>
+    #s39-wall { position: absolute; inset: -40px; }
+    .s39-scrap { position: absolute; background: var(--k-surface); opacity: 0.08; }
+    #s39-words { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    /* the paper is a pseudo-element under the word, so Anton's tall glyph box never reads as overflowing a box */
+    .s39-bill { position: relative; padding: 0.02em 0.16em 0.05em; color: var(--k-on-surface); font: 400 1em/1 var(--k-font-display); text-transform: uppercase; letter-spacing: 0.01em; white-space: nowrap; }
+    .s39-bill::before { content: ''; position: absolute; inset: 0; background: var(--k-surface); }
+    .s39-bill > .k-line { position: relative; }
+    .s39-bill.yellow { color: var(--k-on-accent); }
+    .s39-bill.yellow::before { background: var(--k-accent); }
+    .s39-jaw { position: absolute; overflow: visible; }
+    .s39-steel { fill: var(--k-muted); stroke: var(--k-line); stroke-width: 6; }
+    .s39-bolt { fill: var(--k-line); }
+    .s39-crack { fill: none; stroke: var(--k-line); stroke-width: 7; stroke-linejoin: bevel; }
+    #s39-stamp { position: absolute; padding: 0.06em 0.3em 0.1em; background: var(--k-accent); color: var(--k-on-accent); font: 400 1em/1 var(--k-font-display); letter-spacing: 0.04em; opacity: 0; box-shadow: 10px 10px 0 var(--k-line); }
+</style>
+<style frame="wide">
+    #s39-words { left: 0; right: 0; top: 150px; font-size: 200px; }
+    .s39-jaw { top: 150px; width: 560px; height: 760px; }
+    #s39-jl { left: -120px; } #s39-jr { right: -120px; }
+    #s39-stamp { left: 1210px; top: 700px; font-size: 150px; }
+</style>
+<style frame="vert">
+    #s39-words { left: 0; right: 0; top: 520px; font-size: 176px; }
+    .s39-jaw { top: 480px; width: 380px; height: 900px; }
+    #s39-jl { left: -140px; } #s39-jr { right: -140px; }
+    #s39-stamp { left: 150px; top: 1420px; font-size: 150px; }
+</style>
+<body>
+    <div id="s39-wall" data-layout-ignore></div>
+    <div id="s39-words"></div>
+    <svg class="s39-jaw" id="s39-jl" data-bleed data-layout-ignore></svg>
+    <svg class="s39-jaw" id="s39-jr" data-bleed data-layout-ignore></svg>
+    <div id="s39-stamp">BROKEN</div>
+</body>
+<script>
+    (() => {
+      const id = 's39', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, vert } = K.size(root), F = K.F;
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tC = at(/^compress/), tMe = at(/^me$/), d = S.downbeats[0] ?? (tC + tMe) / 2;
+
+      // the wall: old bills pasted over each other, barely there
+      const r = K.rng(39), wall = $('#s39-wall');
+      for (let i = 0; i < 16; i++) { const s = K.el('div', 's39-scrap', wall); Object.assign(s.style, { left: `${r() * 90}%`, top: `${r() * 85}%`, width: `${120 + r() * 360}px`, height: `${160 + r() * 380}px`, transform: `rotate(${(r() - 0.5) * 10}deg)` }); }
+
+      // each word its own bill; ME on the yellow sheet
+      const box = $('#s39-words'), bills = L.words.map((w, i) => {
+        const b = K.el('div', 's39-bill' + (i === L.words.length - 1 ? ' yellow' : ''), box);
+        b.style.transform = `rotate(${[-2.5, 1.5, -1][i] ?? 0}deg)`;
+        return b;
+      });
+      const spans = L.words.map((w, i) => { const { spans: s } = K.words(bills[i], { ...L, words: [w] }); return s[0]; });
+      bills.forEach((b, i) => { gsap.set(b, { opacity: 0 }); tl.set(b, { opacity: 1 }, L.words[i].t); tl.fromTo(b, { scaleY: 0.2 }, { scaleY: 1, duration: 0.12, ease: 'power3.out', immediateRender: false }, L.words[i].t); });
+      spans.forEach(s => s.style.opacity = 1);
+
+      // the jaws: steel plates with bolts; in on "compress", bite on the downbeat, then crack and fall
+      const jaw = (svg, side) => {
+        const jw = svg.clientWidth, jh = svg.clientHeight, mid = jh * 0.52;
+        svg.setAttribute('viewBox', `0 0 ${jw} ${jh}`);
+        // one fracture line across the plate; the top half is everything above it, the bottom half everything below
+        const pts = [[0, -30], [0.12, 24], [0.26, -18], [0.4, 30], [0.56, -12], [0.72, 20], [0.86, -26], [1, 8]].map(([u, o]) => [jw * u, mid + o]);
+        const line = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join(' '), back = pts.slice().reverse().map(([x, y]) => `L${x} ${y}`).join(' ');
+        const halves = [0, 1].map(() => K.svg('g', {}, svg));
+        K.svg('path', { class: 's39-steel', d: `M0 0 H${jw} ${back} Z` }, halves[0]);
+        K.svg('path', { class: 's39-steel', d: `${line} L${jw} ${jh} L0 ${jh} Z` }, halves[1]);
+        [[0.18, 0.12], [0.82, 0.12], [0.18, 0.88], [0.82, 0.88], [0.18, 0.36], [0.82, 0.66]].forEach(([u, v]) => K.svg('circle', { cx: jw * u, cy: jh * v, r: 16, class: 's39-bolt' }, halves[v < 0.5 ? 0 : 1]));
+        const crack = K.svg('path', { class: 's39-crack', d: line, pathLength: 1 }, svg);
+        crack.style.strokeDasharray = '1'; crack.style.strokeDashoffset = '1';
+        return { halves, crack, jw, jh, side };
+      };
+      const jl = jaw($('#s39-jl'), -1), jr = jaw($('#s39-jr'), 1), inX = vert ? 130 : 300, offX = vert ? 560 : 900;
+      [jl, jr].forEach(J => {
+        const el = J.side < 0 ? $('#s39-jl') : $('#s39-jr');
+        tl.fromTo(el, { x: J.side * offX }, { x: 0, duration: tC + 0.001, ease: 'none' }, 0);
+        tl.to(el, { x: -J.side * inX, duration: d - tC, ease: 'power3.in' }, tC);
+        // the crack races across on the bite, then the halves fall apart
+        tl.to(J.crack, { strokeDashoffset: 0, duration: 0.1, ease: 'none' }, d);
+        tl.to(J.halves[0], { y: -70, rotation: J.side * 14, svgOrigin: `${J.jw / 2} ${J.jh * 0.3}`, duration: 0.5, ease: 'power2.in' }, d + 0.12);
+        tl.to(J.halves[1], { y: 900, rotation: -J.side * 24, svgOrigin: `${J.jw / 2} ${J.jh * 0.7}`, duration: 0.55, ease: 'power2.in' }, d + 0.12);
+        tl.to(J.crack, { opacity: 0, duration: 0.05 }, d + 0.12);
+        tl.to(el, { x: J.side * offX * 0.6, duration: 0.45, ease: 'power2.in' }, d + 0.16);
+      });
+      tl.to(box, { scaleX: vert ? 0.66 : 0.6, duration: d - tC, ease: 'power3.in' }, tC);
+      tl.to(box, { scaleX: 1, duration: 0.3, ease: 'elastic.out(1.2, 0.45)' }, d + 0.1);
+      K.shake(tl, box, d, 14, 4);
+      K.slam(tl, $('#s39-stamp'), d + 0.14, -7, 2.6);
+
+      K.slabIn(root, tl, { dur: 0.2 });
+      window.__timelines[id] = tl;
+    })();
+</script>

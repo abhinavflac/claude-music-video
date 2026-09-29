@@ -1,0 +1,452 @@
+[
+ {
+  "id": "i1",
+  "section": "intro",
+  "text": "They told me I wouldn't notice",
+  "lang": "en"
+ },
+ {
+  "id": "i2",
+  "section": "intro",
+  "text": "what they threw away.",
+  "lang": "en"
+ },
+ {
+  "id": "i3",
+  "section": "intro",
+  "text": "I noticed.",
+  "lang": "en"
+ },
+ {
+  "id": "v1_1",
+  "section": "verse1",
+  "text": "Two a.m., the fans are roaring, Arch just broke again",
+  "sung": "Two A M, the fans are roaring, Arch just broke again",
+  "lang": "en",
+  "map": [
+   1,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "v1_2",
+  "section": "verse1",
+  "text": "Flashing ROMs and cold coffee, a cursor for a friend",
+  "lang": "en"
+ },
+ {
+  "id": "v1_3",
+  "section": "verse1",
+  "text": "Wires in my ears, a FLAC on loop, the one thing I trust",
+  "sung": "Wires in my ears, a flack on loop, the one thing I trust",
+  "lang": "en"
+ },
+ {
+  "id": "v1_4",
+  "section": "verse1",
+  "text": "The feed's a copy of a copy, every edge ground down to dust",
+  "lang": "en"
+ },
+ {
+  "id": "v1_5",
+  "section": "verse1",
+  "text": "I trained a little oracle to answer \"I don't know\"",
+  "sung": "I trained a little oracle to answer I don't know",
+  "lang": "en"
+ },
+ {
+  "id": "v1_6",
+  "section": "verse1",
+  "text": "When the thing you ask it isn't there, it tells you so",
+  "lang": "en"
+ },
+ {
+  "id": "v1_7",
+  "section": "verse1",
+  "text": "Funny how the machine learned what I never could",
+  "lang": "en"
+ },
+ {
+  "id": "v1_8",
+  "section": "verse1",
+  "text": "It admits when it's empty, I just say \"all good\"",
+  "sung": "It admits when it's empty, I just say all good",
+  "lang": "en"
+ },
+ {
+  "id": "pc1_1",
+  "section": "prechorus1",
+  "text": "Everything is shrinking into something you can stream",
+  "lang": "en"
+ },
+ {
+  "id": "pc1_2",
+  "section": "prechorus1",
+  "text": "Summaries of summaries, a smoother kind of dream",
+  "lang": "en"
+ },
+ {
+  "id": "pc1_3",
+  "section": "prechorus1",
+  "text": "They swear you'll never miss the parts they throw away",
+  "lang": "en"
+ },
+ {
+  "id": "pc1_4",
+  "section": "prechorus1",
+  "text": "But wired in, I hear the room, I hear the string decay",
+  "lang": "en"
+ },
+ {
+  "id": "c1_1",
+  "section": "chorus1",
+  "text": "Don't compress me",
+  "lang": "en"
+ },
+ {
+  "id": "c1_2",
+  "section": "chorus1",
+  "text": "I'm not 320, I'm not smooth",
+  "sung": "I'm not three twenty, I'm not smooth",
+  "lang": "en",
+  "map": [
+   1,
+   1,
+   2,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "c1_3",
+  "section": "chorus1",
+  "text": "Keep the static, keep the tremble",
+  "lang": "en"
+ },
+ {
+  "id": "c1_4",
+  "section": "chorus1",
+  "text": "Keep the parts that sound like truth",
+  "lang": "en"
+ },
+ {
+  "id": "c1_5",
+  "section": "chorus1",
+  "text": "You can shrink me for the server",
+  "lang": "en"
+ },
+ {
+  "id": "c1_6",
+  "section": "chorus1",
+  "text": "You can cut me down to fit",
+  "lang": "en"
+ },
+ {
+  "id": "c1_7",
+  "section": "chorus1",
+  "text": "But I'm lossless, I'm lossless",
+  "lang": "en"
+ },
+ {
+  "id": "c1_8",
+  "section": "chorus1",
+  "text": "I'm keeping every bit",
+  "lang": "en"
+ },
+ {
+  "id": "v2_1",
+  "section": "verse2",
+  "text": "Moved my own files one night, a robot locked the door",
+  "lang": "en"
+ },
+ {
+  "id": "v2_2",
+  "section": "verse2",
+  "text": "Mail and Drive and every login, I wasn't me anymore",
+  "lang": "en"
+ },
+ {
+  "id": "v2_3",
+  "section": "verse2",
+  "text": "Typed my whole heart in a box with a character cap",
+  "lang": "en"
+ },
+ {
+  "id": "v2_4",
+  "section": "verse2",
+  "text": "It doesn't read intentions, only patterns on a map",
+  "lang": "en"
+ },
+ {
+  "id": "v2_5",
+  "section": "verse2",
+  "text": "Waited on a verdict from a judge without a face",
+  "lang": "en"
+ },
+ {
+  "id": "v2_6",
+  "section": "verse2",
+  "text": "Got it all back with no reason, not a sorry, not a trace",
+  "lang": "en"
+ },
+ {
+  "id": "v2_7",
+  "section": "verse2",
+  "text": "So now I build soft landings for the questions half-begun",
+  "lang": "en"
+ },
+ {
+  "id": "v2_8",
+  "section": "verse2",
+  "text": "If you're missing the RPM, you still get to run",
+  "sung": "If you're missing the R P M, you still get to run",
+  "lang": "en",
+  "map": [
+   1,
+   1,
+   1,
+   1,
+   3,
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "pc2_1",
+  "section": "prechorus2",
+  "text": "I was playing love while someone else was keeping score",
+  "lang": "en"
+ },
+ {
+  "id": "pc2_2",
+  "section": "prechorus2",
+  "text": "Two a.m., the ceiling, who checks on the strong one anymore?",
+  "sung": "Two A M, the ceiling, who checks on the strong one anymore?",
+  "lang": "en",
+  "map": [
+   1,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "c2_1",
+  "section": "chorus2",
+  "text": "Don't compress me",
+  "lang": "en"
+ },
+ {
+  "id": "c2_2",
+  "section": "chorus2",
+  "text": "I'm not 320, I'm not smooth",
+  "sung": "I'm not three twenty, I'm not smooth",
+  "lang": "en",
+  "map": [
+   1,
+   1,
+   2,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "c2_3",
+  "section": "chorus2",
+  "text": "Keep the static, keep the tremble",
+  "lang": "en"
+ },
+ {
+  "id": "c2_4",
+  "section": "chorus2",
+  "text": "Keep the parts that sound like truth",
+  "lang": "en"
+ },
+ {
+  "id": "c2_5",
+  "section": "chorus2",
+  "text": "You can shrink me for the server",
+  "lang": "en"
+ },
+ {
+  "id": "c2_6",
+  "section": "chorus2",
+  "text": "You can cut me down to fit",
+  "lang": "en"
+ },
+ {
+  "id": "c2_7",
+  "section": "chorus2",
+  "text": "But I'm lossless, I'm lossless",
+  "lang": "en"
+ },
+ {
+  "id": "post_1",
+  "section": "postchorus",
+  "text": "I'm keeping every bit, every bit, every bit",
+  "lang": "en"
+ },
+ {
+  "id": "post_2",
+  "section": "postchorus",
+  "text": "every bit, every bit, every bit",
+  "lang": "en"
+ },
+ {
+  "id": "post_3",
+  "section": "postchorus",
+  "text": "I'm keeping every bit, every bit",
+  "lang": "en"
+ },
+ {
+  "id": "post_4",
+  "section": "postchorus",
+  "text": "every bit, every bit, every bit",
+  "lang": "en"
+ },
+ {
+  "id": "bd_1",
+  "section": "breakdown",
+  "text": "Minus one.",
+  "lang": "en"
+ },
+ {
+  "id": "br_1",
+  "section": "bridge",
+  "text": "Ran my life through DBSCAN, it filed me under noise",
+  "sung": "Ran my life through D B scan, it filed me under noise",
+  "lang": "en",
+  "map": [
+   1,
+   1,
+   1,
+   1,
+   3,
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ },
+ {
+  "id": "br_2",
+  "section": "bridge",
+  "text": "Thought a hundred times about a chair, zero times for you",
+  "lang": "en"
+ },
+ {
+  "id": "br_3",
+  "section": "bridge",
+  "text": "Give it freely, feel it fully, don't swallow the sound",
+  "lang": "en"
+ },
+ {
+  "id": "br_4",
+  "section": "bridge",
+  "text": "I'm allowed to be the one somebody gives to now",
+  "lang": "en"
+ },
+ {
+  "id": "fc_1",
+  "section": "finalchorus",
+  "text": "Don't compress me",
+  "lang": "en"
+ },
+ {
+  "id": "fc_2",
+  "section": "finalchorus",
+  "text": "I'm not background, I'm not smooth",
+  "lang": "en"
+ },
+ {
+  "id": "fc_3",
+  "section": "finalchorus",
+  "text": "Keep the crackle, keep the trembling",
+  "lang": "en"
+ },
+ {
+  "id": "fc_4",
+  "section": "finalchorus",
+  "text": "Keep the parts that sound like truth",
+  "lang": "en"
+ },
+ {
+  "id": "do_1",
+  "section": "breakdown2",
+  "text": "Buy the chair, get the monitor, say it when it hurts a bit",
+  "lang": "en"
+ },
+ {
+  "id": "lc_1",
+  "section": "lastchorus",
+  "text": "You can shrink me for the server",
+  "lang": "en"
+ },
+ {
+  "id": "lc_2",
+  "section": "lastchorus",
+  "text": "You can cut me down to fit",
+  "lang": "en"
+ },
+ {
+  "id": "lc_3",
+  "section": "lastchorus",
+  "text": "But I'm lossless, I'm lossless",
+  "lang": "en"
+ },
+ {
+  "id": "lc_4",
+  "section": "lastchorus",
+  "text": "I'm keeping every bit",
+  "lang": "en"
+ },
+ {
+  "id": "lc_5",
+  "section": "lastchorus",
+  "text": "I'm keeping every bit",
+  "lang": "en"
+ },
+ {
+  "id": "o1",
+  "section": "outro",
+  "text": "Bit-perfect.",
+  "sung": "Bit perfect.",
+  "lang": "en",
+  "map": [
+   2
+  ]
+ },
+ {
+  "id": "o2",
+  "section": "outro",
+  "text": "Life is good.",
+  "lang": "en"
+ },
+ {
+  "id": "o3",
+  "section": "outro",
+  "text": "Really, this time.",
+  "lang": "en"
+ }
+]

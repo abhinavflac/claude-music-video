@@ -1,0 +1,93 @@
+<scene look="aurora-4beb82">
+<!-- i1 "They told me I wouldn't notice": an oscilloscope trace; a psychoacoustic-model blade sweeps across and shaves every
+     peak, leaving dotted ghosts of what was cut. The readout claims the listener will not notice (s05 answers it). -->
+<tokens>--k-accent-2: #FF6AC2; --k-accent-3: #FFC75A;</tokens>
+<style>
+    #s02-cam { position: absolute; inset: 0; }
+    #s02-cmd { position: absolute; font-family: var(--k-font-mono); color: var(--k-muted); white-space: pre; }
+    #s02-cmd b { color: var(--k-ink); font-weight: 500; }
+    #s02-lyric { position: absolute; font: 600 1em/0.95 var(--k-font-display); letter-spacing: -0.01em; text-transform: uppercase; color: var(--k-ink); }
+    #s02-scope { position: absolute; border: 2px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-surface); overflow: hidden; }
+    #s02-scope svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #s02-blade { position: absolute; top: 0; bottom: 0; left: 0; width: 6px; margin-left: -3px; background: var(--k-accent-2); }
+    #s02-tag { position: absolute; top: 18px; left: 14px; padding: 8px 12px; border: 2px solid var(--k-accent-2); background: var(--k-paper); color: var(--k-ink);
+      font: 500 0.5em/1 var(--k-font-mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    #s02-read { position: absolute; display: flex; gap: 1.4em; font-family: var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    #s02-read b { color: var(--k-ink); font-weight: 500; }
+    #s02-no { color: var(--k-accent-3-t); font-weight: 600; }
+</style>
+<style frame="wide">
+    #s02-cmd { left: 80px; top: 118px; font-size: 26px; }
+    #s02-lyric { left: 76px; top: 206px; width: 1780px; font-size: 132px; }
+    #s02-scope { left: 80px; top: 372px; width: 1760px; height: 548px; font-size: 44px; }
+    #s02-read { left: 80px; top: 950px; font-size: 26px; }
+</style>
+<style frame="vert">
+    #s02-cmd { left: 48px; top: 290px; font-size: 30px; line-height: 1.4; }
+    #s02-scope { left: 48px; top: 420px; width: 984px; height: 860px; font-size: 44px; }
+    #s02-lyric { left: 44px; top: 1336px; width: 1000px; font-size: 124px; line-height: 1.14; }
+    #s02-read { left: 48px; top: 1650px; font-size: 30px; flex-direction: column; gap: 12px; }
+</style>
+<body frame="wide">
+    <div id="s02-cam" data-layout-allow-overflow>
+      <div id="s02-cmd">$ encode <b>--model psychoacoustic --target 128k</b> abhinav.wav</div>
+      <div id="s02-lyric"></div>
+      <div id="s02-scope"><svg id="s02-svg" preserveAspectRatio="none"></svg><div id="s02-blade"><div id="s02-tag">psychoacoustic model</div></div></div>
+      <div id="s02-read"><span>peaks masked <b id="s02-pct">0%</b></span><span>bitrate <b>1411 → 128 kbps</b></span><span>listener will notice: <span id="s02-no">no</span></span></div>
+    </div>
+</body>
+<body frame="vert">
+    <div id="s02-cam" data-layout-allow-overflow>
+      <div id="s02-cmd">$ encode <b>--model psychoacoustic</b>
+  <b>--target 128k</b> abhinav.wav</div>
+      <div id="s02-scope"><svg id="s02-svg" preserveAspectRatio="none"></svg><div id="s02-blade"><div id="s02-tag">psychoacoustic model</div></div></div>
+      <div id="s02-lyric"></div>
+      <div id="s02-read"><span>peaks masked <b id="s02-pct">0%</b> · 1411 → 128 kbps</span><span>listener will notice: <span id="s02-no">no</span></span></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's02', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0];
+      K.push(tl, $('#s02-cam'), S.dur, 1, 1.04);
+
+      // the trace: a seeded, song-like waveform; the shaved copy clamps every peak to the masking threshold
+      const scope = $('#s02-scope'), sw = vert ? 984 : 1760, sh = vert ? 860 : 560, svg = $('#s02-svg');
+      svg.setAttribute('viewBox', `0 0 ${sw} ${sh}`);
+      const g = K.svg('g', { stroke: 'var(--k-line)', 'stroke-width': 1 }, svg);
+      for (let x = sw / 12; x < sw; x += sw / 12) K.svg('line', { x1: x, y1: 0, x2: x, y2: sh }, g);
+      for (let y = sh / 8; y < sh; y += sh / 8) K.svg('line', { x1: 0, y1: y, x2: sw, y2: y }, g);
+      const r = K.rng(20260928), N = vert ? 150 : 260, mid = sh / 2, amp = sh * 0.42, thr = sh * 0.11, pts = [];
+      for (let i = 0; i <= N; i++) {
+        const x = i / N * sw, env = 0.35 + 0.65 * Math.abs(Math.sin(i * 0.11) * Math.sin(i * 0.037 + 1.3));
+        pts.push([x, mid + (r() * 2 - 1) * amp * env * (i % 2 ? 1 : -1)]);
+      }
+      const path = f => 'M' + pts.map(([x, y]) => `${x.toFixed(1)} ${f(y).toFixed(1)}`).join(' L');
+      const clampY = y => Math.max(mid - thr, Math.min(mid + thr, y));
+      const defs = K.svg('defs', {}, svg), cl = K.svg('clipPath', { id: 's02-cl' }, defs), cr = K.svg('clipPath', { id: 's02-cr' }, defs);
+      const rl = K.svg('rect', { x: 0, y: 0, width: 0, height: sh }, cl), rr = K.svg('rect', { x: 0, y: 0, width: sw, height: sh }, cr);
+      K.svg('path', { d: path(y => y), fill: 'none', stroke: 'var(--k-accent-2)', 'stroke-width': 2, 'stroke-dasharray': '3 7', opacity: 0.55, 'clip-path': 'url(#s02-cl)' }, svg);
+      K.svg('path', { d: path(clampY), fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 4, 'stroke-linejoin': 'round', 'clip-path': 'url(#s02-cl)' }, svg);
+      K.svg('path', { d: path(y => y), fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 4, 'stroke-linejoin': 'round', 'clip-path': 'url(#s02-cr)' }, svg);
+      K.svg('line', { x1: 0, y1: mid - thr, x2: sw, y2: mid - thr, stroke: 'var(--k-accent-2)', 'stroke-width': 2, opacity: 0.5 }, svg);
+      K.svg('line', { x1: 0, y1: mid + thr, x2: sw, y2: mid + thr, stroke: 'var(--k-accent-2)', 'stroke-width': 2, opacity: 0.5 }, svg);
+
+      // the blade sweeps across the whole scope while the line is sung
+      const blade = $('#s02-blade'), t0 = 0.1, t1 = Math.min(S.dur - 0.2, L.end + 0.9), tagW = vert ? 420 : 470;
+      K.drive(tl, t0, t1, p => {
+        const x = p * sw;
+        rl.setAttribute('width', x); rr.setAttribute('x', x); rr.setAttribute('width', sw - x);
+        blade.style.transform = `translateX(${x}px)`;
+        $('#s02-tag').style.transform = `translateX(${x > sw - tagW ? -tagW - 20 : 0}px)`;
+        $('#s02-pct').textContent = `${Math.round(p * 71)}%`;
+      }, 0, 1, 'power1.inOut');
+
+      const key = L.words.findIndex(w => /^notice/.test(w.w));
+      const { spans } = K.words($('#s02-lyric'), L, { key, breakBefore: vert ? [4] : [] });
+      K.reveal(tl, spans, L, 'rise');
+      tl.fromTo($('#s02-no'), { opacity: 0 }, { opacity: 1, duration: 0.1 }, L.words[key].t);
+
+      K.slabIn(root, tl);
+      window.__timelines[id] = tl;
+    })();
+</script>

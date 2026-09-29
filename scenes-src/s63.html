@@ -1,0 +1,83 @@
+<scene look="kardex-fed568">
+<!-- lc_4 "I'm keeping every bit": the file's properties again, as an archival index card in a Kardex tray, and bigger.
+     The BITS LOST odometer shuffles through the line and locks to 000000 on "bit"; a one-bit seal presses VERIFIED on the
+     downbeat; then the ledger on the card fills in its last entries while the music plays on. -->
+<style>
+    #s63-tray { position: absolute; }
+    .s63-tab { position: absolute; left: 0; right: 0; height: 60px; border: 2px solid var(--k-line); border-bottom: 0; border-radius: 12px 12px 0 0; background: var(--k-surface); font: 500 0.6em/1 var(--k-font-mono); color: var(--k-muted); padding: 0.55em 0.9em; white-space: nowrap; }
+    #s63-card { position: absolute; left: 0; right: 0; bottom: 0; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); padding: 0.8em 1em; }
+    .s63-h { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 0.5em; border-bottom: 2px solid var(--k-line); white-space: nowrap; }
+    .s63-h b { font: 600 1.1em/1 var(--k-font-display); }
+    .s63-h span { font: 500 0.6em/1 var(--k-font-mono); color: var(--k-muted); }
+    .s63-lost { display: flex; align-items: baseline; gap: 0.4em; margin-top: 0.3em; }
+    .s63-lost em { font-style: normal; font: 600 0.7em/1 var(--k-font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+    #s63-odo { display: flex; gap: 0.08em; margin-top: 0.12em; font: 700 4.4em/1.12 var(--k-font-display); font-variant-numeric: tabular-nums; }
+    #s63-odo span { padding: 0 0.06em; border-bottom: 0.06em solid var(--k-accent); }
+    #s63-odo.lock span { color: var(--k-accent-t); }
+    .s63-ledger { margin-top: 0.9em; font: 400 0.72em/1.9 var(--k-font-mono); }
+    .s63-ledger div { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--k-muted); opacity: 0; white-space: nowrap; }
+    #s63-seal { position: absolute; width: 4.2em; height: 4.2em; opacity: 0; }
+    #s63-lyric { position: absolute; font: 700 1em/0.92 var(--k-font-display); letter-spacing: -0.02em; text-transform: uppercase; color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s63-tray { left: 80px; top: 110px; width: 1080px; height: 880px; font-size: 40px; }
+    #s63-card { top: 120px; }
+    #s63-seal { right: 40px; top: 130px; }
+    #s63-lyric { left: 1200px; top: 190px; width: 680px; font-size: 150px; }
+</style>
+<style frame="vert">
+    #s63-tray { left: 48px; top: 250px; width: 984px; height: 1062px; font-size: 40px; }
+    #s63-card { top: 120px; padding-right: 100px; }
+    #s63-seal { right: 110px; top: 150px; }
+    #s63-odo { font-size: 144px; }
+    #s63-lyric { left: 48px; top: 1352px; width: 912px; font-size: 150px; }
+</style>
+<body>
+    <div id="s63-tray">
+      <div class="s63-tab" style="top:0;left:60px;right:120px">a · abandoned drafts</div>
+      <div class="s63-tab" style="top:56px;left:30px;right:60px">l · letters</div>
+      <div id="s63-card">
+        <div class="s63-h"><b>abhinav.flac</b><span>archival record · kept</span></div>
+        <div class="s63-lost"><em>bits lost</em></div>
+        <div id="s63-odo"></div>
+        <div class="s63-ledger" id="s63-ledger">
+          <div><span>format</span><span>FLAC · 24-bit / 96 kHz</span></div>
+          <div><span>size</span><span>42.1 MB · all of it</span></div>
+          <div><span>checksum</span><span>matches the original</span></div>
+          <div><span>custody</span><span>his, still</span></div>
+        </div>
+        <svg id="s63-seal" viewBox="0 0 100 100" data-layout-allow-overlap data-layout-ignore><circle cx="50" cy="50" r="46" fill="none" stroke="var(--k-accent)" stroke-width="5"/><circle cx="50" cy="50" r="36" fill="none" stroke="var(--k-accent)" stroke-width="2"/><text x="50" y="62" text-anchor="middle" style="font: 700 34px var(--k-font-display); fill: var(--k-accent)">1 BIT</text><text x="50" y="28" text-anchor="middle" style="font: 600 11px var(--k-font-mono); fill: var(--k-accent); letter-spacing: 2px">VERIFIED</text></svg>
+      </div>
+    </div>
+    <div id="s63-lyric"></div>
+</body>
+<script>
+    (() => {
+      const id = 's63', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tKeeping = at(/^keeping/), tBit = at(/^bit/), d1 = S.downbeats[0] ?? tBit + 0.08;
+
+      // the odometer: digits shuffle through "keeping every", lock to 000000 on "bit"
+      const odo = $('#s63-odo'), digits = [...Array(6)].map(() => K.el('span', '', odo, '0'));
+      const hash = (i, f) => { const x = Math.sin(i * 12.9898 + f * 78.233) * 43758.5453; return x - Math.floor(x); };
+      K.drive(tl, 0, S.dur, t => {
+        const f = Math.floor(t * 30), live = t >= tKeeping && t < tBit;
+        digits.forEach((d, i) => { d.textContent = live ? String(Math.floor(hash(i, f) * 10)) : '0'; });
+        odo.classList.toggle('lock', t >= tBit);
+      }, 0, S.dur);
+      tl.fromTo(odo, { scale: 1.12 }, { scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false }, tBit);
+      gsap.set(odo, { transformOrigin: '0% 60%' });
+
+      // the one-bit seal presses on the downbeat; the ledger fills in after
+      tl.fromTo($('#s63-seal'), { opacity: 0, scale: 2.2, rotation: -40 }, { opacity: 1, scale: 1, rotation: -12, duration: 0.16, ease: 'power4.in' }, d1);
+      K.shake(tl, $('#s63-card'), d1 + 0.16, 8, 3);
+      [...$('#s63-ledger').children].forEach((row, i) => tl.fromTo(row, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.2, ease: 'power2.out' }, d1 + 0.5 + i * 0.35));
+
+      // the line, BIT in the teal block
+      const { spans } = K.words($('#s63-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [2] : [1, 2, 3] });
+      K.reveal(tl, spans, L, 'slam');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

@@ -1,0 +1,75 @@
+<scene look="riveter-c2747e">
+<!-- c1_1 "Don't compress me": constructivist steel. Two riveted vise jaws squeeze the words on "compress" and hold them on
+     the downbeat; on "me" the words spring back, the jaws fly off, and the pill flips COMPRESSION: ON to OFF. -->
+<tokens>--k-accent-2: #FFC400; --k-accent-3: #1453E1; --k-shadow: 6px 6px 0 #0B0B0E; --k-font-display: 'Archivo', sans-serif;</tokens>
+<style>
+    #s19-cam { position: absolute; inset: 0; }
+    #s19-band { position: absolute; background: var(--k-accent); transform: rotate(-12deg); }
+    #s19-band2 { position: absolute; background: var(--k-accent-2); transform: rotate(-12deg); }
+    #s19-words { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; font: 700 1em/0.86 var(--k-font-display); font-stretch: 125%; letter-spacing: -0.02em; text-transform: uppercase; color: var(--k-ink); white-space: nowrap; }
+    .s19-jaw { position: absolute; background: var(--k-surface); border: 6px solid var(--k-line); box-shadow: var(--k-shadow); }
+    .s19-jaw i { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: var(--k-muted); border: 4px solid var(--k-line); }
+    .s19-jaw b { position: absolute; left: 0; right: 0; height: 22px; background: repeating-linear-gradient(90deg, var(--k-line) 0 10px, transparent 10px 20px); }
+    #s19-pill { position: absolute; display: flex; align-items: center; gap: 18px; padding: 16px 28px; border: 5px solid var(--k-line); background: var(--k-surface); color: var(--k-on-surface); font: 700 1em/1 var(--k-font-mono); text-transform: uppercase; box-shadow: var(--k-shadow); white-space: nowrap; }
+    #s19-state { position: relative; display: inline-grid; }
+    #s19-on, #s19-off { grid-area: 1 / 1; padding: 6px 14px; }
+    #s19-on { background: var(--k-accent); color: var(--k-on-accent); }
+    #s19-off { border: 4px solid var(--k-accent-2); color: var(--k-on-surface); opacity: 0; }
+</style>
+<style frame="wide">
+    #s19-band { left: -200px; top: 380px; width: 2400px; height: 300px; }
+    #s19-band2 { left: -200px; top: 700px; width: 2400px; height: 60px; }
+    #s19-words { left: 0; right: 0; top: 220px; height: 640px; font-size: 176px; }
+    .s19-jaw { top: 190px; width: 520px; height: 700px; }
+    #s19-jl { left: -40px; } #s19-jr { right: -40px; }
+    #s19-pill { left: 50%; top: 930px; font-size: 34px; transform: translateX(-50%); }
+</style>
+<style frame="vert">
+    #s19-band { left: -300px; top: 700px; width: 1700px; height: 360px; }
+    #s19-band2 { left: -300px; top: 1100px; width: 1700px; height: 80px; }
+    #s19-band3 { position: absolute; left: -300px; top: 1500px; width: 1700px; height: 240px; background: var(--k-accent); transform: rotate(-12deg); }
+    #s19-words { left: 0; right: 0; top: 400px; height: 900px; font-size: 150px; }
+    .s19-jaw { top: 380px; width: 330px; height: 940px; }
+    #s19-jl { left: -60px; } #s19-jr { right: -60px; }
+    #s19-pill { left: 48px; top: 1380px; font-size: 44px; }
+</style>
+<body>
+    <div id="s19-cam" data-layout-allow-overflow>
+      <div id="s19-band" data-bleed data-layout-ignore></div><div id="s19-band2" data-bleed data-layout-ignore></div><div id="s19-band3" data-bleed data-layout-ignore></div>
+      <div id="s19-words"></div>
+      <div class="s19-jaw" id="s19-jl" data-bleed data-layout-allow-overflow data-layout-allow-occlusion><b style="top:40px"></b><b style="bottom:40px"></b><i style="left:40px;top:120px"></i><i style="left:40px;bottom:120px"></i><i style="right:40px;top:120px"></i><i style="right:40px;bottom:120px"></i></div>
+      <div class="s19-jaw" id="s19-jr" data-bleed data-layout-allow-overflow data-layout-allow-occlusion><b style="top:40px"></b><b style="bottom:40px"></b><i style="left:40px;top:120px"></i><i style="left:40px;bottom:120px"></i><i style="right:40px;top:120px"></i><i style="right:40px;bottom:120px"></i></div>
+      <div id="s19-pill">compression <span id="s19-state"><span id="s19-on">on</span><span id="s19-off">off</span></span></div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's19', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], w = re => L.words.find(x => re.test(x.w));
+      K.push(tl, $('#s19-cam'), S.dur, 1, 1.05);
+
+      // one word per line: DON'T / COMPRESS / ME, ME in the red block
+      const key = L.words.length - 1, words = $('#s19-words');
+      const { spans } = K.words(words, L, { key, breakBefore: [1, 2] });
+      spans.forEach(s => s.setAttribute('data-layout-allow-occlusion', ''));   // the vise is meant to cover them
+      K.reveal(tl, spans, L, 'slam');
+
+      // the vise: jaws in from the edges on "compress", clamp on the downbeat, fly off on "me"
+      const c = w(/^compress/).t, d = S.downbeats[0] ?? c + 0.33, m = w(/^me$/).t, jl = $('#s19-jl'), jr = $('#s19-jr');
+      const inX = vert ? 150 : 330, offX = vert ? 700 : 1100;
+      tl.fromTo(jl, { x: -offX }, { x: 0, duration: c + 0.001, ease: 'none' }, 0);
+      tl.fromTo(jr, { x: offX }, { x: 0, duration: c + 0.001, ease: 'none' }, 0);
+      tl.to(jl, { x: inX, duration: d - c, ease: 'power3.in' }, c);
+      tl.to(jr, { x: -inX, duration: d - c, ease: 'power3.in' }, c);
+      tl.to(words, { scaleX: vert ? 0.62 : 0.55, duration: d - c, ease: 'power3.in' }, c);
+      K.shake(tl, $('#s19-cam'), d, 12, 3);
+      tl.to(jl, { x: -offX, duration: 0.22, ease: 'power3.out' }, m);
+      tl.to(jr, { x: offX, duration: 0.22, ease: 'power3.out' }, m);
+      tl.to(words, { scaleX: 1, duration: 0.3, ease: 'elastic.out(1.2, 0.45)' }, m);
+      tl.to($('#s19-on'), { opacity: 0, duration: 0.06 }, m + 0.05);
+      tl.to($('#s19-off'), { opacity: 1, duration: 0.06 }, m + 0.05);
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

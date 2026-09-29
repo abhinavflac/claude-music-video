@@ -1,0 +1,104 @@
+<scene look="limelight-ed64a3">
+<!-- c1_7 "But I'm lossless, I'm lossless": the first real "lossless", in a cel-anime key light. A grinning thumbs-up over the
+     night skyline; on the downbeat a key light sweeps the panel and sparkles pop. The LOSSLESS-O-METER swings to 98% and
+     keeps reaching for 100 on each "lossless", falling back every time: 2% still buffering. -->
+<style>
+    #s25-cam { position: absolute; inset: 0; }
+    #s25-art { position: absolute; overflow: hidden; }
+    #s25-light { position: absolute; top: -20%; bottom: -20%; left: -40%; width: 34%; background: linear-gradient(90deg, transparent, var(--k-accent) 45%, var(--k-ink) 50%, var(--k-accent) 55%, transparent); mix-blend-mode: screen; opacity: 0; transform: skewX(-20deg); pointer-events: none; }
+    .s25-card { position: absolute; background: var(--k-surface); border: 2px solid var(--k-line); border-radius: var(--k-radius); box-shadow: 0 0 0 1px var(--k-accent), 0 0 44px -6px var(--k-accent); color: var(--k-on-surface); }
+    .s25-lab { display: flex; justify-content: space-between; font: 600 0.8em/1 var(--k-font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--k-muted); white-space: nowrap; }
+    #s25-gauge { display: block; overflow: visible; }
+    #s25-pct { font: 700 1em/1 var(--k-font-display); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; color: var(--k-ink); }
+    .s25-buf { display: flex; align-items: center; gap: 0.5em; font: 500 0.8em/1 var(--k-font-mono); color: var(--k-accent-3-t); white-space: nowrap; }
+    .s25-buf svg { width: 1.2em; height: 1.2em; flex: none; }
+    #s25-lyric { font: 700 1em/0.9 var(--k-font-display); letter-spacing: -0.045em; text-transform: uppercase; color: var(--k-ink); }
+    #s25-lyric { --k-key-bg: var(--k-accent-2); }
+    .s25-star { fill: var(--k-accent-3); stroke: var(--k-paper); stroke-width: 5; stroke-linejoin: round; }
+</style>
+<style frame="wide">
+    #s25-art { inset: 0; }
+    #s25-meter { left: 1250px; top: 120px; width: 610px; padding: 26px 30px 28px; font-size: 26px; }
+    #s25-gauge { width: 100%; height: 250px; margin: 18px 0 4px; }
+    .s25-row { display: flex; align-items: flex-end; justify-content: space-between; }
+    #s25-pct { font-size: 104px; }
+    #s25-ban { left: 60px; top: 700px; width: 1800px; height: 290px; padding: 32px 44px; }
+    #s25-lyric { font-size: 128px; }
+</style>
+<style frame="vert">
+    #s25-art { left: 0; top: 0; width: 1080px; height: 1200px; }
+    #s25-meter { left: 48px; top: 1120px; width: 984px; padding: 20px 100px 20px 28px; font-size: 28px; display: grid; grid-template-columns: 300px 1fr; column-gap: 28px; align-items: center; }
+    #s25-meter .s25-lab { grid-column: 1 / 3; }
+    #s25-gauge { width: 300px; height: 150px; margin-top: 8px; }
+    .s25-row { display: flex; flex-direction: column; gap: 10px; }
+    #s25-pct { font-size: 96px; }
+    #s25-ban { left: 48px; top: 1338px; width: 984px; height: 368px; padding: 24px 100px 24px 32px; }
+    #s25-lyric { font-size: 112px; }
+</style>
+<body>
+    <div id="s25-cam" data-layout-allow-overflow data-bleed>
+      <div id="s25-art"></div>
+      <div id="s25-light" data-layout-ignore></div>
+    </div>
+    <div class="s25-card" id="s25-meter">
+      <div class="s25-lab"><span>lossless-o-meter</span><span>v1.0</span></div>
+      <svg id="s25-gauge" viewBox="0 0 400 225" data-layout-ignore></svg>
+      <div class="s25-row"><div id="s25-pct">0%</div><div class="s25-buf"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="var(--k-line)" stroke-width="3"/><path id="s25-spin" d="M12 3 A9 9 0 0 1 21 12" fill="none" stroke="var(--k-accent-3)" stroke-width="3" stroke-linecap="round"/></svg>2% still buffering</div></div>
+    </div>
+    <div class="s25-card" id="s25-ban"><div id="s25-lyric"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's25', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], ls = L.words.filter(x => /^lossless/.test(x.w)).map(x => x.t);
+      const [d1, d2] = [S.downbeats[0] ?? 1.17, S.downbeats[1] ?? 3.81];
+
+      // the panel, inked in the key light's own lavender white on night black
+      const vb = vert ? '450 0 1427 1559' : '0 0 3000 1559';
+      const shot = K.shot($('#s25-art'), 's25-thumbs-up', { viewBox: vb, inks: [K.tok(root, 'ink'), K.tok(root, 'paper')] });
+      gsap.set($('#s25-cam'), { transformOrigin: vert ? '55% 35%' : '45% 40%' });
+      tl.fromTo($('#s25-cam'), { scale: 1 }, { scale: 1.07, duration: S.dur, ease: 'none' }, 0);
+      [d1, d2].forEach(d => { K.shake(tl, $('#s25-art'), d, 10, 3); tl.fromTo($('#s25-light'), { x: 0, opacity: 0.85 }, { x: W * 1.6, opacity: 0.85, duration: 0.5, ease: 'power2.inOut', immediateRender: false }, d - 0.05); tl.set($('#s25-light'), { opacity: 0 }, d + 0.46); });
+
+      // sparkles round his grin, popping on each downbeat
+      const ov = K.overlay(shot, vb), star = 'M0 -1 L0.2 -0.2 L1 0 L0.2 0.2 L0 1 L-0.2 0.2 L-1 0 L-0.2 -0.2 Z';
+      [[1180, 170, 70], [1960, 250, 90], [2100, 620, 60], [760, 250, 64], [1860, 90, 44], [640, 900, 50]].forEach(([x, y, s], i) => {
+        const g = K.svg('g', {}, ov); K.svg('path', { d: star, class: 's25-star', transform: `translate(${x} ${y}) scale(${s})`, 'vector-effect': 'non-scaling-stroke' }, g);
+        gsap.set(g, { opacity: 0 });
+        [d1, d2].forEach(d => {
+          tl.fromTo(g, { opacity: 0, scale: 0.2, rotation: -40, svgOrigin: `${x} ${y}` }, { opacity: 1, scale: 1, rotation: 0, svgOrigin: `${x} ${y}`, duration: 0.25, ease: 'back.out(3)', immediateRender: false }, d + i * 0.04);
+          tl.to(g, { opacity: 0, scale: 0.6, svgOrigin: `${x} ${y}`, duration: 0.3, ease: 'power1.in' }, d + 0.9 + i * 0.05);
+        });
+      });
+
+      // the meter: rises through the first "lossless", swings to 98 on the downbeat, reaches for 100 on each
+      // "lossless" and the second downbeat, and falls back every time
+      const g = $('#s25-gauge'), cx = 200, cy = 205, R = 170, pt = (v, r) => [cx - Math.cos(Math.PI * v) * r, cy - Math.sin(Math.PI * v) * r];
+      K.svg('path', { d: `M${pt(0, R)} A${R} ${R} 0 0 1 ${pt(1, R)}`, fill: 'none', stroke: 'var(--k-line)', 'stroke-width': 22 }, g);
+      for (let i = 0; i <= 10; i++) { const [x0, y0] = pt(i / 10, R - 26), [x1, y1] = pt(i / 10, R - (i % 5 ? 40 : 50)); K.svg('line', { x1: x0, y1: y0, x2: x1, y2: y1, stroke: 'var(--k-muted)', 'stroke-width': 3 }, g); }
+      const arc = K.svg('path', { fill: 'none', stroke: 'var(--k-accent)', 'stroke-width': 22 }, g);
+      const needle = K.svg('line', { x1: cx, y1: cy, stroke: 'var(--k-ink)', 'stroke-width': 6, 'stroke-linecap': 'round' }, g);
+      K.svg('circle', { cx, cy, r: 12, fill: 'var(--k-ink)' }, g);
+      const ease = x => 1 - (1 - x) ** 3, cl = x => Math.max(0, Math.min(1, x)), bump = (t, t0) => Math.sin(Math.PI * cl((t - t0) / 0.5));
+      const level = t => {
+        if (t < d1) return 0.6 * ease(cl((t - 0.3) / (d1 - 0.3)));
+        const u = t - d1;
+        return 0.98 - 0.38 * Math.exp(-7 * u) * Math.cos(20 * u) + 0.02 * bump(t, ls[1] ?? 2.15) + 0.017 * bump(t, d2);
+      };
+      K.drive(tl, 0, S.dur, t => {
+        const v = cl(level(t)), [nx, ny] = pt(v, R - 30), [ax, ay] = pt(v, R);
+        needle.setAttribute('x2', nx.toFixed(1)); needle.setAttribute('y2', ny.toFixed(1));
+        arc.setAttribute('d', v > 0.002 ? `M${pt(0, R)} A${R} ${R} 0 0 1 ${ax.toFixed(1)} ${ay.toFixed(1)}` : '');
+        $('#s25-pct').textContent = Math.min(98, Math.round(v * 100)) + (v > 0.985 ? '.' + Math.min(9, Math.floor((v - 0.98) * 500)) : '') + '%';
+        $('#s25-spin').setAttribute('transform', `rotate(${(t * 400) % 360} 12 12)`);
+      }, 0, S.dur);
+
+      // the line, the second LOSSLESS in the pink block, a jolt on each
+      const { spans } = K.words($('#s25-lyric'), L, { key: L.words.length - 1, breakBefore: vert ? [2, 3] : [3] });
+      K.reveal(tl, spans, L, 'slam');
+      ls.forEach(t => K.shake(tl, $('#s25-ban'), t + 0.12, 8, 3));
+
+      K.slabIn(root, tl, { dur: 0.24 });
+      window.__timelines[id] = tl;
+    })();
+</script>

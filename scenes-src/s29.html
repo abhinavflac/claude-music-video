@@ -1,0 +1,145 @@
+<scene look="akte-445c95">
+<!-- v2_1 "Moved my own files one night, a robot locked the door": machine judgment and redaction bars. His files stream
+     through a door, 12,408 of 12,408, all his. On "robot" an arm swings down from the ceiling with a padlock; on "locked"
+     it drops the lock on the door with a clunk, and the account card beside it turns: ACCOUNT DISABLED, reason redacted,
+     reviewed by an automated system, human review: no. (The chrome's counter drops to offline on the same word.) -->
+<tokens>--k-accent-3: #FF4B3E;</tokens>
+<style>
+    #s29-lyric { position: absolute; font: 700 1em/0.95 var(--k-font-display); letter-spacing: -0.01em; text-transform: uppercase; color: var(--k-ink); }
+    #s29-lyric { --k-key-bg: var(--k-accent-3); }
+    .s29-card { position: absolute; background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius); box-shadow: var(--k-shadow); color: var(--k-on-surface); }
+    .s29-h { display: flex; justify-content: space-between; padding: 0.75em 0.9em; border-bottom: 1px solid var(--k-line); font: 500 0.8em/1 var(--k-font-mono); color: var(--k-muted); white-space: nowrap; }
+    .s29-h b { color: var(--k-ink); font-weight: 600; }
+    #s29-stage { position: absolute; overflow: hidden; }
+    #s29-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s29-prog { position: absolute; left: 0.9em; right: 0.9em; font: 500 0.85em/1.3 var(--k-font-mono); color: var(--k-ink); white-space: nowrap; }
+    .s29-prog .k-bar { height: 0.45em; margin: 0.4em 0; }
+    .s29-prog em { font-style: normal; color: var(--k-accent-t); }
+    #s29-acct .s29-body { padding: 0.9em; display: grid; gap: 0.7em; font: 400 0.85em/1.2 var(--k-font-mono); }
+    .s29-status { display: flex; align-items: center; gap: 0.5em; font: 700 1.5em/1 var(--k-font-display); text-transform: uppercase; letter-spacing: 0.01em; }
+    .s29-status i { width: 0.55em; height: 0.55em; border-radius: 50%; background: var(--k-accent); }
+    .s29-row { display: flex; justify-content: space-between; gap: 1em; padding-bottom: 0.5em; border-bottom: 1px solid var(--k-line); white-space: nowrap; }
+    .s29-row em { font-style: normal; color: var(--k-muted); }
+    .s29-red { display: inline-block; height: 0.9em; background: var(--k-ink); vertical-align: -0.1em; }
+    #s29-off { position: absolute; inset: 0; border-radius: inherit; background: var(--k-accent-3); color: var(--k-on-accent); opacity: 0; }
+    #s29-off .s29-h { color: var(--k-on-accent); border-color: var(--k-on-accent); }
+    #s29-off .s29-h b { color: var(--k-on-accent); }
+    #s29-off .s29-row { border-color: var(--k-on-accent); }
+    #s29-off .s29-row em { color: var(--k-on-accent); }
+    #s29-off .s29-red { background: var(--k-on-accent); }
+</style>
+<style frame="wide">
+    #s29-lyric { left: 80px; top: 100px; width: 1760px; font-size: 118px; }
+    #s29-xfer { left: 80px; top: 372px; width: 860px; height: 620px; font-size: 30px; }
+    #s29-stage { left: 0; right: 0; top: 70px; height: 390px; }
+    .s29-prog { bottom: 26px; }
+    #s29-acct { left: 980px; top: 372px; width: 860px; height: 620px; font-size: 32px; }
+</style>
+<style frame="vert">
+    #s29-xfer { left: 48px; top: 250px; width: 984px; height: 520px; font-size: 32px; }
+    .s29-h { padding-right: 100px; }
+    #s29-stage { left: 0; right: 100px; top: 70px; height: 300px; }
+    .s29-prog { bottom: 22px; right: 100px; }
+    #s29-acct { left: 48px; top: 790px; width: 984px; height: 526px; font-size: 32px; }
+    #s29-acct .s29-body { padding-right: 100px; }
+    #s29-lyric { left: 48px; top: 1352px; width: 912px; font-size: 86px; }
+</style>
+<body>
+    <div id="s29-lyric"></div>
+    <div class="s29-card" id="s29-xfer">
+      <div class="s29-h"><b>moving your files</b><span>takeout → new drive</span></div>
+      <div id="s29-stage"><svg id="s29-svg" data-layout-ignore></svg></div>
+      <div class="s29-prog"><div id="s29-n">0 / 12,408</div><div class="k-bar" id="s29-bar"></div><div id="s29-done" style="opacity:0"><em>all yours.</em> nothing left behind</div></div>
+    </div>
+    <div class="s29-card" id="s29-acct">
+      <div class="s29-h"><b>account · abhinav</b><span>security</span></div>
+      <div class="s29-body">
+        <div class="s29-status"><i></i>active</div>
+        <div class="s29-row"><em>files</em><span>12,408</span></div>
+        <div class="s29-row"><em>since</em><span>2014</span></div>
+        <div class="s29-row"><em>two-factor</em><span>on</span></div>
+      </div>
+      <div id="s29-off">
+        <div class="s29-h"><b>account · abhinav</b><span>security</span></div>
+        <div class="s29-body">
+          <div class="s29-status">account disabled</div>
+          <div class="s29-row"><em>reason</em><span><span class="s29-red" style="width:5em"></span> <span class="s29-red" style="width:3.2em"></span></span></div>
+          <div class="s29-row"><em>reviewed by</em><span>automated system</span></div>
+          <div class="s29-row"><em>human review</em><span>no</span></div>
+        </div>
+      </div>
+    </div>
+</body>
+<script>
+    (() => {
+      const id = 's29', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), L = S.lines[0], at = re => L.words.find(x => re.test(x.w)).t;
+      const tFiles = at(/^files/), tNight = at(/^night/), tRobot = at(/^robot/), tLocked = at(/^locked/), tDoor = at(/^door/);
+
+      // the stage: files stream left to right into a door; an arm swings down with a padlock and drops it on the handle
+      const stage = $('#s29-stage'), SW = stage.clientWidth, SH = stage.clientHeight, sv = $('#s29-svg');
+      sv.setAttribute('viewBox', `0 0 ${SW} ${SH}`);
+      const dx = SW * 0.66, dw = SH * 0.46, dh = SH * 0.78, dy = SH - dh - 8;
+      K.svg('rect', { x: dx - 14, y: dy - 14, width: dw + 28, height: dh + 22, fill: 'none', stroke: 'var(--k-muted)', 'stroke-width': 6 }, sv);
+      const door = K.svg('g', {}, sv);
+      K.svg('rect', { x: dx, y: dy, width: dw, height: dh, fill: 'var(--k-line)', stroke: 'var(--k-ink)', 'stroke-width': 5 }, door);
+      K.svg('rect', { x: dx + dw * 0.16, y: dy + dh * 0.1, width: dw * 0.68, height: dh * 0.32, fill: 'none', stroke: 'var(--k-muted)', 'stroke-width': 3 }, door);
+      K.svg('rect', { x: dx + dw * 0.16, y: dy + dh * 0.52, width: dw * 0.68, height: dh * 0.36, fill: 'none', stroke: 'var(--k-muted)', 'stroke-width': 3 }, door);
+      const hx = dx + dw * 0.8, hy = dy + dh * 0.5;
+      K.svg('circle', { cx: hx, cy: hy, r: 9, fill: 'var(--k-ink)' }, door);
+      // the stream of files
+      const files = K.svg('g', {}, sv), N = 14;
+      for (let i = 0; i < N; i++) {
+        const f = K.svg('g', {}, files), y = SH * 0.42 + ((i * 37) % 60) - 30;
+        K.svg('path', { d: `M0 ${y - 26} h26 l12 12 v40 h-38 Z`, fill: 'var(--k-surface)', stroke: 'var(--k-accent)', 'stroke-width': 4, 'stroke-linejoin': 'round' }, f);
+        const t0 = 0.05 + i * (tFiles + 0.35) / N;
+        gsap.set(f, { opacity: 0 });
+        tl.set(f, { opacity: 1 }, t0);
+        tl.fromTo(f, { x: 30 }, { x: dx + dw * 0.3, duration: 0.55, ease: 'power1.in', immediateRender: false }, t0);
+        tl.set(f, { opacity: 0 }, t0 + 0.55);
+      }
+      // the arm: a ceiling mount, two links and a claw holding the lock; the lock falls onto the handle on "locked"
+      // mount at the stage's top edge (the ceiling), elbow out to the right, the claw over the handle
+      const arm = K.svg('g', {}, sv), px = hx, cy = hy - 150, joints = [[px + 120, 0], [px + 165, cy * 0.5], [px, cy]];
+      const link = joints.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join(' ');
+      K.svg('rect', { x: px + 80, y: -4, width: 80, height: 18, fill: 'var(--k-muted)' }, arm);
+      K.svg('path', { d: link, fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 16, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, arm);
+      K.svg('path', { d: link, fill: 'none', stroke: 'var(--k-muted)', 'stroke-width': 6, 'stroke-linejoin': 'round' }, arm);
+      joints.slice(0, 2).forEach(([x, y]) => K.svg('circle', { cx: x, cy: y, r: 13, fill: 'var(--k-surface)', stroke: 'var(--k-ink)', 'stroke-width': 5 }, arm));
+      K.svg('path', { d: `M${px - 30} ${hy - 150} v34 M${px + 30} ${hy - 150} v34 M${px - 30} ${hy - 150} h60`, fill: 'none', stroke: 'var(--k-ink)', 'stroke-width': 8, 'stroke-linecap': 'round' }, arm);
+      const lock = K.svg('g', {}, sv);
+      K.svg('path', { d: `M${px - 16} ${hy - 100} v-18 a16 16 0 0 1 32 0 v18`, fill: 'none', stroke: 'var(--k-accent-3)', 'stroke-width': 9 }, lock);
+      K.svg('rect', { x: px - 28, y: hy - 102, width: 56, height: 48, rx: 6, fill: 'var(--k-accent-3)' }, lock);
+      K.svg('circle', { cx: px, cy: hy - 80, r: 6, fill: 'var(--k-paper)' }, lock);
+      const dropY = 64;
+      gsap.set([arm, lock], { y: -SH * 0.9 });
+      tl.to([arm, lock], { y: 0, duration: 0.3, ease: 'back.out(1.6)' }, tRobot);
+      tl.to(lock, { y: dropY, duration: 0.14, ease: 'power3.in' }, tLocked);
+      tl.to(lock, { y: dropY - 10, duration: 0.07, ease: 'power2.out', yoyo: true, repeat: 1 }, tLocked + 0.14);
+      tl.to(arm, { y: -SH * 0.9, duration: 0.3, ease: 'power2.in' }, tLocked + 0.18);
+      K.shake(tl, $('#s29-xfer'), tLocked + 0.14, 10, 3);
+      tl.fromTo(door, { opacity: 1 }, { opacity: 0.55, duration: 0.05, yoyo: true, repeat: 3 }, tDoor);
+
+      // the transfer counter: every file, all his, done by "night"
+      const fill = K.el('div', 'k-bar-fill', $('#s29-bar'));
+      K.drive(tl, 0, S.dur, t => {
+        const p = Math.max(0, Math.min(1, (t - 0.05) / (tNight - 0.05)));
+        $('#s29-n').textContent = `${Math.round(p * 12408).toLocaleString('en-US')} / 12,408`;
+        fill.style.transform = `scaleX(${p.toFixed(4)})`;
+      }, 0, S.dur);
+      tl.set($('#s29-done'), { opacity: 1 }, tNight);
+
+      // the account card turns on "locked"
+      tl.set($('#s29-off'), { opacity: 1 }, tLocked + 0.14);
+      tl.set([...$('#s29-acct').children].filter(c => c.id !== 's29-off'), { opacity: 0 }, tLocked + 0.14);
+      tl.fromTo($('#s29-acct'), { scale: 1.06 }, { scale: 1, duration: 0.3, ease: 'power3.out', immediateRender: false }, tLocked + 0.14);
+      K.shake(tl, $('#s29-acct'), tLocked + 0.16, 8, 3);
+
+      // the line, LOCKED in the red block
+      const { spans } = K.words($('#s29-lyric'), L, { key: L.words.findIndex(x => /^locked/.test(x.w)), breakBefore: vert ? [4, 8] : [6] });
+      K.reveal(tl, spans, L, 'rise');
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>

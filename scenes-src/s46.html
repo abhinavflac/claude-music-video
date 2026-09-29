@@ -1,0 +1,65 @@
+<scene look="plakat-a48736">
+<!-- post_1 + post_2 "I'm keeping every bit, every bit, every bit / every bit, every bit, every bit": a loud board filling
+     with die-cut reaction stickers, one slapped on every sung "bit" (EVERY BIT, KEPT, 0 LOST, 24-BIT, BIT-PERFECT, UNCUT),
+     RAW and ALL OF IT on the lines' first beats. A giant 1 in the middle kicks on every bit; the counter above counts the
+     song's own bits so far, at CD rate. -->
+<style>
+    #s46-one { position: absolute; font: 400 1em/1 var(--k-font-display); color: var(--k-surface); -webkit-text-stroke: 10px var(--k-ink); text-shadow: 18px 18px 0 var(--k-accent); }
+    #s46-count { position: absolute; z-index: 5; display: flex; align-items: center; gap: 0.6em; padding: 0.35em 0.8em; background: var(--k-surface); border: 4px solid var(--k-ink); border-radius: 999px; box-shadow: var(--k-shadow); font: 400 1em/1 var(--k-font-display); white-space: nowrap; }
+    #s46-count span { font: 600 0.62em/1 var(--k-font-mono); letter-spacing: 0.08em; }
+    #s46-n { font-variant-numeric: tabular-nums; color: var(--k-accent-t); }
+    #s46-board { position: absolute; inset: 0; }
+    #s46-strip { position: absolute; background: var(--k-surface); border: 5px solid var(--k-ink); border-radius: var(--k-radius); box-shadow: var(--k-shadow); }
+    .s46-line { position: absolute; left: 0.5em; right: 0.5em; font: 400 1em/1.06 var(--k-font-display); color: var(--k-ink); }
+</style>
+<style frame="wide">
+    #s46-one { left: 50%; top: 40px; font-size: 760px; transform: translateX(-50%); }
+    #s46-count { left: 50%; top: 110px; font-size: 44px; transform: translateX(-50%); }
+    #s46-strip { left: 60px; top: 840px; width: 1800px; height: 160px; font-size: 52px; }
+    .s46-line { top: 0.52em; }
+</style>
+<style frame="vert">
+    #s46-one { left: 50%; top: 360px; font-size: 780px; transform: translateX(-50%); }
+    #s46-count { left: 48px; top: 262px; font-size: 44px; }
+    #s46-strip { left: 48px; top: 1330px; width: 984px; height: 372px; font-size: 76px; }
+    .s46-line { top: 0.36em; right: 1.4em; }
+</style>
+<body>
+    <div id="s46-one" data-layout-ignore>1</div>
+    <div id="s46-count"><span>bits kept</span><b id="s46-n">0</b></div>
+    <div id="s46-board"></div>
+    <div id="s46-strip"><div class="s46-line" id="s46-l0"></div><div class="s46-line" id="s46-l1"></div></div>
+</body>
+<script>
+    (() => {
+      const id = 's46', S = window.FILM.scenes[id], root = K.root(id), $ = s => root.querySelector(s), { W, H, vert } = K.size(root);
+      const tl = gsap.timeline({ paused: true }), [L0, L1] = S.lines;
+      const bits = S.lines.flatMap(l => l.words.filter(w => /^bit/.test(w.w)).map(w => w.t));
+      const evs = S.lines.flatMap(l => l.words.filter(w => /^every/i.test(w.w)).map(w => w.t));
+      const firsts = [L0.words.find(w => /^keeping/.test(w.w)).t, L1.words[L1.words.length - 1].t + 0.2];
+
+      // stickers: one per "bit", two more on the lines' openings, scattered clear of the strip and the counter
+      const LAB = ['EVERY BIT', 'KEPT', '0 LOST', '24-BIT', 'BIT-PERFECT', 'UNCUT'], TONES = ['accent', 'accent-2', 'surface'], SH = ['burst', 'pill', 'round', 'tag', 'pill', 'burst'];
+      const avoid = vert ? [[0, 1230, W, 690], [0, 180, 820, 240]] : [[0, 760, W, 320], [420, 40, 1080, 200]];
+      const pts = K.scatter(46, 14, vert ? [210, 420, W - 320, 1180] : [260, 250, W - 260, 740], avoid);
+      const list = bits.map((t, i) => ({ t, text: LAB[i], shape: SH[i], tone: TONES[i % 3], x: pts[i][0], y: pts[i][1], rot: (pts[i][2] - 0.5) * 34, size: vert ? 70 : 64 }))
+        .concat(evs.map((t, i) => ({ t, text: '+1', shape: 'round', tone: TONES[(i + 1) % 3], x: pts[6 + i][0], y: pts[6 + i][1], rot: (pts[6 + i][2] - 0.5) * 30, size: vert ? 48 : 42 })))
+        .concat(firsts.map((t, i) => ({ t, text: ['RAW', 'ALL OF IT'][i], shape: ['tag', 'burst'][i], tone: ['accent-2', 'accent'][i], x: pts[12 + i][0], y: pts[12 + i][1], rot: (pts[12 + i][2] - 0.5) * 30, size: vert ? 70 : 64 })));
+      K.stickers($('#s46-board'), tl, list.sort((a, b) => a.t - b.t));
+
+      // the giant 1 kicks on every bit; the counter counts the song's bits so far (44.1 kHz x 16 bit x 2 channels)
+      bits.forEach(t => tl.fromTo($('#s46-one'), { scale: 1.08 }, { scale: 1, duration: 0.25, ease: 'power3.out', immediateRender: false }, t));
+      K.drive(tl, 0, S.dur, t => { $('#s46-n').textContent = Math.floor((S.start + t) * 1411200).toLocaleString('en-US'); }, 0, S.dur);
+
+      // the chant: line one, then line two in its place; the first "bit" of each in the pink block
+      [[L0, '#s46-l0'], [L1, '#s46-l1']].forEach(([L, sel], k) => {
+        const every = L.words.map((w, i) => (i && /^every/i.test(w.w) ? i : -1)).filter(i => i > 0);
+        const { spans } = K.words($(sel), L, { key: L.words.findIndex(w => /^bit/.test(w.w)), breakBefore: vert ? every : [] });
+        K.reveal(tl, spans, L, 'pop');
+        if (!k) tl.set($(sel), { opacity: 0 }, L1.t);
+      });
+
+      K.slabIn(root, tl, { dur: 0.22 });
+      window.__timelines[id] = tl;
+    })();
+</script>
